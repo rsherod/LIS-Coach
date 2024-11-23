@@ -48,6 +48,8 @@ if "pdf_content" not in st.session_state:
     st.session_state.pdf_content = ""
 if "chat_session" not in st.session_state:
     st.session_state.chat_session = None
+if "uploaded_file" not in st.session_state:  # Add this line
+    st.session_state.uploaded_file = None
 
 # Sidebar for model and temperature selection
 with st.sidebar:
