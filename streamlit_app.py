@@ -29,7 +29,7 @@ except Exception as e:
 # Title and BotDescription 
 # You can customize the title, description, and caption by modifying the text within the quotes.
 st.title("Welcome to the Virtual Low-Intensity Strategies Coach Platform!")
-st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that is a good fit for the interfering or challenging behavior you might be experiencing in your class school. \n\ Directions: Begin by providing some information about the behavior you are currently experiencing ")
+st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that is a good fit for the interfering or challenging behavior you might be experiencing in your class school.\n\n**Directions:** Begin by providing some information about the behavior you are currently experiencing.")
 st.caption("Note: This Bot can make mistakes.")
 
 # Initialize Gemini client
