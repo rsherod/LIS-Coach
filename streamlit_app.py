@@ -50,22 +50,24 @@ if "chat_session" not in st.session_state:
     st.session_state.chat_session = None
 
 # Sidebar for model and temperature selection
-#with st.sidebar:
-    #st.title("Settings")
-    #st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
-    
-    # Ensure model_name is initialized
-    #if 'model_name' not in st.session_state:
-        #st.session_state.model_name = "gemini-1.5-flash-002"  # default model
+with st.sidebar:
+    st.title("Settings")
+    st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
 
-    #model_option = st.selectbox(
-        #"Select Model:", ["gemini-1.5-flash-002", "gemini-1.5-pro-002"]
-    
-    
-    #if model_option != st.session_state.model_name:
+    # Ensure model_name is initialized
+    if 'model_name' not in st.session_state:
+        st.session_state.model_name = "gemini-1.5-flash-002"  # default model
+
+    model_option = st.selectbox(
+        "Select Model:", ["gemini-1.5-flash-002", "gemini-1.5-pro-002"]
+    )
+
+    # Update model_name if it has changed
+    if model_option != st.session_state.model_name:
         st.session_state.model_name = model_option
         st.session_state.messages = []
         st.session_state.chat_session = None
+
    
     # File upload for PDF
     #st.title("Upload Intervention Grid Here:")
