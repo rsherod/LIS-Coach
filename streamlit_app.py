@@ -60,7 +60,7 @@ if "chat_session" not in st.session_state:
 
     #model_option = st.selectbox(
         #"Select Model:", ["gemini-1.5-flash-002", "gemini-1.5-pro-002"]
-    )
+    
     
     #if model_option != st.session_state.model_name:
         st.session_state.model_name = model_option
