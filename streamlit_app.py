@@ -39,7 +39,7 @@ genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "model_name" not in st.session_state:
-    st.session_state.model_name = "gemini-1.5-pro-002"
+    st.session_state.model_name = "gemini-2.0-pro-exp-02-05"
 if "temperature" not in st.session_state:
     st.session_state.temperature = 0.5
 if "debug" not in st.session_state:
@@ -58,10 +58,10 @@ with st.sidebar:
 
     # Ensure model_name is initialized
     if 'model_name' not in st.session_state:
-        st.session_state.model_name = "gemini-1.5-flash-002"  # default model
+        st.session_state.model_name = "gemini-2.0-pro-exp-02-05"  # default model
 
     model_option = st.selectbox(
-        "Select Model:", ["gemini-1.5-flash-002", "gemini-1.5-pro-002"]
+        "Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
     )
 
     # Update model_name if it has changed
