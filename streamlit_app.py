@@ -22,7 +22,7 @@ if "should_generate_response" not in st.session_state:
 image_path = 'Low-Intensity Strategy AI Coach.png'
 try:
     image = Image.open(image_path)
-    st.image(image, caption='Created by Rebecca Sherod (2024)', use_column_width=True)
+    st.image(image, caption='Created by Rebecca Sherod (2024)', use_container_width=True)
 except Exception as e:
     st.error(f"Error loading image: {e}")
 
