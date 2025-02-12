@@ -20,7 +20,7 @@ if "should_generate_response" not in st.session_state:
 # You can customize this by changing the image file name and path. Supported image types include .png, .jpg, .jpeg, and .gif.
 # To use a different image, replace 'Low-Intensity Strategy AI Coach.png' with your desired image file name (e.g., 'my_custom_image.jpg').
 # Display image
-image_path = 'Tier 2 and Tier 3 Intervention Grid Search.jpg'
+image_path = '/Low-Intensity Strategy AI Coach.png'
 try:
     image = Image.open(image_path)
     col1, col2, col3 = st.columns([1,6,1])
