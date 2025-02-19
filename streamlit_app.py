@@ -101,6 +101,52 @@ with st.sidebar:
         #st.success("Chat cleared!")
         #st.experimental_rerun()  # use rerun to refresh the app
 
+    # Add divider before strategy buttons
+    st.divider()
+    
+    # Strategy section title
+    st.title("Low-Intensity Strategies")
+    
+    # Custom CSS for the buttons
+    button_style = """
+        <style>
+            .stButton > button {
+                background-color: #9370DB;
+                color: white;
+                border-radius: 20px;
+                padding: 10px 15px;
+                border: none;
+                width: 100%;
+                margin: 5px 0;
+            }
+            .stButton > button:hover {
+                background-color: #7B68EE;
+            }
+        </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+
+    # Strategy buttons
+    strategies = [
+        "Behavior-Specific Praise",
+        "Instructional Choice",
+        "Active Supervision",
+        "High-Probability Request Sequences",
+        "Instructional Feedback",
+        "Opportunities to Respond",
+        "Precorrection"
+    ]
+
+    for strategy in strategies:
+        if st.button(strategy):
+            # Placeholder for future functionality
+            pass
+
+    # Debug section
+    st.title("Debug Info")
+    for debug_msg in st.session_state.debug:
+        st.sidebar.text(debug_msg)
+
 # Load system prompt
 def load_text_file(file_path):
     try:
@@ -240,50 +286,7 @@ if user_input:
             st.session_state.debug.append(f"Error: {e}")
 
     st.rerun()
-
-# Add this section just before the Debug Info section in the sidebar (around line 110)
     
-    # Add divider before strategy buttons
-    st.divider()
-    
-    # Strategy section title
-    st.title("Low-Intensity Strategies")
-    
-    # Custom CSS for the buttons
-    button_style = """
-        <style>
-            .stButton > button {
-                background-color: #9370DB;
-                color: white;
-                border-radius: 20px;
-                padding: 10px 15px;
-                border: none;
-                width: 100%;
-                margin: 5px 0;
-            }
-            .stButton > button:hover {
-                background-color: #7B68EE;
-            }
-        </style>
-    """
-    st.markdown(button_style, unsafe_allow_html=True)
-
-    # Strategy buttons
-    strategies = [
-        "Behavior-Specific Praise",
-        "Instructional Choice",
-        "Active Supervision",
-        "High-Probability Request Sequences",
-        "Instructional Feedback",
-        "Opportunities to Respond",
-        "Precorrection"
-    ]
-
-    for strategy in strategies:
-        if st.button(strategy):
-            # Placeholder for future functionality
-            pass
-
 # Debug information
 # You can remove this by adding # in front of each line
 
