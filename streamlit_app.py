@@ -250,7 +250,9 @@ if user_input:
                 model_name=st.session_state.model_name,
                 generation_config=generation_config,
             )
-            
+# Add funding acknowledgment here
+st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)            
+
             # Initialize chat with system prompt and PDF content
             initial_messages = [
                 {"role": "user", "parts": [f"System: {system_prompt}"]},
