@@ -111,7 +111,7 @@ with st.sidebar:
     button_style = """
         <style>
             .stButton > button {
-                background-color: #9370DB;
+                background-color: #6A157D;
                 color: white;
                 border-radius: 20px;
                 padding: 10px 15px;
@@ -120,7 +120,7 @@ with st.sidebar:
                 margin: 5px 0;
             }
             .stButton > button:hover {
-                background-color: #7B68EE;
+                background-color: #000000;
             }
         </style>
     """
