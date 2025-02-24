@@ -291,5 +291,3 @@ if user_input:
 
     st.rerun()
 
-# Add funding acknowledgment at the bottom (corresponding to the red arrow position)
-st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
