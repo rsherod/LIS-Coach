@@ -26,8 +26,8 @@ try:
     col1, col2, col3 = st.columns([1,6,1])
     with col2:
         st.image(image, use_container_width=True)
-        st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>Created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
-        st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>Bot created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
+        
 except Exception as e:
     st.error(f"Error loading image: {e}")
 
@@ -225,6 +225,12 @@ if st.session_state.should_generate_response:
 # User input
 # The placeholder text "Your message:" can be customized to any desired prompt, e.g., "Message Creative Assistant...".
 user_input = st.chat_input("Type here:")
+
+# Add empty space to ensure the funding statement appears below the chat input
+st.write("")  # This creates some vertical space
+
+# Add funding acknowledgment right where you want it (below the chat input)
+st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
 
 if user_input:
     # Add user message to chat history
