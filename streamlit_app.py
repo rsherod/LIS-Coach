@@ -121,6 +121,7 @@ with st.sidebar:
             }
             .stButton > button:hover {
                 background-color: #871BA1;
+                color: white !important;
             }
         </style>
     """
