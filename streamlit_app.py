@@ -129,6 +129,11 @@ with main_container:
     st.title("Welcome to the Low-Intensity Strategies Bot!")
     st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that is a good fit for the interfering or challenging behavior you might be experiencing in your classroom.\n\n**Directions:** Begin by providing some information about the behavior you are currently experiencing.")
     st.caption("Note: This Bot can make mistakes.")
+    
+    # Add extra spacing between caption and chat input
+    st.write("")
+    st.write("")
+    st.write("")
 
     # Initialize Gemini client
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
