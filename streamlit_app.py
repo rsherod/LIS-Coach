@@ -58,7 +58,7 @@ if "uploaded_file" not in st.session_state:  # Add this line
 
 # Sidebar for model and temperature selection
 with st.sidebar:
-    st.title("Settings")
+    st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
     st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
 
     # Ensure model_name is initialized
@@ -144,7 +144,7 @@ with st.sidebar:
             pass
 
     # Debug section
-    st.title("Debug Info")
+    st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
         st.sidebar.text(debug_msg)
 
