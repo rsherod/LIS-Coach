@@ -120,7 +120,7 @@ with st.sidebar:
                 margin: 5px 0;
             }
             .stButton > button:hover {
-                background-color: #000000;
+                background-color: #871BA1;
             }
         </style>
     """
