@@ -28,27 +28,6 @@ if "chat_session" not in st.session_state:
 if "uploaded_file" not in st.session_state:
     st.session_state.uploaded_file = None
 
-# Sidebar for model and temperature selection
-with st.sidebar:
-    st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
-    st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
-
-    # Ensure model_name is initialized
-    if 'model_name' not in st.session_state:
-        st.session_state.model_name = "gemini-2.0-pro-exp-02-05"  # default model
-
-    model_option = st.selectbox(
-        "Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
-    )
-
-    # Update model_name if it has changed
-    if model_option != st.session_state.model_name:
-        st.session_state.model_name = model_option
-        st.session_state.messages = []
-        st.session_state.chat_session = None
-
-    # Add divider before strategy buttons
-    st.divider()
     
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
@@ -89,6 +68,28 @@ with st.sidebar:
             # Placeholder for future functionality
             pass
 
+    # Sidebar for model and temperature selection
+    with st.sidebar:
+        st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
+        st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
+    
+        # Ensure model_name is initialized
+        if 'model_name' not in st.session_state:
+            st.session_state.model_name = "gemini-2.0-pro-exp-02-05"  # default model
+    
+        model_option = st.selectbox(
+            "Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
+        )
+    
+        # Update model_name if it has changed
+        if model_option != st.session_state.model_name:
+            st.session_state.model_name = model_option
+            st.session_state.messages = []
+            st.session_state.chat_session = None
+    
+        # Add divider before strategy buttons
+        st.divider()
+    
     # Debug section
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
