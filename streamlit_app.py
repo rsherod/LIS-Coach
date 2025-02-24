@@ -123,6 +123,13 @@ with st.sidebar:
                 background-color: #871BA1;
                 color: white !important;
             }
+            /*Center sidebar headers */
+            .sidebar .stTitle,
+            .sidebar h1,
+            .sidebar h2,
+            .sidebar h3 {
+                text-align: center !important;
+            }
         </style>
     """
     st.markdown(button_style, unsafe_allow_html=True)
