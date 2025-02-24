@@ -117,7 +117,7 @@ with main_container:
     image_path = 'LIS Image.jpg'
     try:
         image = Image.open(image_path)
-        col1, col2, col3 = st.columns([1,9,1])
+        col1, col2, col3 = st.columns([1,10,1])
         with col2:
             st.image(image, use_container_width=True)
             st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>Bot created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
