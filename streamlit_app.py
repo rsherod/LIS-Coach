@@ -105,7 +105,7 @@ with st.sidebar:
     st.divider()
     
     # Strategy section title
-    st.title("Low-Intensity Strategies")
+    st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
     # Custom CSS for the buttons
     button_style = """
