@@ -223,11 +223,7 @@ if st.session_state.should_generate_response:
     st.rerun()
 
 # User input
-# The placeholder text "Your message:" can be customized to any desired prompt, e.g., "Message Creative Assistant...".
 user_input = st.chat_input("Type here:")
-
-# Add empty space to ensure the funding statement appears below the chat input
-st.write("")  # This creates some vertical space
 
 if user_input:
     # Add user message to chat history
@@ -291,3 +287,8 @@ if user_input:
 
     st.rerun()
 
+# Add funding acknowledgment after all chat processing
+# This will place it at the bottom of the page
+st.write("")  # Empty space for better spacing
+st.write("")  # More empty space
+st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
