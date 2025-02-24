@@ -55,10 +55,10 @@ with st.sidebar:
     
     # Strategy buttons
     strategies = [
-        "Behavior-Specific Praise",
-        "Instructional Choice",
         "Active Supervision",
+        "Behavior-Specific Praise",
         "High-Probability Request Sequences",
+        "Instructional Choice",
         "Instructional Feedback",
         "Opportunities to Respond",
         "Precorrection"
