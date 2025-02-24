@@ -127,7 +127,7 @@ with main_container:
 
     # Title and BotDescription 
     st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
-    st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you're proactively planning for classroom management or addressing an interfering or challenging behavior you're experiencing.\n\n**Directions:** To get started, you can type a scenario or lesson plan idea into the chat if you're unsure which strategy to use, or select a specific strategy from the side menu if you already have one in mind.")
+    st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you're proactively planning for classroom management or addressing an interfering or challenging behavior you're experiencing.\n\n**Directions:** To get started, type a scenario or lesson plan idea into the chat if you're unsure which strategy to use, or select a specific strategy from the side menu if you already have one in mind.")
     st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
     
     # Add extra spacing between caption and chat input
