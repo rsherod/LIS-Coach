@@ -120,14 +120,14 @@ with main_container:
         col1, col2, col3 = st.columns([1,6,1])
         with col2:
             st.image(image, use_container_width=True)
-            st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>Created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
-            # Remove funding statement from here
+            st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>Bot created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
+          
     except Exception as e:
         st.error(f"Error loading image: {e}")
 
     # Title and BotDescription 
     st.title("Welcome to the Low-Intensity Strategies Bot!")
-    st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that is a good fit for the interfering or challenging behavior you might be experiencing in your classroom.\n\n**Directions:** Begin by providing some information about the behavior you are currently experiencing.")
+    st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you're proactively planning for classroom management or addressing an interfering or challenging behavior you're experiencing.\n\n**Directions:** To get started, you can type a scenario or lesson plan idea into the chat if you're unsure which strategy to use, or select a specific strategy from the side menu if you already have one in mind.")
     st.caption("Note: This Bot can make mistakes.")
     
     # Add extra spacing between caption and chat input
