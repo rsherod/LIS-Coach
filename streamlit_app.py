@@ -4,15 +4,9 @@ import google.generativeai as genai
 from PIL import Image
 import json
 import os
-import sys
 
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
-
-# Debug information to help locate files
-st.sidebar.write("Current working directory:", os.getcwd())
-st.sidebar.write("Files in current directory:", os.listdir())
-st.sidebar.write("Python path:", sys.path)
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -91,61 +85,18 @@ st.markdown("""
 def load_text_file(file_path):
     try:
         with open(file_path, 'r') as file:
-            content = file.read()
-            st.session_state.debug.append(f"Successfully loaded text file: {file_path}")
-            return content
+            return file.read()
     except Exception as e:
-        st.session_state.debug.append(f"Error loading text file {file_path}: {e}")
+        st.error(f"Error loading text file: {e}")
         return ""
 
-# Helper function to load JSON files with improved error handling
+# Helper function to load JSON files
 def load_json_file(file_path):
     try:
-        # Try with different case variations
-        if not os.path.exists(file_path):
-            # Try lowercase
-            lowercase_path = file_path.lower()
-            if os.path.exists(lowercase_path):
-                file_path = lowercase_path
-                st.session_state.debug.append(f"Found file with lowercase name: {lowercase_path}")
-            # Try uppercase
-            uppercase_path = file_path.upper()
-            if os.path.exists(uppercase_path):
-                file_path = uppercase_path
-                st.session_state.debug.append(f"Found file with uppercase name: {uppercase_path}")
-                
-        if not os.path.exists(file_path):
-            # If still not found, search in current directory
-            for f in os.listdir():
-                if f.lower() == file_path.lower():
-                    file_path = f
-                    st.session_state.debug.append(f"Found file with similar name: {f}")
-                    break
-        
-        # Check if the file exists after all attempts
-        if not os.path.exists(file_path):
-            st.session_state.debug.append(f"File not found after all attempts: {file_path}")
-            
-            # If we have the JSON data in paste-2.txt, let's use that as a fallback
-            if file_path.lower().endswith('strategies.json'):
-                try:
-                    with open('paste-2.txt', 'r') as fallback_file:
-                        fallback_data = fallback_file.read()
-                        st.session_state.debug.append("Using paste-2.txt as fallback for strategies")
-                        return json.loads(fallback_data)
-                except Exception as fallback_error:
-                    st.session_state.debug.append(f"Fallback error: {fallback_error}")
-            return {}
-            
         with open(file_path, 'r') as file:
-            data = json.load(file)
-            st.session_state.debug.append(f"Successfully loaded JSON from {file_path}")
-            return data
-    except json.JSONDecodeError as e:
-        st.session_state.debug.append(f"JSON parsing error in {file_path}: {e}")
-        return {}
+            return json.load(file)
     except Exception as e:
-        st.session_state.debug.append(f"Error loading JSON file {file_path}: {e}")
+        st.error(f"Error loading JSON file: {e}")
         return {}
 
 # Load system instructions and strategy data
@@ -153,21 +104,15 @@ system_instructions = load_text_file('instructions.txt')
 strategies_data = {}
 
 # Define the paths to the JSON files
-# First try with exact case
 strategies_json_path = 'Strategies.json'
 
-# Load the JSON file with our improved error handling
-strategies_data.update(load_json_file(strategies_json_path))
+# Load the JSON file if it exists
+if os.path.exists(strategies_json_path):
+    strategies_data.update(load_json_file(strategies_json_path))
+    st.session_state.debug.append(f"Loaded strategies from {strategies_json_path}")
+else:
+    st.session_state.debug.append(f"Warning: {strategies_json_path} not found")
 
-# If we still don't have data, use the content from paste-2.txt directly
-if not strategies_data:
-    try:
-        strategies_content = load_text_file('paste-2.txt')
-        if strategies_content:
-            strategies_data = json.loads(strategies_content)
-            st.session_state.debug.append("Using strategies content from paste-2.txt")
-    except Exception as e:
-        st.session_state.debug.append(f"Error parsing strategies from paste-2.txt: {e}")
 
 # Function to build the complete system prompt
 def build_system_prompt(active_strategy=None):
@@ -207,14 +152,51 @@ with st.sidebar:
         st.session_state.model_name = model_option
         st.session_state.messages = []
         st.session_state.chat_session = None
+
    
+    # File upload for PDF
+    #st.title("Upload Intervention Grid Here:")
+    #uploaded_pdf = st.file_uploader("Upload:", type=["pdf"])
+    
+    
+    
+    # Clear chat functionality
+    #clear_button = st.button("Clear Chat")
+    #if clear_button:
+        #st.session_state.messages = []
+        #st.session_state.debug = []
+        #st.session_state.pdf_content = ""
+        #st.session_state.chat_session = None
+        #st.success("Chat cleared!")
+        #st.experimental_rerun()  # use rerun to refresh the app
+
     # Add divider before strategy buttons
     st.divider()
     
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Strategy buttons - get the list from our loaded data if available
+    # Custom CSS for the buttons
+    button_style = """
+        <style>
+            .stButton > button {
+                background-color: #6A157D;
+                color: white;
+                border-radius: 20px;
+                padding: 10px 15px;
+                border: none;
+                width: 100%;
+                margin: 5px 0;
+            }
+            .stButton > button:hover {
+                background-color: #871BA1;
+                color: white !important;
+            }
+        </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+
+    # Strategy buttons
     strategies = [
         "Behavior-Specific Praise",
         "Instructional Choice",
@@ -224,14 +206,6 @@ with st.sidebar:
         "Opportunities to Respond",
         "Precorrection"
     ]
-    
-    # If we have strategy data, use those names instead
-    if strategies_data and isinstance(strategies_data, list):
-        try:
-            strategies = [item.get("Strategy") for item in strategies_data if item.get("Strategy")]
-            st.session_state.debug.append(f"Using strategy names from loaded data: {strategies}")
-        except Exception as e:
-            st.session_state.debug.append(f"Error extracting strategy names: {e}")
 
     for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
@@ -261,7 +235,6 @@ with st.sidebar:
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
         st.sidebar.text(debug_msg)
-
 # Create a main container for all content
 main_container = st.container()
 
