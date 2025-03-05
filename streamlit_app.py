@@ -138,7 +138,27 @@ def build_system_prompt(active_strategy=None):
 with st.sidebar:
     # Strategy section title first
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
-    
+   
+    # Custom CSS for the buttons
+    button_style = """
+        <style>
+            .stButton > button {
+                background-color: #6A157D;
+                color: white;
+                border-radius: 20px;
+                padding: 10px 15px;
+                border: none;
+                width: 100%;
+                margin: 5px 0;
+            }
+            .stButton > button:hover {
+                background-color: #871BA1;
+                color: white !important;
+            }
+        </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+
     # Strategy buttons with active strategy highlighted
     strategies = [
         "Active Supervision",
