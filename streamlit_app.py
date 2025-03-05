@@ -141,63 +141,14 @@ def build_system_prompt(active_strategy=None):
     
     return prompt
 
-# Sidebar for strategies and settings
+# Sidebar for model and temperature selection
 with st.sidebar:
-    # Strategy section title first
-    st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
-   
-    # Strategy buttons with active strategy highlighted
-    strategies = [
-        "Active Supervision",
-        "Behavior-Specific Praise",
-        "High-Probability Request Sequences",
-        "Instructional Choice",
-        "Instructional Feedback",
-        "Opportunities to Respond",
-        "Precorrection"
-    ]
-
-    # Create buttons for each strategy with strategy-button class
-    for strategy in strategies:
-        button_key = f"btn_{strategy}"
-        
-        # Check if this strategy is active
-        is_active = st.session_state.active_strategy == strategy
-        
-        # Create columns to center the button
-        col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
-        with col2:
-            # Apply different classes based on active state
-            button_class = "active-strategy" if is_active else "strategy-button"
-            
-            # Use markdown to create a div with the appropriate class
-            st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
-            if st.button(
-                strategy, 
-                key=button_key,
-                help=f"Focus the conversation on {strategy} only"
-            ):
-                # If clicking the active strategy, deselect it
-                if is_active:
-                    st.session_state.active_strategy = None
-                    st.session_state.debug.append(f"Deselected strategy: {strategy}")
-                else:
-                    # Otherwise set this as the active strategy
-                    st.session_state.active_strategy = strategy
-                    st.session_state.debug.append(f"Selected strategy: {strategy}")
-                
-                # Always reset chat when changing strategies
-                st.session_state.messages = []
-                st.session_state.chat_session = None
-                st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Add divider between strategies and settings
-    st.divider()
-    
-    # Settings section
     st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
     st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
+
+    # Ensure model_name is initialized
+    if 'model_name' not in st.session_state:
+        st.session_state.model_name = "gemini-2.0-pro-exp-02-05"  # default model
 
     model_option = st.selectbox(
         "Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
@@ -208,22 +159,79 @@ with st.sidebar:
         st.session_state.model_name = model_option
         st.session_state.messages = []
         st.session_state.chat_session = None
+
+   
+    # File upload for PDF
+    #st.title("Upload Intervention Grid Here:")
+    #uploaded_pdf = st.file_uploader("Upload:", type=["pdf"])
     
-    # Clear chat button with default style
-    st.markdown('<div class="clear-chat-button">', unsafe_allow_html=True)
-    if st.button("Clear Chat"):
-        st.session_state.messages = []
-        st.session_state.chat_session = None
-        st.session_state.debug.append("Chat cleared")
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+    #if uploaded_pdf:
+        #try:
+            # Upload file using File API with mime_type specified
+            #uploaded_file = genai.upload_file(uploaded_pdf, mime_type="application/pdf")
+            #st.session_state.uploaded_file = uploaded_file
+            #st.success("File uploaded successfully!")
+        #except Exception as e:
+            #st.error(f"Error uploading file: {e}")
+            #st.session_state.debug.append(f"File upload error: {e}")
     
-    # Debug section at the bottom of sidebar
+    
+    # Clear chat functionality
+    #clear_button = st.button("Clear Chat")
+    #if clear_button:
+        #st.session_state.messages = []
+        #st.session_state.debug = []
+        #st.session_state.pdf_content = ""
+        #st.session_state.chat_session = None
+        #st.success("Chat cleared!")
+        #st.experimental_rerun()  # use rerun to refresh the app
+
+    # Add divider before strategy buttons
     st.divider()
+    
+    # Strategy section title
+    st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
+    
+    # Custom CSS for the buttons
+    button_style = """
+        <style>
+            .stButton > button {
+                background-color: #6A157D;
+                color: white;
+                border-radius: 20px;
+                padding: 10px 15px;
+                border: none;
+                width: 100%;
+                margin: 5px 0;
+            }
+            .stButton > button:hover {
+                background-color: #871BA1;
+                color: white !important;
+            }
+        </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+
+    # Strategy buttons
+    strategies = [
+        "Behavior-Specific Praise",
+        "Instructional Choice",
+        "Active Supervision",
+        "High-Probability Request Sequences",
+        "Instructional Feedback",
+        "Opportunities to Respond",
+        "Precorrection"
+    ]
+
+    for strategy in strategies:
+        if st.button(strategy):
+            # Placeholder for future functionality
+            pass
+
+    # Debug section
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
-        st.text(debug_msg)
-
+        st.sidebar.text(debug_msg)
 # Create a main container for all content
 main_container = st.container()
 
