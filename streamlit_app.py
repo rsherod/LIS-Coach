@@ -17,23 +17,6 @@ if "should_generate_response" not in st.session_state:
 if "active_strategy" not in st.session_state:
     st.session_state.active_strategy = None
 
-# Display image
-# This code attempts to open and display an image file named 'Low-Intensity Strategy AI Coach.png'.
-# If successful, it shows the image with a caption. If there's an error, it displays an error message instead.
-# You can customize this by changing the image file name and path. Supported image types include .png, .jpg, .jpeg, and .gif.
-# To use a different image, replace 'Low-Intensity Strategy AI Coach.png' with your desired image file name (e.g., 'my_custom_image.jpg').
-# Display image
-image_path = 'LIS Image.jpg'
-try:
-    image = Image.open(image_path)
-    col1, col2, col3 = st.columns([1,6,1])
-    with col2:
-        st.image(image, use_container_width=True)
-        st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>Created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
-        st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
-except Exception as e:
-    st.error(f"Error loading image: {e}")
-
 # Define strategy definitions dictionary
 strategy_definitions = {
     "Behavior-Specific Praise": "Behavior-specific praise is classified as a form of positive reinforcement. It involves providing specific acknowledgement to let children and youth know they are meeting expectations in the classroom, at home, and in social settings. This can be given verbally, in writing, or through digital communication.",
@@ -315,3 +298,7 @@ if user_input:
             st.session_state.debug.append(f"Error: {e}")
 
     st.rerun()
+
+# Add footnote at the bottom of the page
+st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>Created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
