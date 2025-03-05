@@ -32,25 +32,31 @@ if "uploaded_file" not in st.session_state:
 if "active_strategy" not in st.session_state:
     st.session_state.active_strategy = None
 
-# Custom CSS for the buttons - UPDATED to purple with lighter purple hover
-button_style = """
-    <style>
-        .stButton > button {
-            background-color: #6A157D;
-            color: white;
-            border-radius: 20px;
-            padding: 10px 15px;
-            border: none;
-            width: 100%;
-            margin: 5px 0;
-        }
-        .stButton > button:hover {
-            background-color: #871BA1;
-            color: white !important;
-        }
-    </style>
-"""
-st.markdown(button_style, unsafe_allow_html=True)
+# IMPORTANT: Apply custom CSS styles immediately after page config to ensure they work
+st.markdown("""
+<style>
+    /* Make buttons purple with lighter hover effect */
+    .stButton > button {
+        background-color: #6A157D !important;
+        color: white !important;
+        border-radius: 20px !important;
+        padding: 10px 15px !important;
+        border: none !important;
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+    .stButton > button:hover {
+        background-color: #871BA1 !important;
+        color: white !important;
+    }
+    
+    /* Style for active strategy buttons */
+    .active-strategy {
+        background-color: #871BA1 !important;
+        border: 2px solid white !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # Helper function to load text files
 def load_text_file(file_path):
@@ -128,16 +134,6 @@ with st.sidebar:
         "Precorrection"
     ]
 
-    # Custom CSS for active strategy button
-    st.markdown("""
-    <style>
-    .active-strategy {
-        background-color: #871BA1 !important;
-        border: 2px solid white !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
     # Create buttons for each strategy
     for strategy in strategies:
         button_key = f"btn_{strategy}"
@@ -204,6 +200,8 @@ funding_container = st.container()
 
 # Now fill the main container with content
 with main_container:
+    # IMPORTANT: Skip image display - we've removed this section entirely
+    
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
         st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
