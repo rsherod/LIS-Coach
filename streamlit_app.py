@@ -168,9 +168,12 @@ with st.sidebar:
         </style>
     """
     st.markdown(button_style, unsafe_allow_html=True)
-    strategies = [
-        "Behavior-Specific Praise",
-        "Instructional Choice",
-        "Active Supervision",
-        "High-Probability Request Sequences",
-        "Instructional
+strategies = [
+    "Behavior-Specific Praise",
+    "Instructional Choice",  # <-- Likely fixed this line
+    "Active Supervision",
+    "High-Probability Request Sequences",
+    "Instructional Feedback", # <-- Or this line
+    "Opportunities to Respond",
+    "Precorrection",
+]
