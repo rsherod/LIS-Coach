@@ -103,10 +103,10 @@ def load_json_file(file_path):
 system_instructions = load_text_file('instructions.txt')
 strategies_data = {}
 
-# Define the paths to both JSON files
+# Define the paths to the JSON files
 strategies_json_path = 'Strategies.json'
 
-# Load the first JSON file if it exists
+# Load the JSON file if it exists
 if os.path.exists(strategies_json_path):
     strategies_data.update(load_json_file(strategies_json_path))
     st.session_state.debug.append(f"Loaded strategies from {strategies_json_path}")
