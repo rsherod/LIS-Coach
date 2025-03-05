@@ -35,23 +35,8 @@ if "active_strategy" not in st.session_state:
 # IMPORTANT: Apply custom CSS styles immediately after page config to ensure they work
 st.markdown("""
 <style>
-    /* Style for strategy buttons - now using default Streamlit style */
+    /* Style for strategy buttons - purple style */
     .strategy-button > button {
-        background-color: transparent !important;
-        color: rgb(38, 39, 48) !important;
-        border: 1px solid rgba(49, 51, 63, 0.2) !important;
-        border-radius: 4px !important;
-        padding: 0.25rem 0.75rem !important;
-        width: 100% !important;
-        margin: 5px 0 !important;
-    }
-    .strategy-button > button:hover {
-        border-color: rgb(49, 51, 63) !important;
-        color: rgb(49, 51, 63) !important;
-    }
-    
-    /* Style for Clear Chat button - now using purple style */
-    .clear-chat-button > button {
         background-color: #6A157D !important;
         color: white !important;
         border-radius: 20px !important;
@@ -60,16 +45,38 @@ st.markdown("""
         width: 100% !important;
         margin: 5px 0 !important;
     }
-    .clear-chat-button > button:hover {
+    .strategy-button > button:hover {
         background-color: #871BA1 !important;
         color: white !important;
     }
     
-    /* Style for active strategy button */
-    .active-strategy > button {
-        background-color: rgba(38, 39, 48, 0.12) !important;
+    /* Style for Clear Chat button - default style */
+    .clear-chat-button > button {
+        background-color: transparent !important;
         color: rgb(38, 39, 48) !important;
-        border-color: rgb(38, 39, 48) !important;
+        border: 1px solid rgba(49, 51, 63, 0.2) !important;
+        border-radius: 4px !important;
+        padding: 0.25rem 0.75rem !important;
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+    .clear-chat-button > button:hover {
+        border-color: rgb(49, 51, 63) !important;
+        color: rgb(49, 51, 63) !important;
+    }
+    
+    /* Style for active strategy button - darker purple */
+    .active-strategy > button {
+        background-color: #4A0D59 !important;
+        color: white !important;
+        border-radius: 20px !important;
+        padding: 10px 15px !important;
+        border: none !important;
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+    .active-strategy > button:hover {
+        background-color: #871BA1 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -139,26 +146,6 @@ with st.sidebar:
     # Strategy section title first
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
    
-    # Custom CSS for the buttons
-    button_style = """
-        <style>
-            .stButton > button {
-                background-color: #6A157D;
-                color: white;
-                border-radius: 20px;
-                padding: 10px 15px;
-                border: none;
-                width: 100%;
-                margin: 5px 0;
-            }
-            .stButton > button:hover {
-                background-color: #871BA1;
-                color: white !important;
-            }
-        </style>
-    """
-    st.markdown(button_style, unsafe_allow_html=True)
-
     # Strategy buttons with active strategy highlighted
     strategies = [
         "Active Supervision",
@@ -222,7 +209,7 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.chat_session = None
     
-    # Clear chat button with purple style
+    # Clear chat button with default style
     st.markdown('<div class="clear-chat-button">', unsafe_allow_html=True)
     if st.button("Clear Chat"):
         st.session_state.messages = []
@@ -245,8 +232,6 @@ funding_container = st.container()
 
 # Now fill the main container with content
 with main_container:
-    # IMPORTANT: Skip image display - we've removed this section entirely
-    
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
         st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
