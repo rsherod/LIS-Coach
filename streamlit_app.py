@@ -141,6 +141,28 @@ def build_system_prompt(active_strategy=None):
     
     return prompt
 
+# Dictionary of strategy definitions
+strategy_definitions = {
+    "Behavior-Specific Praise": "Behavior-specific praise is classified as a form of positive reinforcement, using behavior analytic terms. When something desirable (e.g., attention, activity/tangible, sensory) is received after a behavior, it is more likely the behavior will increase in the future.",
+    
+    "Instructional Choice": "Instructional choice is the embedding of options into lessons for students to select based on their own preferences. It involves offering students two or more options, allowing them to independently select the option of most interest to them.",
+    
+    "Active Supervision": "Active supervision is when the adult, following giving a direction or cue with behavior expectations for a specific context, moves around the specific setting to scan, monitor and respond effectively to behaviors.",
+    
+    "High-Probability Request Sequences": "High-probability requests are brief requests that the student is very likely to comply with (at least 80% of the time). This strategy involves making high-probability requests before making low-probability requests.",
+    
+    "Instructional Feedback": "Instructional feedback is a low-intensity strategy for providing precise information to students about their academic, social, and behavioral performance.",
+    
+    "Opportunities to Respond": "Opportunities to respond is a low-intensity, teacher-delivered strategy that helps students review material, acquire skill fluency, commit information to memory, increase on-task behavior, and reduce challenging behavior.",
+    
+    "Precorrection": "Precorrection involves noting the behavior you would like to see, with the cue or prompt taking place before any challenging or undesirable behavior takes place. This strategy helps address behavior problems before they occur."
+}
+
+# Function to reset chat when switching strategies
+def reset_chat():
+    st.session_state.messages = []
+    st.session_state.chat_session = None
+
 # Sidebar for model and temperature selection
 with st.sidebar:
     st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
@@ -160,23 +182,12 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.chat_session = None
 
+    # Clear chat button
+    if st.button("Clear Chat", key="clear_chat"):
+        reset_chat()
+        st.success("Chat cleared!")
+        st.rerun()
    
-    # File upload for PDF
-    #st.title("Upload Intervention Grid Here:")
-    #uploaded_pdf = st.file_uploader("Upload:", type=["pdf"])
-    
-    
-    
-    # Clear chat functionality
-    #clear_button = st.button("Clear Chat")
-    #if clear_button:
-        #st.session_state.messages = []
-        #st.session_state.debug = []
-        #st.session_state.pdf_content = ""
-        #st.session_state.chat_session = None
-        #st.success("Chat cleared!")
-        #st.experimental_rerun()  # use rerun to refresh the app
-
     # Add divider before strategy buttons
     st.divider()
     
@@ -214,15 +225,30 @@ with st.sidebar:
         "Precorrection"
     ]
 
+    # Function to handle strategy selection
+    def set_active_strategy(strategy):
+        st.session_state.active_strategy = strategy
+        reset_chat()  # Reset chat when switching strategies
+
+    # Create buttons for each strategy
     for strategy in strategies:
-        if st.button(strategy):
-            # Placeholder for future functionality
-            pass
+        button_key = f"btn_{strategy.replace(' ', '_').lower()}"
+        if st.button(strategy, key=button_key):
+            set_active_strategy(strategy)
+            st.rerun()  # Rerun to update the UI immediately
 
     # Debug section
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
         st.sidebar.text(debug_msg)
+
+# Return to Home button if a strategy is active
+if st.session_state.active_strategy:
+    if st.button("← Return to Home"):
+        st.session_state.active_strategy = None
+        reset_chat()
+        st.rerun()
+
 # Create a main container for all content
 main_container = st.container()
 
@@ -231,37 +257,29 @@ funding_container = st.container()
 
 # Now fill the main container with content
 with main_container:
+    # Display image (only on main page)
+    image_path = 'LIS Image.jpg'
+    try:
+        image = Image.open(image_path)
+        if not st.session_state.active_strategy:  # Only show on main page
+            col1, col2, col3 = st.columns([1,6,1])
+            with col2:
+                st.image(image, use_container_width=True)
+                st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>Created by Rebecca Sherod (2024)</small></div>", unsafe_allow_html=True)
+                st.markdown("<div style='text-align: center;'><small style='color: rgb(128, 128, 128);'>This work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error loading image: {e}")
+
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
-        st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
-        
-        # First message intro for active strategy
-        if not st.session_state.messages:
-            strategy_intros = {
-                "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
-                "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
-                "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
-                "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
-                "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
-                "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
-                "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
-            }
-            
-            intro = strategy_intros.get(st.session_state.active_strategy, "")
-            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
-            st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
-        else:
-            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.")
+        st.title(st.session_state.active_strategy)
+        st.info(strategy_definitions.get(st.session_state.active_strategy, ""))
+        st.write(f"Ask questions about how to implement {st.session_state.active_strategy} in your classroom or describe a scenario where you might use it.")
     else:
-        st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
-        st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
+        st.title("Welcome to the Low-Intensity Strategies Bot!")
+        st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that is a good fit for the interfering or challenging behavior you might be experiencing in your classroom.\n\n**Directions:** Begin by providing some information about the behavior you are currently experiencing, or click on a strategy in the sidebar to learn more about it.")
     
-    st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
-    
-    # Add extra spacing between caption and chat input
-    st.write("")
-    st.write("")
-    st.write("")
+    st.caption("Note: This Bot can make mistakes.")
 
     # Initialize Gemini client
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
@@ -327,7 +345,7 @@ with main_container:
         st.rerun()
 
     # User input with context-aware placeholder
-    placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
+    placeholder_text = "Ask about this strategy..." if st.session_state.active_strategy else "Type here:"
     user_input = st.chat_input(placeholder_text)
 
     if user_input:
@@ -382,4 +400,5 @@ with main_container:
 
 # Now put the funding acknowledgment in the funding container (will appear at the bottom)
 with funding_container:
-    st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
+    if not st.session_state.active_strategy:  # Only show on main page
+        st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.</small></div>", unsafe_allow_html=True)
