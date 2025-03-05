@@ -1,0 +1,338 @@
+{
+  "source": "ci3t.org",
+  "copyright": "Copyright © 2022 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies.",
+  "moreInfo": "For more information, please visit ci3t.org",
+  "strategies": [
+    {
+      "title": "Precorrection",
+      "copyright": "Copyright © 2022 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies.",
+      "moreInfo": "For more information, please visit ci3t.org",
+      "definition": {
+        "short": "Precorrection is a preventative behavior strategy used to identify predictable context in which problem behavior often occurs. It is the providing of students with prompts, supports, and reinforcement for engaging in appropriate behavior.",
+        "detailed": "Precorrection is a proactive strategy that helps solve everyday problems with a simple and minimal amount of planning. By \"getting in front\" of disruptive behaviors that are predictable or readily anticipated, teachers and staff reduce or eliminate the likeliness of a problem behavior occurring. A little preplanning with the preventative strategy of precorrection means problem behaviors are dealt with before they occur, instead of reacting to them after they occur."
+      },
+      "components": "Precorrection includes visual supports (e.g., setting expectation posters) and verbal prompts delivered shortly before a problem behavior is anticipated in the authentic setting where it usually occurs, followed by strong reinforcement for engaging in appropriate behavior. This strategy has great flexibility and is usable in virtually any setting with any group of students, easily adapted to any activity or subject area where problem behaviors are anticipated.",
+      "tieredUse": "Precorrection is an easy-to-use, antecedent-based strategy. It can be used: (1) as a Tier 1 strategy during instruction, to facilitate transitions, and even in a range of non-instructional settings; (2) used as a Tier 2 intervention, embedded with other Tier 2 interventions; or (3) added as a component of a Tier 3 intervention for students in need of additional supports.",
+      "implementation": {
+        "steps": [
+          "Identify context and anticipate behaviors",
+          "Determine the expected behaviors",
+          "Adjust the environment",
+          "Provide opportunities for behavioral rehearsal",
+          "Provide strong reinforcement for students engaging in expected behaviors",
+          "Develop a prompting plan to remind students about the expected behavior",
+          "Develop a monitoring plan to determine the effectiveness of the precorrection plan",
+          "Offer students an opportunity to give feedback on this strategy"
+        ]
+      },
+      "usage": {
+        "when": [
+          "Before classroom transitions",
+          "During the time of the day where you tend to see the most problem behaviors",
+          "As a prompt to guide students before beginning independent work"
+        ],
+        "naturalUse": "In fact, many teachers already use precorrection subconsciously."
+      },
+      "effectiveness": {
+        "why": [
+          "It is proactive. Rather than waiting until problems arise, use of precorrection involves anticipating activities, settings, or times of day that could potentially result in challenging behavior",
+          "It focuses on the positive instead of the negative. It lets students know what they should do instead of what they should not do."
+        ]
+      },
+      "challenges": [
+        "Requires a mental shift from reacting to problems in the moment to trying to anticipate and head off problems before they occur.",
+        "Need to have some knowledge of a given setting (i.e., during what parts of the daily schedule, which routines) so that you can be proactive."
+      ],
+      "incorporation": [
+        "Change your classroom environment! Hang up expectation posters as constant, nonverbal reminders.",
+        "Identify times of the day or activities that tend to have increased problem behaviors in which you want to implement precorrection."
+      ],
+      "guidingQuestions": {
+        "description": "The following set of questions can be used to help you decide why and how you can incorporate precorrection into your classroom.",
+        "questions": [
+          {
+            "category": "Why is Precorrection effective?",
+            "answers": [
+              "It is proactive. Rather than waiting until problems arise, use of precorrection involves anticipating activities, settings, or times of day that could potentially result in challenging behavior",
+              "It focuses on the positive instead of the negative. It lets students know what they should do instead of what they should not do."
+            ]
+          },
+          {
+            "category": "When can I use Precorrection?",
+            "answers": [
+              "Before classroom transitions",
+              "During the time of the day where you tend to see the most problem behaviors",
+              "As a prompt to guide students before beginning independent work"
+            ]
+          },
+          {
+            "category": "What are the challenges of Precorrection?",
+            "answers": [
+              "Requires a mental shift from reacting to problems in the moment to trying to anticipate and head off problems before they occur.",
+              "Need to have some knowledge of a given setting (i.e., during what parts of the daily schedule, which routines) so that you can be proactive."
+            ]
+          },
+          {
+            "category": "How can I incorporate Precorrection?",
+            "answers": [
+              "Change your classroom environment! Hang up expectation posters as constant, nonverbal reminders.",
+              "Identify times of the day or activities that tend to have increased problem behaviors in which you want to implement precorrection."
+            ]
+          }
+        ]
+      },
+      "examples": {
+        "teacherReminders": [
+          "A teacher might remind the whole class that an activity's time is almost up and they will be cleaning up and transitioning to the next subject in a few minutes, and ask who can name one way they will show responsibility during the transition (e.g., clean and return all materials, walk safely, keep hands and feet to self). By this reminder, the teacher has given advance warning of a routine where he or she anticipated disruptive behavior (e.g., complaining of stopping the activity, leaving a mess at the activity area, physical conflict between students, running in class), and prompted students to think about which school-wide expectations would apply.",
+          "A teacher who reminds students to use a recently taught and reviewed mnemonic strategy to check math work (e.g., long division steps, order of operations calculations, solving algebraic equations), helping students focus on the process and to turn to the strategy before asking a peer or the teacher for help.",
+          "A teacher asks, \"It's time to line up for lunch, who can raise their hand and tell the class one way we show respect in the hallway and in the cafeteria?\" \"That's correct, Angelique, push in your chair and form a silent line at the door.\" This teacher precorrected for (a) students shouting out by reminding them to raise their hand if they have an answer, (b) unsafe chair legs by reminding students to push in their chairs, (c) disruption at the door by reminding students to form a quiet line, (d) disruption in the hallway by having the student repeat a hallway expectation, and (e) disruption in the cafeteria by having the student remind the class of a cafeteria expectation."
+        ],
+        "categories": {
+          "academic": [
+            "\"When reading an unfamiliar word, remember to point to the first letter and say it's sound.\"",
+            "\"I have posted the materials needed for this science lab on the board. Who would like to demonstrate for the class the setup procedures for the lab? -\"Thank you, Eric. Jenna, will you please read each item from the board to Eric as he prepares his lab station?\"",
+            "\"Class, when you get your microscopes for this experiment, what's the first thing we need to do?\""
+          ],
+          "behavioral": [
+            "\"Sonya, we are about to all go sit in our carpet spots, so remember to walk and keep your hands and feet to yourself, showing responsibility.\"",
+            "\"It's almost time to walk down to PE. Who can remind us of one way we show respect in the hallway?\"",
+            "\"In order to line up for lunch, raise your hand if you can tell us one way to be responsible in the cafeteria?\" - \"That's correct, push in your chair, walk to the door, and form a line.\""
+          ],
+          "socialEmotional": [
+            "\"Just a reminder to listen carefully to opposing arguments as we prepare for mock trial.\"",
+            "\"When we talk about how the characters in our book resolved conflicts, who can tell me which character did the best showing empathy?\"",
+            "\"As we head to the playground, remember our problem solving skills we discussed in class. If a problem comes up on the playground, what are some ways we can solve it?\""
+          ]
+        }
+      },
+      "materials": "The subsequent materials provide a procedural checklist for implementing precorrection as an intervention, sample precorrection statements, a treatment integrity checklist, and pre/post-intervention social validity measures for students and teachers. Details include using it thoughtfully as a Tier 1 school- or class-wide daily practice and as a Tier 2 targeted intervention to help students who regularly display disruptive behavior. In addition, pre-correction can also be used as a component of Tier 2 and Tier 3 strategies."
+    },
+    {
+      "title": "Opportunities to Respond (OTR) in the Classroom",
+      "source": "ci3t.org",
+      "copyright": "Copyright © 2020 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies.",
+      "definition": {
+        "short": "Opportunities to respond is when a teacher offers students frequent opportunities within a set time period to respond to questions or prompts about targeted academic, behavioral, or social skills material.",
+        "detailed": "Opportunities to respond (OTR) is a low-intensity teacher-delivered strategy to manage behavior and support instruction that helps students review material, acquire skill fluency, commit information to memory, and increase on-task behavior and reduce misbehavior (Lane, Menzies, Ennis, & Oakes, 2015). To implement increased rates of OTR, teachers offer students frequent opportunities within a set time period for students to respond to teacher questions or prompts about targeted academic materials."
+      },
+      "why_effective": [
+        "Students have less downtime as they are engaged in instruction; therefore, they have less time to engage in off-task behaviors.",
+        "Students remember content more when given opportunities to respond in comparison to a lecture-based lesson.",
+        "It can be used as a Tier 1 strategy to make instruction engaging, increase engagement, commit information to memory, and prevent challenging behavior.",
+        "It can be used as a Tier 2 intervention, embedded with other Tier 2 interventions.",
+        "Helps students respond to teacher inquiries rapidly and accurately."
+      ],
+      "general_guidelines": [
+        "Best done with material or concepts students have a basic understanding of, as the goal is to help students respond to teacher inquires rapidly and accurately, which promotes their engagement as they practice the information or skill.",
+        "Three or more opportunities to respond per minute is the goal.",
+        "OTR is an easy-to-use strategy and can be used to enhance whole-class instruction, small-group and individual instruction (Sutherland & Wright, 2013)."
+      ],
+      "implementation_steps": [
+        "Identify target content/skills and instructional objectives (for the whole class or for targeted students).",
+        "Prepare a list of questions/prompts based on lesson plans (and response options, if applicable).",
+        "Determine the modality by which content will be delivered.",
+        "Determine which students will respond.",
+        "Be upfront with students about what the strategy is and why you are using it, since this instruction (fast paced, participation) may be different from what they are used to.",
+        "Provide identified questions/prompts during lessons with a minimum of three opportunities to respond per minute using either single-student or unison responding.",
+        "Give evaluative and encouraging feedback after responses.",
+        "Offer students an opportunity to give feedback."
+      ],
+      "implementation_formats": {
+        "group_sizes": [
+          "Whole group instruction",
+          "Small group instruction",
+          "Individual instruction"
+        ],
+        "response_types": {
+          "verbal": [
+            "Individual response (e.g., increasing number of questions asked of a student during individual or small-group instruction)",
+            "Choral response (i.e., every student answers a question/prompt)"
+          ],
+          "non_verbal": [
+            "Signal (e.g., thumbs up/down)",
+            "Response card (e.g., A/B/C/D, individual whiteboard)",
+            "Student response systems (i.e., clickers)"
+          ]
+        }
+      },
+      "addressing_shy_students": [
+        "Try incorporating non-verbal responses in your lessons (signals, response systems, etc.)",
+        "Deliver individual opportunities to respond",
+        "Enable small group discussion"
+      ],
+      "getting_started": [
+        "Identify times of the day/subjects that typically have low participation",
+        "Be sure to shift to delivering 3 opportunities to respond per minute to increase rates for already taught content"
+      ],
+      "additional_resources": {
+        "resources": "The subsequent materials provide teachers a procedural checklist for implementation of OTR as an intervention, sample and illustrations of OTRS in practice, treatment integrity checklist, and pre/post-intervention social validity measures for students and teachers.",
+        "more_information": "For more information, please visit ci3t.org"
+      },
+      "guiding_questions": {
+        "Why are opportunities to respond effective?": [
+          "Students have less downtime as they are engaged in instruction; therefore, they have less time to engage in off-task behaviors.",
+          "Students remember content more when given opportunities to respond in comparison to a lecture-based lesson."
+        ],
+        "What if a student is too shy to engage in front of the class?": [
+          "Try incorporating non-verbal responses in your lessons (signals, response systems, etc.)",
+          "Deliver individual opportunities to respond",
+          "Enable small group discussion"
+        ],
+        "How should I implement Opportunities to Respond into the class?": [
+          "Identify target content/skills",
+          "Prepare a list of questions/prompts based on lesson plans",
+          "Provide identified questions/prompts during lessons",
+          "Give evaluative feedback after responses"
+        ],
+        "Are you ready to incorporate opportunities to respond?": [
+          "Identify times of the day/subjects that typically have low participation",
+          "Be sure to shift to delivering 3 opportunities to respond per minute to increase rates for already taught content"
+        ]
+      }
+    },
+    {
+      "title": "Instructional Feedback",
+      "source": "ci3t.org",
+      "copyright": "Copyright © 2020 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies.",
+      "sections": [
+        {
+          "title": "Definition",
+          "content": "Instructional feedback is a low-intensity strategy for providing precise information to students about academic, social, and behavioral performance with the purpose of clarifying misunderstandings, confirming concepts, fine-tuning understandings, and restructuring current schemas (Butler & Winne, 1995). Instructional feedback is used after students have a beginning understanding and are working toward mastery, with the purpose of helping students get from their current level of performance to the expected level of performance. Students must have an opportunity to practice what is learned from the feedback and apply it to a particular assignment or behavior."
+        },
+        {
+          "title": "Why is Instructional Feedback effective?",
+          "points": [
+            "It is a positive, proactive approach for correcting learning errors",
+            "It reinforces the targeted learning goals",
+            "It motivates students to critically think and participate",
+            "It provides instructional information by cueing students to focus on key processes, information, and concepts"
+          ]
+        },
+        {
+          "title": "What are the challenges of Instructional Feedback?",
+          "points": [
+            "Determining the best type of feedback and carefully selecting which words to use",
+            "Should provide information on the learning process and content acquisition",
+            "Feedback perceived as critical can impact student motivation, perseverance, and sense of self-efficacy"
+          ]
+        },
+        {
+          "title": "How should I implement Instructional Feedback?",
+          "points": [
+            "Identify learning goals and provide instruction that meets those goals",
+            "Allow students to practice with the content",
+            "Engage in active supervision while providing instructional feedback",
+            "Allow for students to give you feedback on how you did"
+          ]
+        },
+        {
+          "title": "How can I incorporate Instructional Feedback?",
+          "points": [
+            "Begin implementing instructional feedback while students practice with content",
+            "Pay attention to your tone and choice of words. Avoid responses such as, \"that's not right\"",
+            "Be sure that your feedback aligns with the instructional goals"
+          ]
+        },
+        {
+          "title": "Why should I use Instructional Feedback?",
+          "content": "Instructional feedback is useful when students are working towards mastery. It can be used as a: (1) Tier 1 strategy to make instruction engaging, increase engagement, and prevent challenging behavior; (2) Tier 2 intervention, or embedded in other Tier 2 interventions; or (3) component of a Tier 3 intervention for students in need of additional supports."
+        },
+        {
+          "title": "How do I use Instructional Feedback?",
+          "content": "Instructional feedback can be used when a student is completing a task correctly (confirming understandings), and when a student has a misunderstanding (correcting misunderstandings).",
+          "steps": [
+            "Identify learning goals",
+            "Provide instruction to meet established goals",
+            "Provide clear directions and checks for understanding",
+            "Plan opportunities for practice and feedback",
+            "Implement active supervision and provide instructional feedback",
+            "Provide time and direction of students to review work or have additional opportunities to practice",
+            "Evaluate instructional practices",
+            "Offer students an opportunity to give feedback on how instructional feedback is being offered"
+          ]
+        },
+        {
+          "title": "Implementation Principles",
+          "content": "In principle, instructional feedback should focus on the process and not necessarily the product. When the teacher detects an error, she should find a small success to praise and then remind the student to use the process taught."
+        },
+        {
+          "title": "Examples of Instructional Feedback",
+          "categories": [
+            {
+              "category": "Confirming Understandings",
+              "examples": [
+                {
+                  "context": "Essay writing",
+                  "feedback": "You included all of the elements of the essay. Good job using the rubric to write your paper."
+                },
+                {
+                  "context": "Reading comprehension",
+                  "feedback": "Nice job using the strategy we learned to increase your reading comprehension and complete the storyboard."
+                },
+                {
+                  "context": "Extending learning",
+                  "feedback": "Think of a way you could apply this information to the lab you are doing in science."
+                }
+              ]
+            },
+            {
+              "category": "Correcting Misunderstandings",
+              "examples": [
+                {
+                  "context": "Math problem",
+                  "sequence": [
+                    {
+                      "type": "Initial praise",
+                      "feedback": "Celia, good job attempting every math problem in order. You're showing good effort."
+                    },
+                    {
+                      "type": "Error correction",
+                      "feedback": "Celia, please write the acronym for the 4-step process next to the division problem and cross off each step as you complete it. This will help you keep the correct order of steps."
+                    },
+                    {
+                      "type": "Confirm understanding and provide time to apply it",
+                      "feedback": "Good, Celia, that is the correct first step in the 4-step process. Write them all down and try the next division problem. I'll check back soon."
+                    },
+                    {
+                      "type": "Confirm understanding",
+                      "feedback": "Excellent, Celia, you wrote the 4-step process correctly, and using the steps in order helped you solve these division problems accurately."
+                    }
+                  ]
+                },
+                {
+                  "context": "Science experiment",
+                  "sequence": [
+                    {
+                      "type": "Initial praise",
+                      "feedback": "Asia, nice work setting out all the components neatly in the correct order for our science experiment today."
+                    },
+                    {
+                      "type": "Fine tuning",
+                      "feedback": "Where can you look to remember what to do first in this experiment? Right, your notes, which look very neat and organized."
+                    },
+                    {
+                      "type": "Confirm understanding and provide time to apply it",
+                      "feedback": "Looking at your notes, please summarize for me what you are going to do first. You got it—I'll check back in a minute."
+                    },
+                    {
+                      "type": "Confirm understanding",
+                      "feedback": "Very nice, Asia, I see you following the experiment steps in your notes and it's looking correct so far."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Instructional Illustration",
+          "content": "As an illustration, picture a teacher presenting a new concept to the whole class. She provides an anticipatory set (e.g., advanced organizer or lesson hook), activates prior knowledge, states the learning objectives, introduces the concept, models it, checks for understanding, does some guided practice, and provides clear directions for independent practice so students can increase fluency with the new concept. These students will need immediate feedback as they begin independent work, feedback that will confirm what they are doing is correct and encourage them to continue and try harder concepts, and/or feedback that will fine-tune their understanding and correct mistakes before incorrect procedures and habits are solidified. The teacher provides this instructional feedback while actively supervising independent work (as opposed to on a final assessment), facilitating high levels of accuracy."
+        }
+      ],
+      "additionalResources": {
+        "website": "ci3t.org",
+        "furtherInformation": "For more information, please visit ci3t.org"
+      }
+    }
+  ]
+}
