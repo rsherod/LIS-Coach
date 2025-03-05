@@ -94,11 +94,16 @@ def load_text_file(file_path):
 def load_json_file(file_path):
     try:
         with open(file_path, 'r') as file:
-            return json.load(file)
+            data = json.load(file)
+            
+            # If data is a list (array), convert it to a dictionary with strategy names as keys
+            if isinstance(data, list):
+                return {item["Strategy"]: item for item in data}
+            return data
     except Exception as e:
         st.error(f"Error loading JSON file: {e}")
         return {}
-
+        
 # Load system instructions and strategy data
 system_instructions = load_text_file('instructions.txt')
 strategies_data = {}
