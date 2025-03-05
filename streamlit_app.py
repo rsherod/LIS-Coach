@@ -50,7 +50,7 @@ st.markdown(
         background-color: #871BA1 !important;
         color: white !important;
     }
-    
+
     /* Style for Clear Chat button - default style */
     .clear-chat-button > button {
         background-color: transparent !important;
@@ -65,7 +65,7 @@ st.markdown(
         border-color: rgb(49, 51, 63) !important;
         color: rgb(49, 51, 63) !important;
     }
-    
+
     /* Style for active strategy button - darker purple */
     .active-strategy > button {
         background-color: #4A0D59 !important;
@@ -126,47 +126,30 @@ else:
 
 # Function to build the complete system prompt
 def build_system_prompt(active_strategy=None):
-    # Start with base instructions
     prompt = system_instructions
-
-    # Add strategy information
     if strategies_data:
         prompt += "\n\n## Strategy Information\n\n"
-
-        # If a specific strategy is selected, only include that one
         if active_strategy and active_strategy in strategies_data:
             prompt += f"Selected Strategy: {active_strategy}\n\n"
             prompt += json.dumps({active_strategy: strategies_data[active_strategy]}, indent=2)
             prompt += "\n\nIMPORTANT: You must ONLY discuss and recommend the selected strategy above. Do not mention or suggest other strategies even if they might be relevant. If asked about other strategies, politely redirect the conversation to focus on the selected strategy or suggest clicking a different strategy button in the sidebar."
         else:
-            # Otherwise include all strategies
             prompt += json.dumps(strategies_data, indent=2)
-
     return prompt
 
 # Sidebar for model and temperature selection
 with st.sidebar:
     st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
     st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
-
-    # Ensure model_name is initialized
     if "model_name" not in st.session_state:
-        st.session_state.model_name = "gemini-2.0-pro-exp-02-05"  # default model
-
+        st.session_state.model_name = "gemini-2.0-pro-exp-02-05"
     model_option = st.selectbox("Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"])
-
-    # Update model_name if it has changed
     if model_option != st.session_state.model_name:
         st.session_state.model_name = model_option
         st.session_state.messages = []
         st.session_state.chat_session = None
-
     st.divider()
-
-    # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
-
-    # Custom CSS for the buttons
     button_style = """
         <style>
             .stButton > button {
@@ -185,3 +168,9 @@ with st.sidebar:
         </style>
     """
     st.markdown(button_style, unsafe_allow_html=True)
+    strategies = [
+        "Behavior-Specific Praise",
+        "Instructional Choice",
+        "Active Supervision",
+        "High-Probability Request Sequences",
+        "Instructional
