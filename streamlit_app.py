@@ -165,15 +165,6 @@ with st.sidebar:
     #st.title("Upload Intervention Grid Here:")
     #uploaded_pdf = st.file_uploader("Upload:", type=["pdf"])
     
-    #if uploaded_pdf:
-        #try:
-            # Upload file using File API with mime_type specified
-            #uploaded_file = genai.upload_file(uploaded_pdf, mime_type="application/pdf")
-            #st.session_state.uploaded_file = uploaded_file
-            #st.success("File uploaded successfully!")
-        #except Exception as e:
-            #st.error(f"Error uploading file: {e}")
-            #st.session_state.debug.append(f"File upload error: {e}")
     
     
     # Clear chat functionality
