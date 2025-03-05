@@ -4,14 +4,9 @@ import google.generativeai as genai
 from PIL import Image
 import json
 import os
-import uuid
 
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
-
-# Generate a unique session ID if not already present
-if "session_id" not in st.session_state:
-    st.session_state.session_id = str(uuid.uuid4())
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -36,23 +31,6 @@ if "uploaded_file" not in st.session_state:
     st.session_state.uploaded_file = None
 if "active_strategy" not in st.session_state:
     st.session_state.active_strategy = None
-
-# Define strategy definitions dictionary
-strategy_definitions = {
-    "Behavior-Specific Praise": "Behavior-specific praise is classified as a form of positive reinforcement. It involves providing specific acknowledgement to let children and youth know they are meeting expectations in the classroom, at home, and in social settings. This can be given verbally, in writing, or through digital communication.",
-    
-    "Instructional Choice": "Instructional choice is the embedding of options into lessons for students to select based on their own preferences. It involves offering students two or more options, allowing them to independently select their preferred option, and providing each student with their selected option.",
-    
-    "Active Supervision": "Active supervision is when the adult, after giving a direction or cue with behavior expectations for a specific context, moves around the setting to scan, monitor, and respond effectively to behaviors. It involves reinforcing desired behaviors and correcting undesired behaviors.",
-    
-    "High-Probability Request Sequences": "High-probability request sequences involve making brief requests that students are very likely to comply with (at least 80% of the time) before making low-probability requests (those with 50% or less compliance). This strategy helps increase the likelihood of compliance with more challenging requests.",
-    
-    "Instructional Feedback": "Instructional feedback is a strategy for providing precise information to students about their academic, social, and behavioral performance. It helps clarify misunderstandings, confirm concepts, fine-tune understandings, and restructure current schemas, leading to increased intrinsic motivation.",
-    
-    "Opportunities to Respond": "Opportunities to respond is a strategy that helps students review material, acquire skill fluency, commit information to memory, increase on-task behavior, and reduce challenging behavior. It involves offering students frequent opportunities to respond to teacher questions or prompts about targeted academic materials.",
-    
-    "Precorrection": "Precorrection involves noting the behavior you would like to see before any challenging or undesirable behavior takes place. It helps address behavior problems proactively by anticipating problem behavior, reminding students of expected behaviors before transitions or activities, and reinforcing students for meeting expectations."
-}
 
 # IMPORTANT: Apply custom CSS styles immediately after page config to ensure they work
 st.markdown("""
@@ -182,15 +160,31 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.chat_session = None
 
-    # Add Clear Chat button functionality
-    clear_button_col = st.container()
-    with clear_button_col:
-        if st.button("Clear Chat", key="clear_chat", use_container_width=True, help="Clear the current conversation"):
-            st.session_state.messages = []
-            st.session_state.chat_session = None
-            # Keep the active strategy when clearing chat
-            st.success("Chat cleared!")
-            st.rerun()
+   
+    # File upload for PDF
+    #st.title("Upload Intervention Grid Here:")
+    #uploaded_pdf = st.file_uploader("Upload:", type=["pdf"])
+    
+    #if uploaded_pdf:
+        #try:
+            # Upload file using File API with mime_type specified
+            #uploaded_file = genai.upload_file(uploaded_pdf, mime_type="application/pdf")
+            #st.session_state.uploaded_file = uploaded_file
+            #st.success("File uploaded successfully!")
+        #except Exception as e:
+            #st.error(f"Error uploading file: {e}")
+            #st.session_state.debug.append(f"File upload error: {e}")
+    
+    
+    # Clear chat functionality
+    #clear_button = st.button("Clear Chat")
+    #if clear_button:
+        #st.session_state.messages = []
+        #st.session_state.debug = []
+        #st.session_state.pdf_content = ""
+        #st.session_state.chat_session = None
+        #st.success("Chat cleared!")
+        #st.experimental_rerun()  # use rerun to refresh the app
 
     # Add divider before strategy buttons
     st.divider()
@@ -198,7 +192,27 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Strategy buttons with functionality
+    # Custom CSS for the buttons
+    button_style = """
+        <style>
+            .stButton > button {
+                background-color: #6A157D;
+                color: white;
+                border-radius: 20px;
+                padding: 10px 15px;
+                border: none;
+                width: 100%;
+                margin: 5px 0;
+            }
+            .stButton > button:hover {
+                background-color: #871BA1;
+                color: white !important;
+            }
+        </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+
+    # Strategy buttons
     strategies = [
         "Behavior-Specific Praise",
         "Instructional Choice",
@@ -210,27 +224,14 @@ with st.sidebar:
     ]
 
     for strategy in strategies:
-        button_class = "active-strategy" if st.session_state.active_strategy == strategy else "strategy-button"
-        if st.button(strategy, key=f"btn_{strategy}", use_container_width=True):
-            st.session_state.active_strategy = strategy
-            # Reset the chat when switching strategies
-            st.session_state.messages = []
-            st.session_state.chat_session = None
-            st.rerun()
-    
-    # Add Reset Strategy Filter button if a strategy is active
-    if st.session_state.active_strategy:
-        if st.button("Show All Strategies", key="reset_strategy"):
-            st.session_state.active_strategy = None
-            st.session_state.messages = []
-            st.session_state.chat_session = None
-            st.rerun()
+        if st.button(strategy):
+            # Placeholder for future functionality
+            pass
 
     # Debug section
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
         st.sidebar.text(debug_msg)
-        
 # Create a main container for all content
 main_container = st.container()
 
@@ -241,9 +242,7 @@ funding_container = st.container()
 with main_container:
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
-        st.markdown(f"<h2>{st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
-        # Display the definition of the selected strategy
-        st.write(strategy_definitions.get(st.session_state.active_strategy, ""))
+        st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
         
         # First message intro for active strategy
         if not st.session_state.messages:
@@ -260,20 +259,6 @@ with main_container:
             intro = strategy_intros.get(st.session_state.active_strategy, "")
             st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
             st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
-            
-            # Add Strategy PDF Download links
-            pdf_links = {
-                "Behavior-Specific Praise": "https://ci3t.org/tier_library/bsp.html",
-                "Instructional Choice": "https://ci3t.org/tier_library/ic.html",
-                "Active Supervision": "https://ci3t.org/tier_library/as.html",
-                "High-Probability Request Sequences": "https://ci3t.org/tier_library/hprs.html",
-                "Instructional Feedback": "https://ci3t.org/tier_library/if.html",
-                "Opportunities to Respond": "https://ci3t.org/tier_library/otr.html",
-                "Precorrection": "https://ci3t.org/tier_library/pc.html"
-            }
-            link = pdf_links.get(st.session_state.active_strategy)
-            if link:
-                st.markdown(f"[🔗 Download {st.session_state.active_strategy} Resources]({link})")
         else:
             st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.")
     else:
@@ -294,27 +279,6 @@ with main_container:
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
-
-    # Add conversation download button if there are messages
-    if st.session_state.messages:
-        # Create a formatted conversation history
-        conversation_text = f"Low-Intensity Strategies Bot Conversation\nSession ID: {st.session_state.session_id}\n\n"
-        if st.session_state.active_strategy:
-            conversation_text += f"Strategy Focus: {st.session_state.active_strategy}\n\n"
-        
-        for msg in st.session_state.messages:
-            prefix = "You: " if msg["role"] == "user" else "Bot: "
-            conversation_text += f"{prefix}{msg['content']}\n\n"
-        
-        # Add the download button in a smaller container
-        col1, col2, col3 = st.columns([7, 3, 7])
-        with col2:
-            st.download_button(
-                label="Download Conversation",
-                data=conversation_text,
-                file_name=f"strategy_conversation_{st.session_state.session_id}.txt",
-                mime="text/plain"
-            )
 
     # Handle form submission and generate response
     if st.session_state.should_generate_response:
