@@ -104,22 +104,15 @@ system_instructions = load_text_file('instructions.txt')
 strategies_data = {}
 
 # Define the paths to both JSON files
-strategies_json_path1 = 'AS_BSP_HP_IC_combined.json'
-strategies_json_path2 = 'IF_OTR_P_combined.json'
+strategies_json_path = 'Strategies.json'
 
 # Load the first JSON file if it exists
-if os.path.exists(strategies_json_path1):
-    strategies_data.update(load_json_file(strategies_json_path1))
-    st.session_state.debug.append(f"Loaded strategies from {strategies_json_path1}")
+if os.path.exists(strategies_json_path):
+    strategies_data.update(load_json_file(strategies_json_path))
+    st.session_state.debug.append(f"Loaded strategies from {strategies_json_path}")
 else:
-    st.session_state.debug.append(f"Warning: {strategies_json_path1} not found")
+    st.session_state.debug.append(f"Warning: {strategies_json_path} not found")
 
-# Load the second JSON file if it exists
-if os.path.exists(strategies_json_path2):
-    strategies_data.update(load_json_file(strategies_json_path2))
-    st.session_state.debug.append(f"Loaded strategies from {strategies_json_path2}")
-else:
-    st.session_state.debug.append(f"Warning: {strategies_json_path2} not found")
 
 # Function to build the complete system prompt
 def build_system_prompt(active_strategy=None):
