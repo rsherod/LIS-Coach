@@ -1,1 +1,635 @@
-
+{
+  "title": "Comprehensive Teaching Strategies Guide",
+  "strategies": [
+    {
+      "name": "Active Supervision",
+      "content": {
+        "title": "Active Supervision Comprehensive Guide",
+        "main_sections": [
+          {
+            "source_file": "AS_Introduction.json",
+            "title": "Active Supervision",
+            "section": "Introduction",
+            "content": {
+              "definition": "Active supervision can be used as a low-intensity, teacher-delivered strategy to support students meeting behavior by frequently and proactively monitoring students during specific settings or times. Active supervision is defined as the use of 'Specific and overt behaviors (scanning, escorting, interacting) designed to prevent problem behavior and promote rule-following behavior' (Colvin, Sugai, Good, & Lee, 1997, p. 346).",
+              "effectiveness": "Its effectiveness is increased with the use of precorrections (Lane, Menzies, Ennis, & Oakes, 2005).",
+              "elements": [
+                "Established expectations",
+                "Frequent scanning of context",
+                "Positive interactions (verbal and nonverbal precorrections and prompts)",
+                "Reinforcement of desired behavior",
+                "When necessary, correction to help success"
+              ],
+              "implementation": {
+                "purpose": "Active supervision is an easy-to-use strategy to support behaviors across academic and social domains (e.g., increased time on task, bullying prevention).",
+                "steps": [
+                  "Educators identify the activity or transition that would benefit most from active supervision.",
+                  "Before beginning, it is important to ensure routines are in place and expectations are established for the target activity.",
+                  "Once expectations are understood, adults provide the cue or prompt to initiate the activity.",
+                  "While the activity ensues, the adult moves around the setting scanning and monitoring.",
+                  "The adult uses proximity to signal students they are alert and monitoring (e.g., precorrections, non-verbal prompts).",
+                  "This is followed by reinforcement of desired behavior and, if necessary, private corrections to help students be successful when infractions occur."
+                ]
+              },
+              "applications": {
+                "materials": "The subsequent materials provide a procedural checklist for implementing active supervision as an intervention, a treatment integrity checklist, and pre/post-intervention social validity measures for students and teachers.",
+                "tiers": [
+                  "Tier 1 school- or class-wide daily practice",
+                  "Tier 2 targeted intervention to help students who regularly display disruptive behavior",
+                  "Component of Tier 2 and Tier 3 strategies"
+                ]
+              }
+            },
+            "references": [
+              "Colvin, Sugai, Good, & Lee, 1997",
+              "Lane, Menzies, Ennis, & Oakes, 2005",
+              "De Pry & Sugai, 2002",
+              "Haydon & Scott, 2008"
+            ],
+            "copyright": "Copyright © 2020 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies."
+          },
+          {
+            "source_file": "AS_Guiding_Questions_Infographic.json",
+            "title": "Guiding Questions",
+            "subtitle": "Incorporating Active Supervision",
+            "description": "The following questions can be used to help you decide whether and how you can incorporate active supervision in your school.",
+            "sections": [
+              {
+                "question": "Why is Active Supervision effective?",
+                "answers": [
+                  "Active supervision is a proactive strategy that aims to prevent challenging behavior before it occurs",
+                  "It communicates to the students that the adults are aware of what they are doing"
+                ]
+              },
+              {
+                "question": "How should I implement Active Supervision?",
+                "answers": [
+                  "Identify which activity or transition would benefit from active supervision",
+                  "Provide cue or prompt before beginning",
+                  "Scan and monitor the area as activity unfolds",
+                  "Reinforce desired behavior"
+                ]
+              },
+              {
+                "question": "What are the challenges of Active Supervision?",
+                "answers": [
+                  "Consistent implementation can be a challenge as schools are settings that often require multi-tasking, shifting back and forth between different demands on our attention",
+                  "Prerequisite familiarity and fluency of components of precorrection, prompting, and reinforcement are needed"
+                ]
+              },
+              {
+                "question": "Are you ready to shift to Active Supervision?",
+                "answers": [
+                  "Make adult presence known in hallways, cafeteria, playground, bus-loading area, and within the classroom",
+                  "Deliver precorrection, prompting, and reinforcement while actively supervising"
+                ]
+              }
+            ],
+            "footer": "For more information, please visit ci3t.org",
+            "source": "ci3t.org"
+          },
+          {
+            "source_file": "AS_Examples_Infographic.json",
+            "title": "Examples of Active Supervision",
+            "description": "There are many places that Active Supervision can be used. Active Supervision can be used during activities or during transitions.",
+            "environments": [
+              {
+                "location": "Inside the Classroom",
+                "examples": [
+                  "Walking around the classroom during activities to decrease off-tasks behaviors.",
+                  "Shifting from staying in one spot (desk, board, etc.) while teaching lessons to circulating the room.",
+                  "When working with one-on-one with a student or with a small group of students, consider getting up every few minutes to check in with other students working independently or in groups"
+                ]
+              },
+              {
+                "location": "Outside the Classroom",
+                "examples": [
+                  "Walking around the cafeteria during cafeteria duty instead of staying in one spot.",
+                  "Shifting from watching students from a distance to watching at a near proximity while they play on the playground.",
+                  "When walking in the hallway, watch the front and the back of the line by positioning yourself in the middle.",
+                  "Having staff supervise students as they come in and out the building during arrival and dismissal"
+                ]
+              }
+            ],
+            "footer": "For more information, please visit ci3t.org",
+            "source": "ci3t.org"
+          },
+          {
+            "source_file": "AS_Overview_Infographic.json",
+            "title": "Low-Intensity Strategies",
+            "subtitle": "Active Supervision",
+            "sections": [
+              {
+                "heading": "What is Active Supervision?",
+                "content": "Active Supervision is a low-intensity, teacher-delivered strategy to support students engaging in expected behaviors and prevent problem behaviors by frequently and proactively monitoring students (e.g., scanning, escorting, interacting) in specific settings or times."
+              },
+              {
+                "heading": "Why should I use Active Supervision?",
+                "content": "Active Supervision emphasizes changing the classroom environment to maximize engagement and limit disruption. It can be used as a: (1) Tier 1 strategy to promote student engagement and positive interactions between students and teachers, as well as to reinforce expectations; (2) Tier 2 intervention, or embedded in other Tier 2 interventions; or (3) component of a Tier 3 intervention for students in need of additional supports."
+              },
+              {
+                "heading": "How do I use Active Supervision?",
+                "content": "Active Supervision is a versatile strategy. It can be used during activities or transitions.",
+                "steps": [
+                  "Identify the activity or transition period that would benefit most from active supervision.",
+                  "Ensure that the routine for the target activity is familiar and understood by students. If not, routines and expectations must be established.",
+                  "Provide the cue or prompt to begin the activity.",
+                  "As the activity unfolds, scan and monitor the area.",
+                  "Signal your awareness of students' actions through proximity, prompts, and non-verbal communication.",
+                  "Manage infractions and off-task behavior efficiently: privately, in a businesslike way, and with opportunities for positive interactions.",
+                  "At appropriate intervals and at the end of the activity or transition, reinforce students' good behavior with positive comments and gestures.",
+                  "Provide the students with an opportunity to give feedback."
+                ]
+              }
+            ],
+            "usage_contexts": [
+              "activities",
+              "transitions"
+            ],
+            "source": "ci3t.org"
+          }
+        ],
+        "meta": {
+          "combined_date": "2025-02-24",
+          "source_files": [
+            "AS_Introduction.json",
+            "AS_Guiding_Questions_Infographic.json",
+            "AS_Examples_Infographic.json",
+            "AS_Overview_Infographic.json"
+          ],
+          "primary_source": "ci3t.org"
+        }
+      }
+    },
+    {
+      "name": "Behavior-Specific Praise",
+      "content": {
+        "title": "Behavior-Specific Praise Comprehensive Documentation",
+        "definition": {
+          "description": "Behavior specific praise refers to praise statements that explicitly reference the particular behavior for which the student is being recognized",
+          "citations": [
+            {
+              "authors": "Brophy",
+              "year": 1981
+            },
+            {
+              "authors": "Sutherland, Wehby, & Copeland",
+              "year": 2000
+            }
+          ]
+        },
+        "overview": {
+          "what_is_bsp": {
+            "definition": "Behavior-specific praise are statements that positively acknowledge an individual for engaging in a specific, desired behavior.",
+            "example": "Jonah, I really like how you got your pencil and paper out immediately after being asked. You were really prepared and on task!"
+          },
+          "benefits": {
+            "teacher_outcomes": [
+              "Experience less disruptive student behavior",
+              "Establishes a supportive and positive classroom environment"
+            ],
+            "student_outcomes": [
+              "Increases appropriate behaviors",
+              "Increases academic engaged time",
+              "Increases on-task behavior",
+              "Increases positive social behaviors",
+              "Reduces problem behavior"
+            ]
+          },
+          "characteristics": [
+            "Simple",
+            "Effective when delivered consistently and immediately after desired behavior",
+            "No cost",
+            "Requires minimal effort"
+          ]
+        },
+        "implementation": {
+          "tiered_support": {
+            "tier1": {
+              "description": "Low-intensity teacher-delivered strategy for all students",
+              "use": "Strategy to increase engagement and prevent challenging behavior"
+            },
+            "tier2": {
+              "description": "Stand-alone intervention",
+              "ratio": "4:1 ratio of positive to negative statements",
+              "use": "Intervention that can be embedded with other Tier 2 interventions",
+              "citation": {
+                "authors": "Myers, Simonsen, & Sugai",
+                "year": 2011
+              }
+            },
+            "tier3": {
+              "description": "Component of interventions",
+              "use": "Featured as a component of intervention for students in need of additional supports"
+            }
+          },
+          "framework": {
+            "name": "IFEED-AV",
+            "components": [
+              {
+                "letter": "I",
+                "meaning": "Immediately"
+              },
+              {
+                "letter": "F",
+                "meaning": "Frequently"
+              },
+              {
+                "letter": "E",
+                "meaning": "Enthusiasm"
+              },
+              {
+                "letter": "E",
+                "meaning": "Eye Contact"
+              },
+              {
+                "letter": "D",
+                "meaning": "Describe"
+              },
+              {
+                "letter": "A",
+                "meaning": "Anticipation"
+              },
+              {
+                "letter": "V",
+                "meaning": "Variety"
+              }
+            ],
+            "citation": {
+              "authors": "Rhode, Jenson, & Reavis",
+              "year": 1992
+            }
+          },
+          "steps": [
+            "Evaluate current rates of general and behavior-specific praise (BSP)",
+            "Identify behaviors to reinforce",
+            "Practice delivery of BSP",
+            "Observe student behavior",
+            "Provide BSP",
+            "Monitor BSP Delivery",
+            "Seek student input"
+          ],
+          "delivery_methods": {
+            "public": "Loud tone, in front of class for students that like attention",
+            "private": "Hushed tone, individually for students that do not like attention"
+          }
+        },
+        "guidelines": {
+          "general_principles": [
+            "Praise effort, not ability",
+            "Praise specific examples of effort, not broad generalizations",
+            "Praise in a variety of contexts with various methods: in front of class, in private, written feedback"
+          ],
+          "troubleshooting": {
+            "non_responsive_students": [
+              "Teach students how to provide their classmates with behavior-specific praise",
+              "Pair providing ticket with giving behavior-specific praise to those students that are tangibly motivated"
+            ],
+            "best_practices": [
+              "Focus on the positive! Remember 4 positive statements to every 1 corrective statement",
+              "Shift from using general praise to using behavior-specific praise"
+            ]
+          }
+        },
+        "examples": {
+          "behavior_specific": {
+            "academic_performance": [
+              "Great job showing your work on your math homework",
+              "Great job locating seven robust resource documents for your essay",
+              "You made good progress on vocabulary, defining 17 of 20 words, which is seven more than last week",
+              "You met your goals today of completing the essay outline!",
+              "You followed the steps to correctly reduce fractions to lowest terms, mastering the state standard!",
+              "Excellent use of our new vocabulary word \"ambient\" in your everyday speech!"
+            ],
+            "classroom_behavior": [
+              "I appreciate how you pushed in your chair on the way to line up for lunch. That keeps the walkways safe",
+              "Thank you for turning in your assignment on time",
+              "I love how you remembered to clean up your area after science lab",
+              "I like how Lucille is sitting with her hands and feet to herself",
+              "You were really engaged and participatory in our class discussion",
+              "Great job sharing your materials with your group as we work on our project today"
+            ],
+            "class_management": [
+              "Great job class taking turns in our discussion",
+              "I appreciate you walking over here quietly, being respectful of everyone else who is reading",
+              "Thank you for raising your hand and waiting to be called on before asking your question",
+              "Class, you are working on your assignment so quietly, thank you!",
+              "Thanks to my friends who are sitting \"crisscross applesauce\"",
+              "Way to go, Billy, you are using your coping skills",
+              "Thank you for waiting your turn, Janelle",
+              "Anna, great job filling out your self-monitoring form consistently at each step"
+            ]
+          },
+          "comparison": {
+            "behavior_specific_examples": {
+              "academic": [
+                {
+                  "statement": "Jessie, thank you for being prepared by getting your math folder out during transition",
+                  "focus": "Preparation during transition"
+                },
+                {
+                  "statement": "I love how Jessie is waiting patiently with her hand raised to be called on",
+                  "focus": "Classroom participation behavior"
+                }
+              ],
+              "non_academic": [
+                {
+                  "statement": "Great job, Jessie, being a team player by sharing the ball",
+                  "focus": "Sharing and teamwork"
+                },
+                {
+                  "statement": "Jessie, I like how respectful you were when you asked to use the ball",
+                  "focus": "Respectful communication"
+                }
+              ]
+            },
+            "general_examples": {
+              "academic": [
+                {
+                  "statement": "Great job, Jessie",
+                  "issue": "Lacks specific behavior reference"
+                },
+                {
+                  "statement": "You are prepared, Jessie",
+                  "issue": "No context for preparation"
+                },
+                {
+                  "statement": "Way to go!",
+                  "issue": "Generic praise without specificity"
+                }
+              ],
+              "non_academic": [
+                {
+                  "statement": "That was very nice of you, Jessie",
+                  "issue": "No specific behavior mentioned"
+                },
+                {
+                  "statement": "How respectful of you!",
+                  "issue": "Lacks context for respectful behavior"
+                }
+              ]
+            }
+          }
+        },
+        "materials_provided": [
+          "Procedural checklist for implementing behavior specific praise",
+          "Sample praise statements",
+          "Treatment integrity checklist",
+          "Pre/post-intervention social validity measures for students and teachers"
+        ],
+        "metadata": {
+          "copyright": "Copyright © 2020 by the University of Kansas. All rights reserved.",
+          "usage_rights": "Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies.",
+          "source": "ci3t.org",
+          "contact": "For more information, please visit ci3t.org"
+        }
+      }
+    },
+    {
+      "name": "High Probability Request Sequence",
+      "content": {
+        "title": "High Probability (High-p) Request Sequence: Comprehensive Guide",
+        "definition": "High Probability (High-p) request sequence is a low-intensity, teacher-delivered support strategy designed to increase the likelihood a student will comply with or demonstrate a requested behavior that is currently at a low level of compliance, or low-probability (low-p) behavior.",
+        "uses": [
+          "A Tier 1 instruction with all students to increase engagement, minimize disruption, and create positive, productive, inclusive learning environments",
+          "A Tier 2 targeted intervention, or embedded in other Tier 2 interventions",
+          "A component of a Tier 3 intervention for students in need of additional supports"
+        ],
+        "effectiveness": {
+          "reasons": [
+            "It is a preventative, proactive strategy",
+            "It takes advantage of behavioral momentum theory: By increasing compliance and corresponding reinforcement, momentum is created for compliance with another behavior",
+            "The momentum created by the initial compliance transfers to behaviors less likely to result in compliance, resulting in perseverance",
+            "Compliance with high-p requests generalizes to low-p requests, which results in increased compliance with low-p requests"
+          ]
+        },
+        "implementation": {
+          "steps": [
+            "Identify and operationally define the targeted low-probability (low-p) behavior",
+            "Generate a list of several high-probability (high-p) behaviors that are similar to the desired low-p behavior",
+            "Test the high-p behaviors by giving the requests 10 times each to confirm 80% compliance",
+            "Administer three to five high-p requests in close succession, followed by praise for demonstrating the target behavior",
+            "Deliver the low-p request within 10 seconds of the last high-p request",
+            "Praise the low-p behavior upon compliance or demonstration",
+            "Ask for feedback on the strategy from stakeholders"
+          ],
+          "domains": ["academic", "behavioral", "social"]
+        },
+        "challenges": [
+          "Time is required to determine whether the threshold of 80% or greater compliance is met for classifying a behavior as high-p",
+          "The longer non-compliant behaviors have been reinforced, the more resistant they become to change"
+        ],
+        "examples": {
+          "high_p_requests": {
+            "description": "Academic tasks in which the student has a history of compliance (e.g., preferred activity)",
+            "criteria": "Confirmed through direct observation of requests that resulted in immediate compliance ≥ 80% of the time",
+            "examples": [
+              "Take out your pencil",
+              "Get out a sheet of paper",
+              "Write your name on your paper"
+            ]
+          },
+          "low_p_requests": {
+            "description": "Academic tasks in which the student has history of non-compliance (e.g., non-preferred math problem)",
+            "criteria": "Confirmed through direct observation that requests resulted in compliance ≤ 50% of the time",
+            "examples": [
+              "Begin your independent work"
+            ]
+          }
+        },
+        "readiness_checklist": [
+          "Consider the sequence of requests that will be made",
+          "Ensure attention to reinforcing the desired behavior",
+          "Ensure reinforcement is not provided for noncompliant behaviors"
+        ],
+        "process": "Teachers will deliver three to five high-p requests (followed by praise), then deliver the low-p request within 10 seconds of delivering the last high-p request. Teachers will praise the student for complying with the low-p request to reinforce the desired behavior.",
+        "copyright": "Copyright © 2020 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies.",
+        "more_info": "For more information, please visit ci3t.org"
+      }
+    },
+    {
+      "name": "Instructional Choice",
+      "content": {
+        "title": "Instructional Choice",
+        "subtitle": "An Introduction",
+        "copyright": "Copyright © 2020 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies.",
+        "definition": {
+          "basic": "Instructional choice is a strategy that provides students with opportunities to independently select a provided option from two or more possibilities.",
+          "expanded": "Instructional choice is when a teacher provides students with two or more options for ways they can interact with the environment, materials, activities, or classroom content. Students are then allowed to make a choice, which is provided to them by the teacher."
+        },
+        "characteristics": [
+          "Instructional choice is an antecedent-based strategy emphasizing the environment, meaning changes are made to instructional conditions.",
+          "Instructional choice has been associated with promoting decision-making and other self-determined behaviors in students.",
+          "Teachers can facilitate choice making by offering two forms of instructional choice: across activity choices and within activity choices (Lane et al., 2015; Royer et al., 2017)."
+        ],
+        "benefits": [
+          "Instructional choice has been shown to increase student's engagement and decrease disruption (Dunlap et al., 1994; Ennis et al., 2020).",
+          "Instructional Choice is grounded in positive behavior interventions and supports (PBIS) and can be easily implemented by educators to support content instruction, decrease problem behaviors, and increase students' academic engagement and work completion.",
+          "Incorporating instructional choice enables teachers to differentiate instruction and communicate their respect for students' interests and abilities (Lane et al., 2011)."
+        ],
+        "implementation_considerations": [
+          "Provide students with two or more options",
+          "Allow students to independently select an option",
+          "Provide students with the selected option (Jolivette et al., 2002)"
+        ],
+        "usage_tiers": {
+          "description": "Instructional choice is versatile in choices that can be offered and how it can be used. It can be used:",
+          "tiers": [
+            "(1) as a Tier 1 strategy to promote academic engagement, reduce disruptive behavior, and promote self-determination for all students",
+            "(2) used as a Tier 2 intervention, embedded with other Tier 2 interventions",
+            "(3) added as a component of a Tier 3 intervention for students in need of additional supports"
+          ]
+        },
+        "choice_types": {
+          "across_activity": {
+            "description": "Across-activity choices include what task students can complete",
+            "examples": {
+              "ways_to_demonstrate_knowledge": [
+                "Writing an essay",
+                "Putting on a play",
+                "Creating a song or a YouTube video",
+                "Making a brochure",
+                "Tic-Tac-Toe Boards"
+              ],
+              "order_of_completion": [
+                "Choice of daily schedule",
+                "Choice of learning center or activity to complete first - start with reading, writing, or math?",
+                "Which activity would you like to do first?",
+                "Select a learning center",
+                "Create a schedule for the day"
+              ],
+              "sequence_of_task_completion": "Sequence of task completion"
+            }
+          },
+          "within_activity": {
+            "description": "Within-activity choices include how students can complete a task",
+            "examples": {
+              "materials": [
+                "Type of writing utensil",
+                "Paper and pencil vs. computer",
+                "Type of math manipulative such as number line vs. abacus",
+                "Crayons or Markers?",
+                "Pencil or Pen?"
+              ],
+              "where_when_which": [
+                "Complete evens or odds",
+                "Select book to read",
+                "Work at desk or reading corner",
+                "Chair vs. bean bag",
+                "Independent or partner work",
+                "Select 3 out of 5 problems",
+                "Choose Even or Odd problems",
+                "Work independently or with a partner?",
+                "Finish in class or at home?"
+              ]
+            }
+          }
+        },
+        "implementation_steps": [
+          "Determine which type of choices you would feel comfortable offering and create a menu of choices.",
+          "Use the menu to determine which type of choice to add to a particular lesson.",
+          "After choice is built into the lesson, offer the established choices.",
+          "Ask the student to make their choice.",
+          "Provide wait time for the student to select their choice.",
+          "Listen to (or observe) the student's response.",
+          "Prompt the student to make a choice from one of the available options if the student has not made a choice within the time allotted.",
+          "Reinforce the student's choice, providing them with the option they selected.",
+          "Offer students an opportunity to give feedback on the choice they selected."
+        ],
+        "lesson_planning": {
+          "guiding_questions": [
+            {
+              "question": "How might instructional choice fit within this lesson?",
+              "considerations": [
+                "Consider this when planning your lesson",
+                "Choice could be offered around how students access instruction",
+                "Choice could be offered within tasks/assignments"
+              ]
+            },
+            {
+              "question": "When might instructional choice fit in this lesson?",
+              "options": [
+                "Whole or small group instruction",
+                "Independent seat work",
+                "Homework",
+                "Starter or closing activities"
+              ]
+            },
+            {
+              "question": "Which within-activity choices might fit best within this lesson?",
+              "options": [
+                "Where to complete work (desk, carpet/floor)",
+                "How to complete an assignment (typed or handwritten, independently or with a partner)",
+                "Choice of prompt, questions to complete (evens or odds, book to read, etc."
+              ]
+            },
+            {
+              "question": "Which across-activity choices might fit best within this lesson?",
+              "options": [
+                "Sequence of task completion",
+                "Ways to demonstrate knowledge (e.g., worksheet, writing prompt, slideshow)"
+              ]
+            }
+          ]
+        },
+        "specific_examples": {
+          "across_activity_choices": [
+            {
+              "category": "Differentiation of Product",
+              "examples": [
+                "Written Paper, Oral Presentation, YouTube Video",
+                "Tic-Tac-Toe Boards"
+              ]
+            },
+            {
+              "category": "Order of Completion",
+              "examples": [
+                "Which activity would you like to do first?",
+                "Select a learning center",
+                "Create a schedule for the day"
+              ]
+            }
+          ],
+          "within_activity_choices": [
+            {
+              "category": "Differentiation of Materials",
+              "examples": [
+                "Crayons or Markers?",
+                "Pencil or Pen?",
+                "Paper and pencil or Computer?"
+              ]
+            },
+            {
+              "category": "Differentiation for Work Completion",
+              "examples": [
+                "Select 3 out of 5 problems",
+                "Choose Even or Odd problems",
+                "Work independently or with a partner?",
+                "Finish in class or at home?"
+              ]
+            }
+          ]
+        },
+        "additional_information": {
+          "tic_tac_toe": "Tic-Tac-Toe boards differentiate instruction and 'give students a choice in how they demonstrate their understanding of a given topic' (Florida Inclusion Network, 2015).",
+          "references": [
+            "Lane et al., 2015",
+            "Royer et al., 2017",
+            "Dunlap et al., 1994",
+            "Ennis et al., 2020",
+            "Lane et al., 2011",
+            "Jolivette et al., 2002",
+            "Florida Inclusion Network, 2015"
+          ],
+          "website": "For more information, please visit ci3t.org"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "creation_date": "2025-02-25",
+    "description": "This document combines comprehensive guides for four evidence-based teaching strategies: Active Supervision, Behavior-Specific Praise, High Probability Request Sequence, and Instructional Choice. Each strategy is documented with definitions, implementation steps, examples, and research foundations.",
+    "source": "ci3t.org",
+    "copyright": "Copyright © 2020 by the University of Kansas. All rights reserved. Permission granted to photocopy for personal and educational use as long as the names of the creators and the full copyright notice are included in all copies."
+  }
+}
