@@ -35,8 +35,23 @@ if "active_strategy" not in st.session_state:
 # IMPORTANT: Apply custom CSS styles immediately after page config to ensure they work
 st.markdown("""
 <style>
-    /* Make buttons purple with lighter hover effect */
-    .stButton > button {
+    /* Style for strategy buttons - now using default Streamlit style */
+    .strategy-button > button {
+        background-color: transparent !important;
+        color: rgb(38, 39, 48) !important;
+        border: 1px solid rgba(49, 51, 63, 0.2) !important;
+        border-radius: 4px !important;
+        padding: 0.25rem 0.75rem !important;
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+    .strategy-button > button:hover {
+        border-color: rgb(49, 51, 63) !important;
+        color: rgb(49, 51, 63) !important;
+    }
+    
+    /* Style for Clear Chat button - now using purple style */
+    .clear-chat-button > button {
         background-color: #6A157D !important;
         color: white !important;
         border-radius: 20px !important;
@@ -45,15 +60,16 @@ st.markdown("""
         width: 100% !important;
         margin: 5px 0 !important;
     }
-    .stButton > button:hover {
+    .clear-chat-button > button:hover {
         background-color: #871BA1 !important;
         color: white !important;
     }
     
-    /* Style for active strategy buttons */
-    .active-strategy {
-        background-color: #871BA1 !important;
-        border: 2px solid white !important;
+    /* Style for active strategy button */
+    .active-strategy > button {
+        background-color: rgba(38, 39, 48, 0.12) !important;
+        color: rgb(38, 39, 48) !important;
+        border-color: rgb(38, 39, 48) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -134,33 +150,40 @@ with st.sidebar:
         "Precorrection"
     ]
 
-    # Create buttons for each strategy
+    # Create buttons for each strategy with strategy-button class
     for strategy in strategies:
         button_key = f"btn_{strategy}"
         
         # Check if this strategy is active
         is_active = st.session_state.active_strategy == strategy
         
-        # Create button with conditional CSS class
-        if st.button(
-            strategy, 
-            key=button_key,
-            help=f"Focus the conversation on {strategy} only",
-            type="primary" if is_active else "secondary"
-        ):
-            # If clicking the active strategy, deselect it
-            if is_active:
-                st.session_state.active_strategy = None
-                st.session_state.debug.append(f"Deselected strategy: {strategy}")
-            else:
-                # Otherwise set this as the active strategy
-                st.session_state.active_strategy = strategy
-                st.session_state.debug.append(f"Selected strategy: {strategy}")
+        # Create columns to center the button
+        col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+        with col2:
+            # Apply different classes based on active state
+            button_class = "active-strategy" if is_active else "strategy-button"
             
-            # Always reset chat when changing strategies
-            st.session_state.messages = []
-            st.session_state.chat_session = None
-            st.rerun()
+            # Use markdown to create a div with the appropriate class
+            st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
+            if st.button(
+                strategy, 
+                key=button_key,
+                help=f"Focus the conversation on {strategy} only"
+            ):
+                # If clicking the active strategy, deselect it
+                if is_active:
+                    st.session_state.active_strategy = None
+                    st.session_state.debug.append(f"Deselected strategy: {strategy}")
+                else:
+                    # Otherwise set this as the active strategy
+                    st.session_state.active_strategy = strategy
+                    st.session_state.debug.append(f"Selected strategy: {strategy}")
+                
+                # Always reset chat when changing strategies
+                st.session_state.messages = []
+                st.session_state.chat_session = None
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
     
     # Add divider between strategies and settings
     st.divider()
@@ -179,12 +202,14 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.chat_session = None
     
-    # Clear chat button
+    # Clear chat button with purple style
+    st.markdown('<div class="clear-chat-button">', unsafe_allow_html=True)
     if st.button("Clear Chat"):
         st.session_state.messages = []
         st.session_state.chat_session = None
         st.session_state.debug.append("Chat cleared")
         st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Debug section at the bottom of sidebar
     st.divider()
