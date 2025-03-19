@@ -117,8 +117,8 @@ with st.sidebar:
     
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
-       
-    # Apply custom styling to the buttons via CSS
+    
+    # Add CSS styling inside the sidebar - MAKE SURE INDENTATION MATCHES OTHER SIDEBAR CODE
     st.markdown("""
     <style>
         div[data-testid="stSidebar"] .stButton > button {
@@ -135,7 +135,7 @@ with st.sidebar:
         }
     </style>
     """, unsafe_allow_html=True)
-        for strategy in strategies:
+    
     # Strategy buttons
     strategies = [
         "Active Supervision",
@@ -146,15 +146,13 @@ with st.sidebar:
         "Opportunities to Respond",
         "Precorrection"
     ]
-
+    
+    for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
         
         # Determine if the current strategy is active
         is_active = st.session_state.active_strategy == strategy
-        
-        # Use different styling based on whether the button is active
-        button_class = "active-strategy" if is_active else "strategy-button"
         
         # Button logic: if the button is clicked, set the session state appropriately
         if st.button(strategy, key=button_key, disabled=is_active, help="Click to explore this strategy"):
@@ -162,7 +160,6 @@ with st.sidebar:
             st.session_state.messages = []  # Clear chat history when switching strategies
             st.session_state.chat_session = None #reset session
             st.rerun()
-
         if is_active:
             if st.button(f"Return to All Strategies", key=f"return_button_{strategy}"):  # A second button to deactivate
                 st.session_state.active_strategy = None # Clear the active strategy
