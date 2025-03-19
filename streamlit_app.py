@@ -120,7 +120,7 @@ with st.sidebar:
     <style>
         div[data-testid="stSidebar"] #strategy-buttons button {
             background-color: #6A157D !important;
-            color: white !important;
+            color: #6A157D !important;
         }
         div[data-testid="stSidebar"] #strategy-buttons button:hover {
             background-color: #871BA1 !important;
