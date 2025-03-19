@@ -8,7 +8,7 @@ import os
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
 
-# (Removed global CSS here so that only the strategy buttons are affected)
+# Global CSS for other elements remains unchanged (if any)
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -74,7 +74,6 @@ else:
 def build_system_prompt(active_strategy=None):
     # Start with base instructions
     prompt = system_instructions
-    
     # Add strategy information
     if strategies_data:
         prompt += "\n\n## Strategy Information\n\n"
@@ -82,7 +81,10 @@ def build_system_prompt(active_strategy=None):
         if active_strategy and active_strategy in strategies_data:
             prompt += f"Selected Strategy: {active_strategy}\n\n"
             prompt += json.dumps({active_strategy: strategies_data[active_strategy]}, indent=2)
-            prompt += "\n\nIMPORTANT: You must ONLY discuss and recommend the selected strategy above. Do not mention or suggest other strategies even if they might be relevant. If asked about other strategies, politely redirect the conversation to focus on the selected strategy or suggest clicking a different strategy button in the sidebar."
+            prompt += ("\n\nIMPORTANT: You must ONLY discuss and recommend the selected strategy above. "
+                       "Do not mention or suggest other strategies even if they might be relevant. "
+                       "If asked about other strategies, politely redirect the conversation to focus on the "
+                       "selected strategy or suggest clicking a different strategy button in the sidebar.")
         else:
             # Otherwise include all strategies
             prompt += json.dumps(strategies_data, indent=2)
@@ -113,26 +115,20 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Insert CSS styling ONLY for the 7 strategy buttons using a unique container id
+    # Insert CSS styling ONLY for the 7 strategy buttons by targeting the container
     st.markdown("""
     <style>
-        div#strategy-buttons .stButton > button {
+        div[data-testid="stSidebar"] #strategy-buttons button {
             background-color: #6A157D !important;
             color: white !important;
-            border-radius: 20px !important;
-            padding: 10px 15px !important;
-            border: none !important;
-            width: 100% !important;
-            margin: 5px 0 !important;
         }
-        div#strategy-buttons .stButton > button:hover {
+        div[data-testid="stSidebar"] #strategy-buttons button:hover {
             background-color: #871BA1 !important;
-            color: white !important;
         }
     </style>
     """, unsafe_allow_html=True)
     
-    # Wrap the strategy buttons in a container with a unique id so that only these buttons are targeted
+    # Wrap the strategy buttons in a container with a unique id so that only these buttons are affected
     st.markdown('<div id="strategy-buttons">', unsafe_allow_html=True)
     
     # Strategy buttons list
@@ -149,7 +145,6 @@ with st.sidebar:
     for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
-        
         # Determine if the current strategy is active
         is_active = st.session_state.active_strategy == strategy
         
@@ -186,7 +181,6 @@ with main_container:
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
         st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
-        
         # First message intro for active strategy
         if not st.session_state.messages:
             strategy_intros = {
@@ -198,7 +192,6 @@ with main_container:
                 "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
                 "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
             }
-            
             intro = strategy_intros.get(st.session_state.active_strategy, "")
             st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
             st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
@@ -334,4 +327,3 @@ with main_container:
 # Now put the funding acknowledgment in the funding container (will appear at the bottom)
 with funding_container:
     st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
-
