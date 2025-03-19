@@ -117,17 +117,7 @@ with st.sidebar:
     
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
-    
-    # Strategy buttons
-    strategies = [
-        "Active Supervision",
-        "Behavior-Specific Praise",
-        "High-Probability Request Sequences",
-        "Instructional Choice",
-        "Instructional Feedback",
-        "Opportunities to Respond",
-        "Precorrection"
-    ]
+       
     # Apply custom styling to the buttons via CSS
     st.markdown("""
     <style>
@@ -146,6 +136,17 @@ with st.sidebar:
     </style>
     """, unsafe_allow_html=True)
         for strategy in strategies:
+    # Strategy buttons
+    strategies = [
+        "Active Supervision",
+        "Behavior-Specific Praise",
+        "High-Probability Request Sequences",
+        "Instructional Choice",
+        "Instructional Feedback",
+        "Opportunities to Respond",
+        "Precorrection"
+    ]
+
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
         
