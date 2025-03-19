@@ -122,8 +122,8 @@ with st.sidebar:
     st.markdown("""
     <style>
         div[data-testid="stSidebar"] .stButton > button {
-            background-color: #6A157D; !important;
-            color: white; !important
+            background-color: #6A157D !important;
+            color: white !important
             border-radius: 20px;
             padding: 10px 15px;
             border: none;
