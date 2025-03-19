@@ -8,25 +8,7 @@ import os
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
 
-# Add CSS styling right after st.set_page_config()
-st.markdown("""
-<style>
-    div[data-testid="stSidebar"] .stButton > button {
-        background-color: #6A157D !important;
-        color: white !important;
-        border-radius: 20px !important;
-        padding: 10px 15px !important;
-        border: none !important;
-        width: 100% !important;
-        margin: 5px 0 !important;
-    }
-    
-    div[data-testid="stSidebar"] .stButton > button:hover {
-        background-color: #871BA1 !important;
-        color: white !important;
-    }
-</style>
-""", unsafe_allow_html=True)
+# (Removed global CSS here so that only the strategy buttons are affected)
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -66,7 +48,6 @@ def load_json_file(file_path):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
-            
             # If data is a list (array), convert it to a dictionary with strategy names as keys
             if isinstance(data, list):
                 return {item["Strategy"]: item for item in data}
@@ -74,7 +55,7 @@ def load_json_file(file_path):
     except Exception as e:
         st.error(f"Error loading JSON file: {e}")
         return {}
-        
+
 # Load system instructions and strategy data
 system_instructions = load_text_file('instructions.txt')
 strategies_data = {}
@@ -89,7 +70,6 @@ if os.path.exists(strategies_json_path):
 else:
     st.session_state.debug.append(f"Warning: {strategies_json_path} not found")
 
-
 # Function to build the complete system prompt
 def build_system_prompt(active_strategy=None):
     # Start with base instructions
@@ -98,7 +78,6 @@ def build_system_prompt(active_strategy=None):
     # Add strategy information
     if strategies_data:
         prompt += "\n\n## Strategy Information\n\n"
-        
         # If a specific strategy is selected, only include that one
         if active_strategy and active_strategy in strategies_data:
             prompt += f"Selected Strategy: {active_strategy}\n\n"
@@ -107,9 +86,7 @@ def build_system_prompt(active_strategy=None):
         else:
             # Otherwise include all strategies
             prompt += json.dumps(strategies_data, indent=2)
-    
     return prompt
-
 
 # Sidebar for model and temperature selection
 with st.sidebar:
@@ -136,25 +113,29 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Add CSS styling inside the sidebar - MAKE SURE INDENTATION MATCHES OTHER SIDEBAR CODE
+    # Insert CSS styling ONLY for the 7 strategy buttons using a unique container id
     st.markdown("""
     <style>
-        div[data-testid="stSidebar"] .stButton > button {
-            background-color: #6A157D; !important;
-            color: white; !important
-            border-radius: 20px;
-            padding: 10px 15px;
-            border: none;
-            width: 100%;
-            margin: 5px 0;
+        div#strategy-buttons .stButton > button {
+            background-color: #6A157D !important;
+            color: white !important;
+            border-radius: 20px !important;
+            padding: 10px 15px !important;
+            border: none !important;
+            width: 100% !important;
+            margin: 5px 0 !important;
         }
-        div[data-testid="stSidebar"] .stButton > button:hover {
-            background-color: #871BA1;
+        div#strategy-buttons .stButton > button:hover {
+            background-color: #871BA1 !important;
+            color: white !important;
         }
     </style>
     """, unsafe_allow_html=True)
     
-    # Strategy buttons
+    # Wrap the strategy buttons in a container with a unique id so that only these buttons are targeted
+    st.markdown('<div id="strategy-buttons">', unsafe_allow_html=True)
+    
+    # Strategy buttons list
     strategies = [
         "Active Supervision",
         "Behavior-Specific Praise",
@@ -176,21 +157,23 @@ with st.sidebar:
         if st.button(strategy, key=button_key, disabled=is_active, help="Click to explore this strategy"):
             st.session_state.active_strategy = strategy  # Activate the strategy
             st.session_state.messages = []  # Clear chat history when switching strategies
-            st.session_state.chat_session = None #reset session
+            st.session_state.chat_session = None  # Reset session
             st.rerun()
         if is_active:
             if st.button(f"Return to All Strategies", key=f"return_button_{strategy}"):  # A second button to deactivate
-                st.session_state.active_strategy = None # Clear the active strategy
+                st.session_state.active_strategy = None  # Clear the active strategy
                 st.session_state.messages = []  # Clear chat history when switching strategies
-                st.session_state.chat_session = None #reset session
+                st.session_state.chat_session = None  # Reset session
                 st.rerun()
+    
+    # Close the container for the strategy buttons
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Debug section - only include once in the sidebar
     st.divider()
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
         st.text(debug_msg)
-
 
 # Create a main container for all content
 main_container = st.container()
@@ -342,7 +325,6 @@ with main_container:
                 message_placeholder.markdown(full_response)
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
                 st.session_state.debug.append("Assistant response generated")
-
             except Exception as e:
                 st.error(f"An error occurred while generating the response: {e}")
                 st.session_state.debug.append(f"Error: {e}")
