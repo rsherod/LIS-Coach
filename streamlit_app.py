@@ -8,6 +8,43 @@ import os
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
 
+# Add CSS styling for buttons immediately after page config
+st.markdown("""
+<style>
+    /* Strategy buttons in sidebar */
+    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button {
+        background-color: #6A157D !important;
+        color: white !important;
+        border-radius: 20px !important;
+        padding: 10px 15px !important;
+        border: none !important;
+        width: 100% !important;
+        margin: 5px 0 !important;
+        font-weight: 500 !important;
+        transition: background-color 0.3s ease !important;
+    }
+    
+    /* Hover state for strategy buttons */
+    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button:hover {
+        background-color: #871BA1 !important;
+        color: white !important;
+    }
+    
+    /* Active strategy button styling */
+    div[data-testid="stSidebar"] .active-strategy > button {
+        background-color: #4A0D59 !important;
+        color: white !important;
+    }
+    
+    /* Return button styling */
+    button[key^="return_button_"] {
+        background-color: #871BA1 !important;
+        color: white !important;
+        border-radius: 20px !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
     st.session_state.form_submitted = False
@@ -31,54 +68,6 @@ if "uploaded_file" not in st.session_state:
     st.session_state.uploaded_file = None
 if "active_strategy" not in st.session_state:
     st.session_state.active_strategy = None
-
-# IMPORTANT: Apply custom CSS styles immediately after page config to ensure they work
-st.markdown("""
-<style>
-    /* Target only strategy buttons in the sidebar */
-    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button,
-    div[data-testid="stSidebar"] .strategy-button > button,
-    button[key^="strategy_button_"] {
-        background-color: #6A157D !important;
-        color: white !important;
-        border-radius: 20px !important;
-        padding: 10px 15px !important;
-        border: none !important;
-        width: 100% !important;
-        margin: 5px 0 !important;
-        font-weight: 500 !important;
-        transition: background-color 0.3s ease !important;
-    }
-    
-    /* Hover state for strategy buttons */
-    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button:hover,
-    div[data-testid="stSidebar"] .strategy-button > button:hover,
-    button[key^="strategy_button_"]:hover {
-        background-color: #871BA1 !important;
-        color: white !important;
-    }
-    
-    /* Reset other buttons to Streamlit default */
-    button:not([key^="strategy_button_"]) {
-        background-color: initial;
-        color: initial;
-        border-radius: initial;
-    }
-    
-    /* For active strategy buttons */
-    div[data-testid="stSidebar"] .active-strategy > button,
-    button[key^="strategy_button_"].active {
-        background-color: #4A0D59 !important;
-    }
-    
-    /* Return button styling */
-    button[key^="return_button_"] {
-        background-color: #871BA1 !important;
-        color: white !important;
-        border-radius: 20px !important;
-    }
-</style>
-""", unsafe_allow_html=True)
 
 # Helper function to load text files
 def load_text_file(file_path):
@@ -164,29 +153,6 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Strategy buttons specific styling
-    st.markdown("""
-    <style>
-        /* Strategy buttons specific styling */
-        button[key^="strategy_button_"] {
-            background-color: #6A157D !important;
-            color: white !important;
-            border-radius: 20px !important;
-            padding: 10px 15px !important;
-            border: none !important;
-            width: 100% !important;
-        }
-        button[key^="strategy_button_"]:hover {
-            background-color: #871BA1 !important;
-        }
-        button[key^="return_button_"] {
-            background-color: #871BA1 !important;
-            color: white !important;
-            border-radius: 20px !important;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-    
     # Strategy buttons
     strategies = [
         "Behavior-Specific Praise",
@@ -227,22 +193,6 @@ with st.sidebar:
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
         st.text(debug_msg)
-   
-    # File upload for PDF
-    #st.title("Upload Intervention Grid Here:")
-    #uploaded_pdf = st.file_uploader("Upload:", type=["pdf"])
-    
-    
-    
-    # Clear chat functionality
-    #clear_button = st.button("Clear Chat")
-    #if clear_button:
-        #st.session_state.messages = []
-        #st.session_state.debug = []
-        #st.session_state.pdf_content = ""
-        #st.session_state.chat_session = None
-        #st.success("Chat cleared!")
-        #st.experimental_rerun()  # use rerun to refresh the app
 
 
 # Create a main container for all content
