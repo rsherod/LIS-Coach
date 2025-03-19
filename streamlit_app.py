@@ -8,7 +8,25 @@ import os
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
 
-
+# Add CSS styling right after st.set_page_config()
+st.markdown("""
+<style>
+    div[data-testid="stSidebar"] .stButton > button {
+        background-color: #6A157D !important;
+        color: white !important;
+        border-radius: 20px !important;
+        padding: 10px 15px !important;
+        border: none !important;
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+    
+    div[data-testid="stSidebar"] .stButton > button:hover {
+        background-color: #871BA1 !important;
+        color: white !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -122,8 +140,8 @@ with st.sidebar:
     st.markdown("""
     <style>
         div[data-testid="stSidebar"] .stButton > button {
-            background-color: #6A157D !important;
-            color: white !important
+            background-color: #6A157D; !important;
+            color: white; !important
             border-radius: 20px;
             padding: 10px 15px;
             border: none;
