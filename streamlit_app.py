@@ -213,16 +213,20 @@ with st.sidebar:
                 border: none;
                 width: 100%;
                 margin: 5px 0;
+                font-weight: 500;
+                transition: background-color 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
             .stButton > button:hover {
                 background-color: #871BA1;
                 color: white !important;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             }
         </style>
     """
     st.markdown(button_style, unsafe_allow_html=True)
-
-    # Strategy buttons
+   
+# Strategy buttons
     strategies = [
         "Behavior-Specific Praise",
         "Instructional Choice",
