@@ -138,6 +138,7 @@ def build_system_prompt(active_strategy=None):
     
     return prompt
 
+
 # Sidebar for model and temperature selection
 with st.sidebar:
     st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
@@ -157,6 +158,75 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.chat_session = None
 
+    # Add divider before strategy buttons
+    st.divider()
+    
+    # Strategy section title
+    st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
+    
+    # Strategy buttons specific styling
+    st.markdown("""
+    <style>
+        /* Strategy buttons specific styling */
+        button[key^="strategy_button_"] {
+            background-color: #6A157D !important;
+            color: white !important;
+            border-radius: 20px !important;
+            padding: 10px 15px !important;
+            border: none !important;
+            width: 100% !important;
+        }
+        button[key^="strategy_button_"]:hover {
+            background-color: #871BA1 !important;
+        }
+        button[key^="return_button_"] {
+            background-color: #871BA1 !important;
+            color: white !important;
+            border-radius: 20px !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Strategy buttons
+    strategies = [
+        "Behavior-Specific Praise",
+        "Instructional Choice",
+        "Active Supervision",
+        "High-Probability Request Sequences",
+        "Instructional Feedback",
+        "Opportunities to Respond",
+        "Precorrection"
+    ]
+    
+    for strategy in strategies:
+        # Use a unique key for each button to avoid conflicts during re-renders
+        button_key = f"strategy_button_{strategy}"
+        
+        # Determine if the current strategy is active
+        is_active = st.session_state.active_strategy == strategy
+        
+        # Use different styling based on whether the button is active
+        button_class = "active-strategy" if is_active else "strategy-button"
+        
+        # Button logic: if the button is clicked, set the session state appropriately
+        if st.button(strategy, key=button_key, disabled=is_active, help="Click to explore this strategy"):
+            st.session_state.active_strategy = strategy  # Activate the strategy
+            st.session_state.messages = []  # Clear chat history when switching strategies
+            st.session_state.chat_session = None #reset session
+            st.rerun()
+
+        if is_active:
+            if st.button(f"Return to All Strategies", key=f"return_button_{strategy}"):  # A second button to deactivate
+                st.session_state.active_strategy = None # Clear the active strategy
+                st.session_state.messages = []  # Clear chat history when switching strategies
+                st.session_state.chat_session = None #reset session
+                st.rerun()
+    
+    # Debug section - only include once in the sidebar
+    st.divider()
+    st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
+    for debug_msg in st.session_state.debug:
+        st.text(debug_msg)
    
     # File upload for PDF
     #st.title("Upload Intervention Grid Here:")
@@ -181,16 +251,6 @@ with st.sidebar:
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
    
-# Strategy buttons
-strategies = [
-    "Behavior-Specific Praise",
-    "Instructional Choice",
-    "Active Supervision",
-    "High-Probability Request Sequences",
-    "Instructional Feedback",
-    "Opportunities to Respond",
-    "Precorrection"
-]
 
 # Add this right before the strategy button loop
 st.markdown("""
