@@ -35,8 +35,8 @@ if "active_strategy" not in st.session_state:
 # IMPORTANT: Apply custom CSS styles immediately after page config to ensure they work
 st.markdown("""
 <style>
-    /* Style for strategy buttons - purple style */
-    .strategy-button > button {
+    /* Target all sidebar buttons directly */
+    .sidebar .stButton > button {
         background-color: #6A157D !important;
         color: white !important;
         border-radius: 20px !important;
@@ -46,58 +46,32 @@ st.markdown("""
         margin: 5px 0 !important;
         font-weight: 500 !important;
         transition: background-color 0.3s ease !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-    }
-    .strategy-button > button:hover {
-        background-color: #871BA1 !important;
-        color: white !important;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
     }
     
-    /* Style for Clear Chat button - default style */
+    .sidebar .stButton > button:hover {
+        background-color: #871BA1 !important;
+        color: white !important;
+    }
+    
+    /* Make these styles apply more forcefully */
+    div[data-testid="stSidebarNav"] .stButton > button {
+        background-color: #6A157D !important;
+        color: white !important;
+        border-radius: 20px !important;
+    }
+    
+    /* For active buttons, we'll add a class in the Python code */
+    .active-button {
+        background-color: #4A0D59 !important;
+    }
+    
+    /* Keep the Clear Chat button styling */
     .clear-chat-button > button {
         background-color: transparent !important;
         color: rgb(38, 39, 48) !important;
         border: 1px solid rgba(49, 51, 63, 0.2) !important;
         border-radius: 4px !important;
         padding: 0.25rem 0.75rem !important;
-        width: 100% !important;
-        margin: 5px 0 !important;
-    }
-    .clear-chat-button > button:hover {
-        border-color: rgb(49, 51, 63) !important;
-        color: rgb(49, 51, 63) !important;
-    }
-    
-    /* Style for active strategy button - darker purple */
-    .active-strategy > button {
-        background-color: #4A0D59 !important;
-        color: white !important;
-        border-radius: 20px !important;
-        padding: 10px 15px !important;
-        border: none !important;
-        width: 100% !important;
-        margin: 5px 0 !important;
-        font-weight: 500 !important;
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2) !important;
-    }
-    .active-strategy > button:hover {
-        background-color: #871BA1 !important;
-    }
-    
-    /* Style for return button - complementary style */
-    button[key^="return_button_"] {
-        background-color: #871BA1 !important;
-        color: white !important;
-        border-radius: 20px !important;
-        padding: 8px 12px !important;
-        border: none !important;
-        width: 100% !important;
-        margin: 5px 0 !important;
-        font-size: 0.9em !important;
-    }
-    button[key^="return_button_"]:hover {
-        background-color: #9A2EB7 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -202,25 +176,20 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Custom CSS for the buttons
+    # Custom CSS for the buttons - using stronger selectors
     button_style = """
         <style>
-            .stButton > button {
-                background-color: #6A157D;
-                color: white;
-                border-radius: 20px;
-                padding: 10px 15px;
-                border: none;
-                width: 100%;
-                margin: 5px 0;
-                font-weight: 500;
-                transition: background-color 0.3s ease;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            .stButton > button:hover {
-                background-color: #871BA1;
+            /* This targets all buttons in the app for consistency */
+            button {
+                background-color: #6A157D !important;
                 color: white !important;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                border-radius: 20px !important;
+                padding: 10px 15px !important;
+                border: none !important;
+            }
+            button:hover {
+                background-color: #871BA1 !important;
+                color: white !important;
             }
         </style>
     """
