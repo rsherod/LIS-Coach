@@ -8,41 +8,7 @@ import os
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
 
-# Add CSS styling for buttons immediately after page config
-st.markdown("""
-<style>
-    /* Strategy buttons in sidebar */
-    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button {
-        background-color: #6A157D !important;
-        border-radius: 20px !important;
-        padding: 10px 15px !important;
-        border: none !important;
-        width: 100% !important;
-        margin: 5px 0 !important;
-        font-weight: 500 !important;
-        transition: background-color 0.3s ease !important;
-    }
-    
-    /* Hover state for strategy buttons */
-    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button:hover {
-        background-color: #871BA1 !important;
-        color: white !important;
-    }
-    
-    /* Active strategy button styling */
-    div[data-testid="stSidebar"] .active-strategy > button {
-        background-color: #4A0D59 !important;
-        color: white !important;
-    }
-    
-    /* Return button styling */
-    button[key^="return_button_"] {
-        background-color: #871BA1 !important;
-        color: white !important;
-        border-radius: 20px !important;
-    }
-</style>
-""", unsafe_allow_html=True)
+
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -162,7 +128,23 @@ with st.sidebar:
         "Opportunities to Respond",
         "Precorrection"
     ]
-    
+    # Apply custom styling to the buttons via CSS
+st.markdown("""
+<style>
+    div[data-testid="stSidebar"] .stButton > button {
+        background-color: #6A157D;
+        color: white;
+        border-radius: 20px;
+        padding: 10px 15px;
+        border: none;
+        width: 100%;
+        margin: 5px 0;
+    }
+    div[data-testid="stSidebar"] .stButton > button:hover {
+        background-color: #871BA1;
+    }
+</style>
+""", unsafe_allow_html=True)
     for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
