@@ -35,8 +35,10 @@ if "active_strategy" not in st.session_state:
 # IMPORTANT: Apply custom CSS styles immediately after page config to ensure they work
 st.markdown("""
 <style>
-    /* Target all sidebar buttons directly */
-    .sidebar .stButton > button {
+    /* Target only strategy buttons in the sidebar */
+    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button,
+    div[data-testid="stSidebar"] .strategy-button > button,
+    button[key^="strategy_button_"] {
         background-color: #6A157D !important;
         color: white !important;
         border-radius: 20px !important;
@@ -48,30 +50,32 @@ st.markdown("""
         transition: background-color 0.3s ease !important;
     }
     
-    .sidebar .stButton > button:hover {
+    /* Hover state for strategy buttons */
+    div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button:hover,
+    div[data-testid="stSidebar"] .strategy-button > button:hover,
+    button[key^="strategy_button_"]:hover {
         background-color: #871BA1 !important;
         color: white !important;
     }
     
-    /* Make these styles apply more forcefully */
-    div[data-testid="stSidebarNav"] .stButton > button {
-        background-color: #6A157D !important;
-        color: white !important;
-        border-radius: 20px !important;
+    /* Reset other buttons to Streamlit default */
+    button:not([key^="strategy_button_"]) {
+        background-color: initial;
+        color: initial;
+        border-radius: initial;
     }
     
-    /* For active buttons, we'll add a class in the Python code */
-    .active-button {
+    /* For active strategy buttons */
+    div[data-testid="stSidebar"] .active-strategy > button,
+    button[key^="strategy_button_"].active {
         background-color: #4A0D59 !important;
     }
     
-    /* Keep the Clear Chat button styling */
-    .clear-chat-button > button {
-        background-color: transparent !important;
-        color: rgb(38, 39, 48) !important;
-        border: 1px solid rgba(49, 51, 63, 0.2) !important;
-        border-radius: 4px !important;
-        padding: 0.25rem 0.75rem !important;
+    /* Return button styling */
+    button[key^="return_button_"] {
+        background-color: #871BA1 !important;
+        color: white !important;
+        border-radius: 20px !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -176,36 +180,45 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Custom CSS for the buttons - using stronger selectors
-    button_style = """
-        <style>
-            /* This targets all buttons in the app for consistency */
-            button {
-                background-color: #6A157D !important;
-                color: white !important;
-                border-radius: 20px !important;
-                padding: 10px 15px !important;
-                border: none !important;
-            }
-            button:hover {
-                background-color: #871BA1 !important;
-                color: white !important;
-            }
-        </style>
-    """
-    st.markdown(button_style, unsafe_allow_html=True)
    
 # Strategy buttons
-    strategies = [
-        "Behavior-Specific Praise",
-        "Instructional Choice",
-        "Active Supervision",
-        "High-Probability Request Sequences",
-        "Instructional Feedback",
-        "Opportunities to Respond",
-        "Precorrection"
-    ]
+strategies = [
+    "Behavior-Specific Praise",
+    "Instructional Choice",
+    "Active Supervision",
+    "High-Probability Request Sequences",
+    "Instructional Feedback",
+    "Opportunities to Respond",
+    "Precorrection"
+]
 
+# Add this right before the strategy button loop
+st.markdown("""
+<style>
+    /* Strategy buttons specific styling */
+    button[key^="strategy_button_"] {
+        background-color: #6A157D !important;
+        color: white !important;
+        border-radius: 20px !important;
+        padding: 10px 15px !important;
+        border: none !important;
+        width: 100% !important;
+    }
+    button[key^="strategy_button_"]:hover {
+        background-color: #871BA1 !important;
+    }
+    button[key^="return_button_"] {
+        background-color: #871BA1 !important;
+        color: white !important;
+        border-radius: 20px !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+for strategy in strategies:
+    # Rest of your code remains the same
+
+    
     for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
