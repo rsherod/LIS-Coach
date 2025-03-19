@@ -129,23 +129,23 @@ with st.sidebar:
         "Precorrection"
     ]
     # Apply custom styling to the buttons via CSS
-st.markdown("""
-<style>
-    div[data-testid="stSidebar"] .stButton > button {
-        background-color: #6A157D;
-        color: white;
-        border-radius: 20px;
-        padding: 10px 15px;
-        border: none;
-        width: 100%;
-        margin: 5px 0;
-    }
-    div[data-testid="stSidebar"] .stButton > button:hover {
-        background-color: #871BA1;
-    }
-</style>
-""", unsafe_allow_html=True)
-    for strategy in strategies:
+    st.markdown("""
+    <style>
+        div[data-testid="stSidebar"] .stButton > button {
+            background-color: #6A157D;
+            color: white;
+            border-radius: 20px;
+            padding: 10px 15px;
+            border: none;
+            width: 100%;
+            margin: 5px 0;
+        }
+        div[data-testid="stSidebar"] .stButton > button:hover {
+            background-color: #871BA1;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+        for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
         
