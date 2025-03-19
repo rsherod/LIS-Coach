@@ -14,7 +14,6 @@ st.markdown("""
     /* Strategy buttons in sidebar */
     div[data-testid="stSidebar"] h1:contains("Low-Intensity Strategies") + div .stButton > button {
         background-color: #6A157D !important;
-        color: white !important;
         border-radius: 20px !important;
         padding: 10px 15px !important;
         border: none !important;
