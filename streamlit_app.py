@@ -91,9 +91,9 @@ def build_system_prompt(active_strategy=None):
     return prompt
 
 # Sidebar for model and temperature selection
-with st.sidebar:
-    st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
-    st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
+#with st.sidebar:
+   # st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
+   # st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
 
     # Ensure model_name is initialized
     if 'model_name' not in st.session_state:
