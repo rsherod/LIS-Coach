@@ -131,6 +131,9 @@ with st.sidebar:
         margin: 4px 2px; /* Add some margin */
         cursor: pointer; /* Add a pointer cursor on hover */
         border-radius: 12px; /* Rounded corners */
+        width: 200px; /* Fixed width for all buttons */
+        white-space: normal; /* Allow text to wrap */
+        height: auto; /* Allow height to adjust based on content */
     }
     
     /* Add a hover effect for buttons */
