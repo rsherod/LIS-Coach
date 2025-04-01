@@ -173,7 +173,7 @@ with st.sidebar:
             st.session_state.chat_session = None  # Reset session
             st.rerun()
         if is_active:
-            if st.button(f"Return to All Strategies", key=f"return_button_{strategy}"):  # A second button to deactivate
+            if st.button(f"Return to Main Chat", key=f"return_button_{strategy}"):  # A second button to deactivate
                 st.session_state.active_strategy = None  # Clear the active strategy
                 st.session_state.messages = []  # Clear chat history when switching strategies
                 st.session_state.chat_session = None  # Reset session
