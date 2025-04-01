@@ -258,17 +258,21 @@ with main_container:
     if st.session_state.messages:  # Only show if there are messages
         chat_text = get_chat_text()
         
-        # Create a column layout for the download button to control its width and positioning
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.download_button(
-                label="Download chat transcript",
-                data=chat_text,
-                file_name=f"LIS-Coach-Chat-{'strategy-' + st.session_state.active_strategy if st.session_state.active_strategy else 'main'}.md",
-                mime="text/markdown",
-                help="Save this conversation to your device",
-                key="download_chat"
-            )
+        # Create a container with right-aligned content
+        download_container = st.container()
+        with download_container:
+            # Use columns to push the button to the right side
+            _, _, right_col = st.columns([6, 2, 2])
+            with right_col:
+                st.download_button(
+                    label="Download chat",
+                    data=chat_text,
+                    file_name=f"LIS-Coach-Chat-{'strategy-' + st.session_state.active_strategy if st.session_state.active_strategy else 'main'}.md",
+                    mime="text/markdown",
+                    help="Save this conversation to your device",
+                    key="download_chat",
+                    use_container_width=True
+                )
 
     # Handle form submission and generate response
     if st.session_state.should_generate_response:
