@@ -100,14 +100,14 @@ with st.sidebar:
         st.session_state.model_name = "gemini-2.0-pro-exp-02-05"  # default model
 
     #model_option = st.selectbox(
-        "Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
+        #"Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
     )
 
     # Update model_name if it has changed
-    if model_option != st.session_state.model_name:
-        st.session_state.model_name = model_option
-        st.session_state.messages = []
-        st.session_state.chat_session = None
+    #if model_option != st.session_state.model_name:
+        #st.session_state.model_name = model_option
+        #st.session_state.messages = []
+        #st.session_state.chat_session = None
 
     # Add divider before strategy buttons
     st.divider()
