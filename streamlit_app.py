@@ -5,6 +5,11 @@ from PIL import Image
 import json
 import os
 from datetime import datetime
+from io import BytesIO
+
+# Import file format libraries (will be used in helper functions)
+# Note: You may need to add these to your requirements.txt
+# python-docx, fpdf2
 
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
@@ -57,9 +62,9 @@ def load_json_file(file_path):
         st.error(f"Error loading JSON file: {e}")
         return {}
 
-# Helper function to generate downloadable chat text
-def get_chat_text():
-    """Convert the chat messages to a downloadable text format"""
+# Helper functions for different file format exports
+def get_chat_text_markdown():
+    """Convert the chat messages to a downloadable markdown format"""
     chat_text = "# Low-Intensity Strategies Coach Chat Log\n\n"
     
     # Add timestamp
@@ -75,6 +80,87 @@ def get_chat_text():
         chat_text += f"## {role}:\n{msg['content']}\n\n"
     
     return chat_text
+
+def get_chat_pdf():
+    """Convert the chat messages to a PDF file"""
+    from fpdf import FPDF
+    
+    # Create PDF object
+    pdf = FPDF()
+    pdf.add_page()
+    
+    # Set font
+    pdf.set_font("Arial", size=12)
+    
+    # Add title
+    pdf.set_font("Arial", 'B', 16)
+    pdf.cell(200, 10, "Low-Intensity Strategies Coach Chat Log", ln=True, align='C')
+    pdf.ln(5)
+    
+    # Add timestamp
+    pdf.set_font("Arial", size=10)
+    pdf.cell(200, 10, f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", ln=True)
+    pdf.ln(5)
+    
+    # Add strategy info if applicable
+    if st.session_state.active_strategy:
+        pdf.cell(200, 10, f"Focus Strategy: {st.session_state.active_strategy}", ln=True)
+        pdf.ln(5)
+    
+    # Add the messages
+    for msg in st.session_state.messages:
+        role = "Teacher" if msg["role"] == "user" else "Assistant"
+        
+        # Add role header
+        pdf.set_font("Arial", 'B', 12)
+        pdf.cell(200, 10, f"{role}:", ln=True)
+        
+        # Add message content
+        pdf.set_font("Arial", size=10)
+        
+        # Split long text into multiple lines and add to PDF
+        text = msg["content"]
+        pdf.multi_cell(0, 10, text)
+        pdf.ln(5)
+    
+    # Return the PDF as bytes
+    return pdf.output(dest='S').encode('latin1')
+
+def get_chat_docx():
+    """Convert the chat messages to a Word document"""
+    from docx import Document
+    from io import BytesIO
+    
+    # Create document
+    doc = Document()
+    
+    # Add title
+    doc.add_heading('Low-Intensity Strategies Coach Chat Log', 0)
+    
+    # Add timestamp
+    doc.add_paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # Add strategy info if applicable
+    if st.session_state.active_strategy:
+        doc.add_paragraph(f"Focus Strategy: {st.session_state.active_strategy}")
+    
+    # Add the messages
+    for msg in st.session_state.messages:
+        role = "Teacher" if msg["role"] == "user" else "Assistant"
+        
+        # Add role as heading
+        doc.add_heading(f"{role}:", 2)
+        
+        # Add message content
+        doc.add_paragraph(msg["content"])
+    
+    # Save to BytesIO object
+    bytesio = BytesIO()
+    doc.save(bytesio)
+    bytesio.seek(0)
+    
+    # Return bytes
+    return bytesio.getvalue()
 
 # Load system instructions and strategy data
 system_instructions = load_text_file('instructions.txt')
@@ -254,21 +340,45 @@ with main_container:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
     
-    # Add download button after the messages but before user input
+    # Add download buttons after the messages but before user input
     if st.session_state.messages:  # Only show if there are messages
-        chat_text = get_chat_text()
-        
         # Create a container with right-aligned content
         download_container = st.container()
         with download_container:
-            # Use columns to push the button to the right side
-            _, _, right_col = st.columns([6, 2, 2])
-            with right_col:
+            # Use columns to create the format selection area and download button
+            _, format_col, button_col = st.columns([4, 3, 3])
+            
+            with format_col:
+                format_option = st.selectbox(
+                    "Format:",
+                    ["Markdown (.md)", "PDF (.pdf)", "Word (.docx)"],
+                    label_visibility="collapsed",
+                    key="format_selection"
+                )
+            
+            with button_col:
+                # Determine file extension and data based on format selection
+                if format_option == "PDF (.pdf)":
+                    file_ext = ".pdf"
+                    file_data = get_chat_pdf()
+                    mime_type = "application/pdf"
+                elif format_option == "Word (.docx)":
+                    file_ext = ".docx"
+                    file_data = get_chat_docx()
+                    mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                else:  # Default to Markdown
+                    file_ext = ".md"
+                    file_data = get_chat_text_markdown()
+                    mime_type = "text/markdown"
+                
+                # Common base filename
+                base_filename = f"LIS-Coach-Chat-{'strategy-' + st.session_state.active_strategy if st.session_state.active_strategy else 'main'}"
+                
                 st.download_button(
                     label="Download chat",
-                    data=chat_text,
-                    file_name=f"LIS-Coach-Chat-{'strategy-' + st.session_state.active_strategy if st.session_state.active_strategy else 'main'}.md",
-                    mime="text/markdown",
+                    data=file_data,
+                    file_name=f"{base_filename}{file_ext}",
+                    mime=mime_type,
                     help="Save this conversation to your device",
                     key="download_chat",
                     use_container_width=True
