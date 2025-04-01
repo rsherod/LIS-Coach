@@ -120,6 +120,9 @@ with st.sidebar:
     <style>
     /* Target buttons within the sidebar */
     [data-testid="stSidebar"] button {
+        width: 200px; /* Fixed width for all buttons */
+        white-space: normal; /* Allow text to wrap */
+        height: auto; /* Allow height to adjust based on content */
         background-color: #6A157D; /* Purple background */
         color: white; /* White text */
         border: none; /* Remove borders */
@@ -131,9 +134,6 @@ with st.sidebar:
         margin: 4px 2px; /* Add some margin */
         cursor: pointer; /* Add a pointer cursor on hover */
         border-radius: 12px; /* Rounded corners */
-        width: 200px; /* Fixed width for all buttons */
-        white-space: normal; /* Allow text to wrap */
-        height: auto; /* Allow height to adjust based on content */
     }
     
     /* Add a hover effect for buttons */
