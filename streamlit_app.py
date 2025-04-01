@@ -101,7 +101,7 @@ with st.sidebar:
 
     #model_option = st.selectbox(
         #"Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
-    )
+    #)
 
     # Update model_name if it has changed
     #if model_option != st.session_state.model_name:
