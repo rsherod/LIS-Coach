@@ -345,8 +345,8 @@ with main_container:
         # Create a container with right-aligned content
         download_container = st.container()
         with download_container:
-            # Use columns to create the format selection area and download button
-            _, format_col, button_col = st.columns([4, 3, 3])
+            # Adjusted column widths to make buttons shorter - using more columns to push content right
+            _, _, _, format_col, button_col = st.columns([3, 3, 2, 2, 2])
             
             with format_col:
                 format_option = st.selectbox(
