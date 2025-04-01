@@ -4,6 +4,7 @@ import google.generativeai as genai
 from PIL import Image
 import json
 import os
+from datetime import datetime
 
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
@@ -55,6 +56,25 @@ def load_json_file(file_path):
     except Exception as e:
         st.error(f"Error loading JSON file: {e}")
         return {}
+
+# Helper function to generate downloadable chat text
+def get_chat_text():
+    """Convert the chat messages to a downloadable text format"""
+    chat_text = "# Low-Intensity Strategies Coach Chat Log\n\n"
+    
+    # Add timestamp
+    chat_text += f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+    
+    # Add strategy info if applicable
+    if st.session_state.active_strategy:
+        chat_text += f"Focus Strategy: {st.session_state.active_strategy}\n\n"
+    
+    # Add the messages
+    for msg in st.session_state.messages:
+        role = "Teacher" if msg["role"] == "user" else "Assistant"
+        chat_text += f"## {role}:\n{msg['content']}\n\n"
+    
+    return chat_text
 
 # Load system instructions and strategy data
 system_instructions = load_text_file('instructions.txt')
@@ -233,6 +253,22 @@ with main_container:
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
+    
+    # Add download button after the messages but before user input
+    if st.session_state.messages:  # Only show if there are messages
+        chat_text = get_chat_text()
+        
+        # Create a column layout for the download button to control its width and positioning
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.download_button(
+                label="Download chat transcript",
+                data=chat_text,
+                file_name=f"LIS-Coach-Chat-{'strategy-' + st.session_state.active_strategy if st.session_state.active_strategy else 'main'}.md",
+                mime="text/markdown",
+                help="Save this conversation to your device",
+                key="download_chat"
+            )
 
     # Handle form submission and generate response
     if st.session_state.should_generate_response:
