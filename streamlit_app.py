@@ -9,7 +9,7 @@ from io import BytesIO
 
 # Import file format libraries (will be used in helper functions)
 # Note: You may need to add these to your requirements.txt
-# python-docx, fpdf2
+# python-docx, reportlab
 
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
@@ -82,49 +82,77 @@ def get_chat_text_markdown():
     return chat_text
 
 def get_chat_pdf():
-    """Convert the chat messages to a PDF file"""
-    from fpdf2 import FPDF
+    """Convert the chat messages to a PDF file using reportlab"""
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib import colors
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from io import BytesIO
     
-    # Create PDF object
-    pdf = FPDF()
-    pdf.add_page()
+    # Create a buffer for the PDF
+    buffer = BytesIO()
     
-    # Set font
-    pdf.set_font("Arial", size=12)
+    # Create the PDF document
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+    
+    # Create a list to hold the elements
+    elements = []
     
     # Add title
-    pdf.set_font("Arial", 'B', 16)
-    pdf.cell(200, 10, "Low-Intensity Strategies Coach Chat Log", ln=True, align='C')
-    pdf.ln(5)
+    title_style = styles["Title"]
+    elements.append(Paragraph("Low-Intensity Strategies Coach Chat Log", title_style))
+    elements.append(Spacer(1, 12))
     
     # Add timestamp
-    pdf.set_font("Arial", size=10)
-    pdf.cell(200, 10, f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", ln=True)
-    pdf.ln(5)
+    normal_style = styles["Normal"]
+    elements.append(Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", normal_style))
+    elements.append(Spacer(1, 12))
     
     # Add strategy info if applicable
     if st.session_state.active_strategy:
-        pdf.cell(200, 10, f"Focus Strategy: {st.session_state.active_strategy}", ln=True)
-        pdf.ln(5)
+        elements.append(Paragraph(f"Focus Strategy: {st.session_state.active_strategy}", normal_style))
+        elements.append(Spacer(1, 12))
+    
+    # Define styles for user and assistant
+    user_style = ParagraphStyle(
+        "UserStyle", 
+        parent=styles["Heading2"],
+        textColor=colors.darkblue
+    )
+    
+    assistant_style = ParagraphStyle(
+        "AssistantStyle", 
+        parent=styles["Heading2"],
+        textColor=colors.darkgreen
+    )
     
     # Add the messages
     for msg in st.session_state.messages:
-        role = "Teacher" if msg["role"] == "user" else "Assistant"
+        if msg["role"] == "user":
+            role = "Teacher"
+            heading_style = user_style
+        else:
+            role = "Assistant"
+            heading_style = assistant_style
         
-        # Add role header
-        pdf.set_font("Arial", 'B', 12)
-        pdf.cell(200, 10, f"{role}:", ln=True)
+        # Add role heading
+        elements.append(Paragraph(f"{role}:", heading_style))
+        elements.append(Spacer(1, 6))
         
-        # Add message content
-        pdf.set_font("Arial", size=10)
-        
-        # Split long text into multiple lines and add to PDF
-        text = msg["content"]
-        pdf.multi_cell(0, 10, text)
-        pdf.ln(5)
+        # Add message content with proper line breaks
+        text = msg["content"].replace('\n', '<br/>')
+        elements.append(Paragraph(text, normal_style))
+        elements.append(Spacer(1, 12))
     
-    # Return the PDF as bytes
-    return pdf.output(dest='S').encode('latin1')
+    # Build the PDF
+    doc.build(elements)
+    
+    # Get the value from the buffer
+    pdf_value = buffer.getvalue()
+    buffer.close()
+    
+    return pdf_value
 
 def get_chat_docx():
     """Convert the chat messages to a Word document"""
