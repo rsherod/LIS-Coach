@@ -83,7 +83,7 @@ def get_chat_text_markdown():
 
 def get_chat_pdf():
     """Convert the chat messages to a PDF file"""
-    from fpdf import FPDF
+    from fpdf2 import FPDF
     
     # Create PDF object
     pdf = FPDF()
