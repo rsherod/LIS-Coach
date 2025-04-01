@@ -273,6 +273,7 @@ with st.sidebar:
     /* Add a hover effect for buttons */
     [data-testid="stSidebar"] button:hover {
         background-color: #871BA1; /* Darker purple */
+        color: white !important; /* White text on hover - using !important to override any conflicting styles */
     }
     </style>
     """
