@@ -140,13 +140,8 @@ with st.sidebar:
     </style>
     """
 
-# Set colors for sidebar Put this directly above your sidebar code  
-st.markdown(custom_css, unsafe_allow_html=True)
-
-
-# Set colors for sidebar Put this directly above your sidebar code  
-st.markdown(custom_css, unsafe_allow_html=True)
-
+    # Set colors for sidebar Put this directly above your sidebar code  
+    st.markdown(custom_css, unsafe_allow_html=True)
     
     # Wrap the strategy buttons in a container with a unique id so that only these buttons are affected
     st.markdown('<div id="strategy-buttons">', unsafe_allow_html=True)
