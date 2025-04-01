@@ -115,18 +115,34 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Insert CSS styling ONLY for the 7 strategy buttons by targeting the container
-    st.markdown("""
+    # Put this custom css style chunk for purple buttons directly above set colors (see below)
+    custom_css = """
     <style>
-        div[data-testid="stSidebar"] #strategy-buttons button {
-            background-color: #6A157D !important;
-            color: #6A157D !important;
-        }
-        div[data-testid="stSidebar"] #strategy-buttons button:hover {
-            background-color: #871BA1 !important;
-        }
+    /* Target buttons within the sidebar */
+    [data-testid="stSidebar"] button {
+        background-color: #6A157D; /* Purple background */
+        color: white; /* White text */
+        border: none; /* Remove borders */
+        padding: 10px 24px; /* Add some padding */
+        text-align: center; /* Center text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block; /* Get buttons to line up nicely */
+        font-size: 10px; /* Increase font size */
+        margin: 4px 2px; /* Add some margin */
+        cursor: pointer; /* Add a pointer cursor on hover */
+        border-radius: 12px; /* Rounded corners */
+    }
+    
+    /* Add a hover effect for buttons */
+    [data-testid="stSidebar"] button:hover {
+        background-color: #871BA1; /* Darker purple */
+    }
     </style>
-    """, unsafe_allow_html=True)
+    """
+
+# Set colors for sidebar Put this directly above your sidebar code  
+st.markdown(custom_css, unsafe_allow_html=True)
+
     
     # Wrap the strategy buttons in a container with a unique id so that only these buttons are affected
     st.markdown('<div id="strategy-buttons">', unsafe_allow_html=True)
