@@ -120,7 +120,7 @@ with st.sidebar:
     <style>
     /* Target buttons within the sidebar */
     [data-testid="stSidebar"] button {
-        width: 200px; /* Fixed width for all buttons */
+        width: 300px; /* Fixed width for all buttons */
         white-space: normal; /* Allow text to wrap */
         height: auto; /* Allow height to adjust based on content */
         background-color: #6A157D; /* Purple background */
