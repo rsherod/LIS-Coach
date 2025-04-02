@@ -7,14 +7,20 @@ import os
 from datetime import datetime
 from io import BytesIO
 
-# Import file format libraries (will be used in helper functions)
-# Note: You may need to add these to your requirements.txt
-# python-docx, reportlab
-
 # Streamlit configuration
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
 
-# Global CSS for other elements remains unchanged (if any)
+# Custom CSS for the light gray box with rounded corners at the top
+st.markdown("""
+<style>
+.header-box {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -226,23 +232,6 @@ def build_system_prompt(active_strategy=None):
 
 # Sidebar for model and temperature selection
 with st.sidebar:
-   # st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
-   # st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
-
-    # Ensure model_name is initialized
-    if 'model_name' not in st.session_state:
-        st.session_state.model_name = "gemini-2.0-pro-exp-02-05"  # default model
-
-    #model_option = st.selectbox(
-        #"Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
-    #)
-
-    # Update model_name if it has changed
-    #if model_option != st.session_state.model_name:
-        #st.session_state.model_name = model_option
-        #st.session_state.messages = []
-        #st.session_state.chat_session = None
-
     # Add divider before strategy buttons
     st.divider()
     
@@ -331,6 +320,9 @@ funding_container = st.container()
 
 # Now fill the main container with content
 with main_container:
+    # Wrap the header in the light gray box with rounded corners
+    st.markdown('<div class="header-box">', unsafe_allow_html=True)
+    
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
         st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
@@ -355,6 +347,9 @@ with main_container:
         st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
     
     st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
+    
+    # Close the light gray box
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Add extra spacing between caption and chat input
     st.write("")
