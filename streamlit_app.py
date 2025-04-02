@@ -315,7 +315,7 @@ with main_container:
         st.markdown("""
         <style>
         [data-testid="stVerticalBlock"] > [style*="flex-direction: column"] > [data-testid="stVerticalBlock"] {
-            background-color: #f5f5f5;
+            background-color: #F0F2F6;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
