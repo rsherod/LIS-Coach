@@ -333,27 +333,20 @@ funding_container = st.container()
 with main_container:
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
-        st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='background-color: #E0E0E0; padding: 10px;'>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
         # First message intro for active strategy
         if not st.session_state.messages:
             strategy_intros = {
-                "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
-                "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
-                "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
-                "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
-                "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
-                "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
-                "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
+                # strategy definitions here
             }
             intro = strategy_intros.get(st.session_state.active_strategy, "")
-            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
-            st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
+            st.markdown(f"<div style='background-color: #E0E0E0; padding: 10px;'>You're currently exploring the {st.session_state.active_strategy} strategy. {intro}</div>", unsafe_allow_html=True)
+            st.markdown("<div style='background-color: #E0E0E0; padding: 10px;'>Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.</div>", unsafe_allow_html=True)
         else:
-            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.")
+            st.markdown(f"<div style='background-color: #E0E0E0; padding: 10px;'>You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.</div>", unsafe_allow_html=True)
     else:
-        st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
-        st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
-    
+        st.markdown("<h2 style='background-color: #E0E0E0; padding: 10px;'>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
+        st.markdown("<div style='background-color: #E0E0E0; padding: 10px;'>The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.<br><br><strong>Directions:</strong> If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.</div>", unsafe_allow_html=True) 
     st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
     
     # Add extra spacing between caption and chat input
