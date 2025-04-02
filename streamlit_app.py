@@ -303,6 +303,9 @@ with st.sidebar:
 # Create a main container for all content
 main_container = st.container()
 
+# Create a container for the funding acknowledgment that will appear at the bottom
+funding_container = st.container()  
+
 # Now fill the main container with content
 with main_container:
     with st.container():
@@ -318,8 +321,6 @@ with main_container:
         </style>
         """, unsafe_allow_html=True)
    
-# Create a container for the funding acknowledgment that will appear at the bottom
-funding_container = st.container()  
 
 # Add content within this styled container
 header = st.container()
