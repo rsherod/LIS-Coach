@@ -321,198 +321,197 @@ with main_container:
 # Create a container for the funding acknowledgment that will appear at the bottom
 funding_container = st.container()  
 
-        # Add content within this styled container
-        header = st.container()
-        with header:
-            # Title and BotDescription with dynamic header based on active strategy
-            if st.session_state.active_strategy:
-                st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
-                # First message intro for active strategy
-                if not st.session_state.messages:
-                    strategy_intros = {
-                        "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
-                        "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
-                        "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
-                        "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
-                        "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
-                        "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
-                        "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
-                    }
-                    intro = strategy_intros.get(st.session_state.active_strategy, "")
-                    st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
-                    st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
-                else:
-                    st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.")
-            else:
-                st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
-                st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
-            
-            st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
-
-    # Add extra spacing between caption and chat input
-    st.write("")
-
-    # Initialize Gemini client
-    genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-
-    # Display chat messages
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+# Add content within this styled container
+header = st.container()
+with header:
+    # Title and BotDescription with dynamic header based on active strategy
+    if st.session_state.active_strategy:
+        st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
+        # First message intro for active strategy
+        if not st.session_state.messages:
+            strategy_intros = {
+                "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
+                "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
+                "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
+                "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
+                "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
+                "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
+                "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
+            }
+            intro = strategy_intros.get(st.session_state.active_strategy, "")
+            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
+            st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
+        else:
+            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.")
+    else:
+        st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
+        st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
     
-    # Add download buttons after the messages but before user input
-    if st.session_state.messages:  # Only show if there are messages
-        # Create a container with right-aligned content
-        download_container = st.container()
-        with download_container:
-            # Adjusted column widths to make buttons shorter - using more columns to push content right
-            _, _, _, format_col, button_col = st.columns([3, 3, 2, 2, 2])
-            
-            with format_col:
-                format_option = st.selectbox(
-                    "Format:",
-                    ["Markdown (.md)", "PDF (.pdf)", "Word (.docx)"],
-                    label_visibility="collapsed",
-                    key="format_selection"
-                )
-            
-            with button_col:
-                # Determine file extension and data based on format selection
-                if format_option == "PDF (.pdf)":
-                    file_ext = ".pdf"
-                    file_data = get_chat_pdf()
-                    mime_type = "application/pdf"
-                elif format_option == "Word (.docx)":
-                    file_ext = ".docx"
-                    file_data = get_chat_docx()
-                    mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                else:  # Default to Markdown
-                    file_ext = ".md"
-                    file_data = get_chat_text_markdown()
-                    mime_type = "text/markdown"
-                
-                # Common base filename
-                base_filename = f"LIS-Coach-Chat-{'strategy-' + st.session_state.active_strategy if st.session_state.active_strategy else 'main'}"
-                
-                st.download_button(
-                    label="Download chat",
-                    data=file_data,
-                    file_name=f"{base_filename}{file_ext}",
-                    mime=mime_type,
-                    help="Save this conversation to your device",
-                    key="download_chat",
-                    use_container_width=True
-                )
+    st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
 
-    # Handle form submission and generate response
-    if st.session_state.should_generate_response:
-        # Create combined prompt from responses
-        combined_prompt = "Form Responses:\n"
-        for q, a in st.session_state.form_responses.items():
-            combined_prompt += f"{q}: {a}\n"
+# Add extra spacing between caption and chat input
+st.write("")
+
+# Initialize Gemini client
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+
+# Display chat messages
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Add download buttons after the messages but before user input
+if st.session_state.messages:  # Only show if there are messages
+    # Create a container with right-aligned content
+    download_container = st.container()
+    with download_container:
+        # Adjusted column widths to make buttons shorter - using more columns to push content right
+        _, _, _, format_col, button_col = st.columns([3, 3, 2, 2, 2])
         
-        # Add user message to chat history
-        current_message = {"role": "user", "content": combined_prompt}
-        st.session_state.messages.append(current_message)
+        with format_col:
+            format_option = st.selectbox(
+                "Format:",
+                ["Markdown (.md)", "PDF (.pdf)", "Word (.docx)"],
+                label_visibility="collapsed",
+                key="format_selection"
+            )
+        
+        with button_col:
+            # Determine file extension and data based on format selection
+            if format_option == "PDF (.pdf)":
+                file_ext = ".pdf"
+                file_data = get_chat_pdf()
+                mime_type = "application/pdf"
+            elif format_option == "Word (.docx)":
+                file_ext = ".docx"
+                file_data = get_chat_docx()
+                mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            else:  # Default to Markdown
+                file_ext = ".md"
+                file_data = get_chat_text_markdown()
+                mime_type = "text/markdown"
+            
+            # Common base filename
+            base_filename = f"LIS-Coach-Chat-{'strategy-' + st.session_state.active_strategy if st.session_state.active_strategy else 'main'}"
+            
+            st.download_button(
+                label="Download chat",
+                data=file_data,
+                file_name=f"{base_filename}{file_ext}",
+                mime=mime_type,
+                help="Save this conversation to your device",
+                key="download_chat",
+                use_container_width=True
+            )
 
-        with st.chat_message("user"):
-            st.markdown(current_message["content"])
+# Handle form submission and generate response
+if st.session_state.should_generate_response:
+    # Create combined prompt from responses
+    combined_prompt = "Form Responses:\n"
+    for q, a in st.session_state.form_responses.items():
+        combined_prompt += f"{q}: {a}\n"
+    
+    # Add user message to chat history
+    current_message = {"role": "user", "content": combined_prompt}
+    st.session_state.messages.append(current_message)
 
-        # Generate and display assistant response
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
+    with st.chat_message("user"):
+        st.markdown(current_message["content"])
 
-            # Initialize chat session if needed
-            if st.session_state.chat_session is None:
-                generation_config = {
-                    "temperature": st.session_state.temperature,
-                    "top_p": 0.95,
-                    "top_k": 40,
-                    "max_output_tokens": 8192,
-                }
-                model = genai.GenerativeModel(
-                    model_name=st.session_state.model_name,
-                    generation_config=generation_config,
-                )
-                
-                # Build complete system prompt with active strategy if applicable
-                complete_system_prompt = build_system_prompt(st.session_state.active_strategy)
-                
-                initial_messages = [
-                    {"role": "user", "parts": [f"System: {complete_system_prompt}"]},
-                    {"role": "model", "parts": ["Understood. I will follow these instructions."]},
-                ]
-                
-                st.session_state.chat_session = model.start_chat(history=initial_messages)
+    # Generate and display assistant response
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
 
-            # Generate response with error handling
-            try:
-                response = st.session_state.chat_session.send_message(current_message["content"])
-                full_response = response.text
-                message_placeholder.markdown(full_response)
-                st.session_state.messages.append({"role": "assistant", "content": full_response})
-                st.session_state.debug.append("Assistant response generated")
-            except Exception as e:
-                st.error(f"An error occurred while generating the response: {e}")
-                st.session_state.debug.append(f"Error: {e}")
+        # Initialize chat session if needed
+        if st.session_state.chat_session is None:
+            generation_config = {
+                "temperature": st.session_state.temperature,
+                "top_p": 0.95,
+                "top_k": 40,
+                "max_output_tokens": 8192,
+            }
+            model = genai.GenerativeModel(
+                model_name=st.session_state.model_name,
+                generation_config=generation_config,
+            )
+            
+            # Build complete system prompt with active strategy if applicable
+            complete_system_prompt = build_system_prompt(st.session_state.active_strategy)
+            
+            initial_messages = [
+                {"role": "user", "parts": [f"System: {complete_system_prompt}"]},
+                {"role": "model", "parts": ["Understood. I will follow these instructions."]},
+            ]
+            
+            st.session_state.chat_session = model.start_chat(history=initial_messages)
 
-        st.session_state.should_generate_response = False
-        st.rerun()
+        # Generate response with error handling
+        try:
+            response = st.session_state.chat_session.send_message(current_message["content"])
+            full_response = response.text
+            message_placeholder.markdown(full_response)
+            st.session_state.messages.append({"role": "assistant", "content": full_response})
+            st.session_state.debug.append("Assistant response generated")
+        except Exception as e:
+            st.error(f"An error occurred while generating the response: {e}")
+            st.session_state.debug.append(f"Error: {e}")
 
-    # User input with context-aware placeholder
-    placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
-    user_input = st.chat_input(placeholder_text)
+    st.session_state.should_generate_response = False
+    st.rerun()
 
-    if user_input:
-        # Add user message to chat history
-        current_message = {"role": "user", "content": user_input}
-        st.session_state.messages.append(current_message)
+# User input with context-aware placeholder
+placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
+user_input = st.chat_input(placeholder_text)
 
-        with st.chat_message("user"):
-            st.markdown(current_message["content"])
+if user_input:
+    # Add user message to chat history
+    current_message = {"role": "user", "content": user_input}
+    st.session_state.messages.append(current_message)
 
-        # Generate and display assistant response
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
+    with st.chat_message("user"):
+        st.markdown(current_message["content"])
 
-            # Prepare messages for Gemini API
-            if st.session_state.chat_session is None:
-                generation_config = {
-                    "temperature": st.session_state.temperature,
-                    "top_p": 0.95,
-                    "top_k": 40,
-                    "max_output_tokens": 8192,
-                }
-                model = genai.GenerativeModel(
-                    model_name=st.session_state.model_name,
-                    generation_config=generation_config,
-                )
-                
-                # Build complete system prompt with active strategy if applicable
-                complete_system_prompt = build_system_prompt(st.session_state.active_strategy)
-                
-                # Initialize chat with system prompt
-                initial_messages = [
-                    {"role": "user", "parts": [f"System: {complete_system_prompt}"]},
-                    {"role": "model", "parts": ["Understood. I will follow these instructions."]},
-                ]
-                
-                st.session_state.chat_session = model.start_chat(history=initial_messages)
+    # Generate and display assistant response
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
 
-            # Generate response with error handling
-            try:
-                response = st.session_state.chat_session.send_message(current_message["content"])
-                full_response = response.text
-                message_placeholder.markdown(full_response)
-                st.session_state.messages.append({"role": "assistant", "content": full_response})
-                st.session_state.debug.append("Assistant response generated")
-            except Exception as e:
-                st.error(f"An error occurred while generating the response: {e}")
-                st.session_state.debug.append(f"Error: {e}")
+        # Prepare messages for Gemini API
+        if st.session_state.chat_session is None:
+            generation_config = {
+                "temperature": st.session_state.temperature,
+                "top_p": 0.95,
+                "top_k": 40,
+                "max_output_tokens": 8192,
+            }
+            model = genai.GenerativeModel(
+                model_name=st.session_state.model_name,
+                generation_config=generation_config,
+            )
+            
+            # Build complete system prompt with active strategy if applicable
+            complete_system_prompt = build_system_prompt(st.session_state.active_strategy)
+            
+            # Initialize chat with system prompt
+            initial_messages = [
+                {"role": "user", "parts": [f"System: {complete_system_prompt}"]},
+                {"role": "model", "parts": ["Understood. I will follow these instructions."]},
+            ]
+            
+            st.session_state.chat_session = model.start_chat(history=initial_messages)
 
-        st.rerun()
+        # Generate response with error handling
+        try:
+            response = st.session_state.chat_session.send_message(current_message["content"])
+            full_response = response.text
+            message_placeholder.markdown(full_response)
+            st.session_state.messages.append({"role": "assistant", "content": full_response})
+            st.session_state.debug.append("Assistant response generated")
+        except Exception as e:
+            st.error(f"An error occurred while generating the response: {e}")
+            st.session_state.debug.append(f"Error: {e}")
+
+    st.rerun()
 
 # Now put the funding acknowledgment in the funding container (will appear at the bottom)
 with funding_container:
     st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
-    
