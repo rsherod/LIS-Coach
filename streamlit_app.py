@@ -308,20 +308,31 @@ funding_container = st.container()
 
 # Now fill the main container with content
 with main_container:
-    # Create a header container with styling using Streamlit's native components
-    # This is the gray box with rounded corners
-    with st.container():
-        # Apply styling directly to the container using markdown
-        st.markdown("""
-        <style>
-        [data-testid="stVerticalBlock"] > [style*="flex-direction: column"] > [data-testid="stVerticalBlock"] {
-            background-color: #F0F2F6;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+    # Add a thin border to create a visual container without changing the background
+    st.markdown("""
+    <style>
+    .header-box {
+        border: 1px solid rgba(49, 51, 63, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    </style>
+    <div class="header-box">
+    """, unsafe_allow_html=True)
+    
+    # Add your header content here
+    if st.session_state.active_strategy:
+        st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
+        # Rest of your strategy-specific content...
+    else:
+        st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
+        st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
+        
+    st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
+    
+    # Close the div
+    st.markdown("</div>", unsafe_allow_html=True)
         
         # Add content within this styled container
         header = st.container()
