@@ -303,9 +303,6 @@ with st.sidebar:
 # Create a main container for all content
 main_container = st.container()
 
-# Create a container for the funding acknowledgment that will appear at the bottom
-funding_container = st.container()  
-
 # Now fill the main container with content
 with main_container:
     with st.container():
@@ -320,35 +317,34 @@ with main_container:
         }
         </style>
         """, unsafe_allow_html=True)
-   
-
-# Add content within this styled container
-header = st.container()
-with header:
-    # Title and BotDescription with dynamic header based on active strategy
-    if st.session_state.active_strategy:
-        st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
-        # First message intro for active strategy
-        if not st.session_state.messages:
-            strategy_intros = {
-                "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
-                "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
-                "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
-                "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
-                "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
-                "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
-                "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
-            }
-            intro = strategy_intros.get(st.session_state.active_strategy, "")
-            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
-            st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
-        else:
-            st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.")
-    else:
-        st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
-        st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
-    
-    st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
+        
+        # Add content within this styled container
+        header = st.container()
+        with header:
+            # Title and BotDescription with dynamic header based on active strategy
+            if st.session_state.active_strategy:
+                st.markdown(f"<h2>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
+                # First message intro for active strategy
+                if not st.session_state.messages:
+                    strategy_intros = {
+                        "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
+                        "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
+                        "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
+                        "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
+                        "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
+                        "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
+                        "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
+                    }
+                    intro = strategy_intros.get(st.session_state.active_strategy, "")
+                    st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. {intro}")
+                    st.write("Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.")
+                else:
+                    st.write(f"You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.")
+            else:
+                st.markdown("<h2>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
+                st.write("The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.\n\n**Directions:** If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.")
+            
+            st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
 
 # Add extra spacing between caption and chat input
 st.write("")
@@ -513,6 +509,10 @@ if user_input:
 
     st.rerun()
 
+# Create a container for the funding acknowledgment that will appear at the bottom
+funding_container = st.container()  
+
 # Now put the funding acknowledgment in the funding container (will appear at the bottom)
 with funding_container:
     st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
+    
