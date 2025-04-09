@@ -279,6 +279,7 @@ with st.sidebar:
     /* Style for active buttons - lighter purple */
     [data-testid="stSidebar"] button[disabled] {
         background-color: #9A55AD !important; /* Lighter purple for active button */
+        color: white; /* White text */
         opacity: 1 !important; /* Override default disabled opacity */
     }
     
