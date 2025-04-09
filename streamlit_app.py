@@ -283,7 +283,7 @@ with st.sidebar:
         opacity: 1 !important; /* Override default disabled opacity */
     }
     
-    /* Style for return button - light blue */
+    /* Style for Return to Main Chat button - light blue */
     [data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
         background-color: #C1E5F5 !important; /* Light blue for return button */
         color: black !important; /* Darker text for better contrast */
