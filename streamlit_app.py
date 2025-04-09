@@ -333,7 +333,7 @@ funding_container = st.container()
 with main_container:
     # Title and BotDescription with dynamic header based on active strategy
     if st.session_state.active_strategy:
-        st.markdown(f"<h2 style='background-color: #E0E0E0; padding: 10px;'>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='background-color: #F0F2F6; padding: 10px;'>Focus on {st.session_state.active_strategy}</h2>", unsafe_allow_html=True)
         # First message intro for active strategy
         if not st.session_state.messages:
             strategy_intros = {
