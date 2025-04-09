@@ -278,7 +278,7 @@ with st.sidebar:
     
     /* Style for active buttons - lighter purple */
     .active-strategy-button {
-        background-color: #9A55AD !important; /* Lighter purple for active button */
+        background-color: #E1A2F0 !important; /* Lighter purple for active button */
     }
     
     /* Style for return button - light blue */
