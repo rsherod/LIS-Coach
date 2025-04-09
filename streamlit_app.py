@@ -275,26 +275,6 @@ with st.sidebar:
         background-color: #871BA1; /* Darker purple */
         color: white !important; /* White text on hover - using !important to override any conflicting styles */
     }
-
-    /* Style for active buttons - lighter purple */
-    [data-testid="stSidebar"] button[disabled] {
-        background-color: #E1A2F0 !important; /* Lighter purple for active button */
-        color: white; /* White text */
-        opacity: 1 !important; /* Override default disabled opacity */
-    }
-
-    /* Style for Return to Main Chat button - light blue */
-    [data-testid="stSidebar"] button[key*="return_button_"] {
-        background-color: #C1E5F5 !important; /* Light blue for return button */
-        color: black !important; /* Darker text for better contrast */
-        margin-bottom: 15px !important; /* Add space below return button */
-    }
-
-/* Ensure the return button also has proper styling on hover */
-[data-testid="stSidebar"] button[key*="return_button_"]:hover {
-    background-color: #A3D2E8 !important; /* Slightly darker blue on hover */
-    color: black !important; /* Keep text black on hover */
-}
     </style>
     """
 
@@ -315,33 +295,21 @@ with st.sidebar:
         "Precorrection"
     ]
     
-    # If a strategy is active, first display the return button
-    if st.session_state.active_strategy:
-        # Add return button at the top with blue styling
-        st.markdown('<div class="return-button">', unsafe_allow_html=True)
-        if st.button(f"Return to Main Chat", key=f"return_button_top", help="Go back to main chat"):
-            st.session_state.active_strategy = None  # Clear the active strategy
-            st.session_state.messages = []  # Clear chat history when switching strategies
-            st.session_state.chat_session = None  # Reset session
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    # Display strategy buttons
     for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
         # Determine if the current strategy is active
         is_active = st.session_state.active_strategy == strategy
         
-        # If the strategy is active, apply the active styling
+        # Button logic: if the button is clicked, set the session state appropriately
+        if st.button(strategy, key=button_key, disabled=is_active, help="Click to explore this strategy"):
+            st.session_state.active_strategy = strategy  # Activate the strategy
+            st.session_state.messages = []  # Clear chat history when switching strategies
+            st.session_state.chat_session = None  # Reset session
+            st.rerun()
         if is_active:
-            st.markdown(f'<div class="active-strategy-button">', unsafe_allow_html=True)
-            st.button(strategy, key=button_key, disabled=True, help="Currently selected strategy")
-            st.markdown('</div>', unsafe_allow_html=True)
-        else:
-            # Regular button for inactive strategies
-            if st.button(strategy, key=button_key, help="Click to explore this strategy"):
-                st.session_state.active_strategy = strategy  # Activate the strategy
+            if st.button(f"Return to Main Chat", key=f"return_button_{strategy}"):  # A second button to deactivate
+                st.session_state.active_strategy = None  # Clear the active strategy
                 st.session_state.messages = []  # Clear chat history when switching strategies
                 st.session_state.chat_session = None  # Reset session
                 st.rerun()
