@@ -283,6 +283,13 @@ with st.sidebar:
         opacity: 1 !important; /* Prevent the default opacity reduction */
         cursor: default;
     }
+    
+    /* Style for primary button (Return to Main Chat) */
+    [data-testid="stSidebar"] [kind="primary"] {
+        background-color: #C1E5F5 !important; /* Light blue background */
+        color: black !important; /* Black text for better contrast */
+        margin-bottom: 15px !important; /* Add space below */
+    }
     </style>
     """
 
@@ -303,31 +310,10 @@ with st.sidebar:
         "Precorrection"
     ]
     
-    # If a strategy is active, first display the return button using a custom colored element
+    # If a strategy is active, first display the return button using a primary button type
     if st.session_state.active_strategy:
-        # Create a light blue button using direct HTML
-        st.markdown("""
-        <div style="width: 300px; margin: 4px 2px 15px 2px;">
-            <button 
-                style="width: 100%; 
-                       background-color: #C1E5F5; 
-                       color: black; 
-                       border: none; 
-                       padding: 10px 24px; 
-                       text-align: center; 
-                       text-decoration: none; 
-                       display: inline-block; 
-                       font-size: 10px; 
-                       cursor: pointer; 
-                       border-radius: 12px;" 
-                onclick="window.location.href=window.location.href">
-                Return to Main Chat
-            </button>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Hidden Streamlit button that will handle the state reset
-        if st.button("", key="hidden_return_button", help="Go back to main chat"):
+        # Use type="primary" to make it visually different, styled with CSS
+        if st.button("Return to Main Chat", key="return_button", type="primary", help="Go back to main chat"):
             st.session_state.active_strategy = None
             st.session_state.messages = []
             st.session_state.chat_session = None
