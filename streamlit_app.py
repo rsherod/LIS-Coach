@@ -249,42 +249,60 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # First add your normal style for the strategy buttons
-    st.markdown("""
+    # Put this custom css style chunk for purple buttons directly above set colors (see below)
+    custom_css = """
     <style>
-    /* Strategy buttons style */
-    .strategy-buttons button {
-        width: 300px;
-        white-space: normal;
-        height: auto;
+    /* Target buttons within the sidebar */
+    [data-testid="stSidebar"] button {
+        width: 300px; /* Fixed width for all buttons */
+        white-space: normal; /* Allow text to wrap */
+        height: auto; /* Allow height to adjust based on content */
         background-color: #6A157D; /* Purple background */
-        color: white;
-        border: none;
-        padding: 10px 24px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 10px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 12px;
+        color: white; /* White text */
+        border: none; /* Remove borders */
+        padding: 10px 24px; /* Add some padding */
+        text-align: center; /* Center text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block; /* Get buttons to line up nicely */
+        font-size: 10px; /* Increase font size */
+        margin: 4px 2px; /* Add some margin */
+        cursor: pointer; /* Add a pointer cursor on hover */
+        border-radius: 12px; /* Rounded corners */
     }
     
-    .strategy-buttons button:hover {
+    /* Add a hover effect for buttons */
+    [data-testid="stSidebar"] button:hover {
         background-color: #871BA1; /* Darker purple */
-        color: white !important;
+        color: white !important; /* White text on hover - using !important to override any conflicting styles */
     }
-    
-    .strategy-buttons button[disabled] {
-        background-color: #E1A2F0 !important; /* Lighter purple */
-        color: white;
-        opacity: 1 !important;
+
+    /* Style for active buttons - lighter purple */
+    [data-testid="stSidebar"] button[disabled] {
+        background-color: #E1A2F0 !important; /* Lighter purple for active button */
+        color: white; /* White text */
+        opacity: 1 !important; /* Override default disabled opacity */
     }
+
+    /* Style for Return to Main Chat button - light blue */
+    [data-testid="stSidebar"] button[key*="return_button_"] {
+        background-color: #C1E5F5 !important; /* Light blue for return button */
+        color: black !important; /* Darker text for better contrast */
+        margin-bottom: 15px !important; /* Add space below return button */
+    }
+
+/* Ensure the return button also has proper styling on hover */
+[data-testid="stSidebar"] button[key*="return_button_"]:hover {
+    background-color: #A3D2E8 !important; /* Slightly darker blue on hover */
+    color: black !important; /* Keep text black on hover */
+}
     </style>
-    """, unsafe_allow_html=True)
+    """
+
+    # Set colors for sidebar Put this directly above your sidebar code  
+    st.markdown(custom_css, unsafe_allow_html=True)
     
     # Wrap the strategy buttons in a container with a unique id so that only these buttons are affected
-    st.markdown('<div class="strategy-buttons">', unsafe_allow_html=True)
+    st.markdown('<div id="strategy-buttons">', unsafe_allow_html=True)
     
     # Strategy buttons list
     strategies = [
@@ -297,60 +315,39 @@ with st.sidebar:
         "Precorrection"
     ]
     
+    # If a strategy is active, first display the return button
+    if st.session_state.active_strategy:
+        # Add return button at the top with blue styling
+        st.markdown('<div class="return-button">', unsafe_allow_html=True)
+        if st.button(f"Return to Main Chat", key=f"return_button_top", help="Go back to main chat"):
+            st.session_state.active_strategy = None  # Clear the active strategy
+            st.session_state.messages = []  # Clear chat history when switching strategies
+            st.session_state.chat_session = None  # Reset session
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # Display strategy buttons
     for strategy in strategies:
         # Use a unique key for each button to avoid conflicts during re-renders
         button_key = f"strategy_button_{strategy}"
         # Determine if the current strategy is active
         is_active = st.session_state.active_strategy == strategy
         
-        # Button logic: if the button is clicked, set the session state appropriately
-        if st.button(strategy, key=button_key, disabled=is_active, help="Click to explore this strategy"):
-            st.session_state.active_strategy = strategy  # Activate the strategy
-            st.session_state.messages = []  # Clear chat history when switching strategies
-            st.session_state.chat_session = None  # Reset session
-            st.rerun()
+        # If the strategy is active, apply the active styling
+        if is_active:
+            st.markdown(f'<div class="active-strategy-button">', unsafe_allow_html=True)
+            st.button(strategy, key=button_key, disabled=True, help="Currently selected strategy")
+            st.markdown('</div>', unsafe_allow_html=True)
+        else:
+            # Regular button for inactive strategies
+            if st.button(strategy, key=button_key, help="Click to explore this strategy"):
+                st.session_state.active_strategy = strategy  # Activate the strategy
+                st.session_state.messages = []  # Clear chat history when switching strategies
+                st.session_state.chat_session = None  # Reset session
+                st.rerun()
     
+    # Close the container for the strategy buttons
     st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Now add a completely separate style and section for return buttons
-    st.markdown("""
-    <style>
-    /* Return button style */
-    .return-buttons button {
-        width: 300px;
-        white-space: normal;
-        height: auto;
-        background-color: #C1E5F5 !important; /* Blue background */
-        color: black !important;
-        border: none;
-        padding: 10px 24px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 10px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 12px;
-    }
-    
-    .return-buttons button:hover {
-        background-color: #A3D2E8 !important; /* Darker blue */
-        color: black !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    # Only show return button if a strategy is active
-    if st.session_state.active_strategy:
-        st.markdown('<div class="return-buttons">', unsafe_allow_html=True)
-        
-        if st.button("Return to Main Chat", key="return_button"):
-            st.session_state.active_strategy = None
-            st.session_state.messages = []
-            st.session_state.chat_session = None
-            st.rerun()
-            
-        st.markdown('</div>', unsafe_allow_html=True)
     
     # Debug section - only include once in the sidebar
     st.divider()
@@ -372,13 +369,7 @@ with main_container:
         # First message intro for active strategy
         if not st.session_state.messages:
             strategy_intros = {
-                "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
-                "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
-                "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
-                "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
-                "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
-                "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
-                "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
+                # strategy definitions here
             }
             intro = strategy_intros.get(st.session_state.active_strategy, "")
             st.markdown(f"<div style='background-color: #F0F2F6; padding: 15px;'>You're currently exploring the {st.session_state.active_strategy} strategy. {intro}</div>", unsafe_allow_html=True)
