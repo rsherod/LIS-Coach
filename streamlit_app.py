@@ -249,7 +249,7 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # Put this custom css style chunk for purple buttons directly above set colors (see below)
+    # UPDATED CSS with improved selectors for button styling
     custom_css = """
     <style>
     /* Target buttons within the sidebar */
@@ -276,21 +276,24 @@ with st.sidebar:
         color: white !important; /* White text on hover - using !important to override any conflicting styles */
     }
     
-    /* Style for active buttons - lighter purple */
-    .active-strategy-button {
-        background-color: #E1A2F0 !important; /* Lighter purple for active button */
-        color: white
+    /* Style for active buttons - Updated selector to target disabled buttons */
+    [data-testid="stSidebar"] button:disabled {
+        background-color: #E1A2F0 !important; /* Light purple for active button */
+        color: black !important; /* Make text visible against light background */
+        opacity: 1 !important; /* Prevent the default opacity reduction */
+        cursor: default;
     }
     
-    /* Style for return button - light blue */
-    .return-button {
+    /* Style for return button - Updated selector to target buttons with key containing return_button */
+    [data-testid="stSidebar"] button[key^="return_button"] {
         background-color: #C1E5F5 !important; /* Light blue for return button */
+        color: black !important; /* Black text for better contrast */
         margin-bottom: 15px !important; /* Add space below return button */
     }
     </style>
     """
 
-    # Set colors for sidebar Put this directly above your sidebar code  
+    # Set colors for sidebar  
     st.markdown(custom_css, unsafe_allow_html=True)
     
     # Wrap the strategy buttons in a container with a unique id so that only these buttons are affected
@@ -309,14 +312,12 @@ with st.sidebar:
     
     # If a strategy is active, first display the return button
     if st.session_state.active_strategy:
-        # Add return button at the top with blue styling
-        st.markdown('<div class="return-button">', unsafe_allow_html=True)
-        if st.button(f"Return to Main Chat", key=f"return_button_top", help="Go back to main chat"):
+        # Add return button with key starting with "return_button"
+        if st.button("Return to Main Chat", key="return_button_top", help="Go back to main chat"):
             st.session_state.active_strategy = None  # Clear the active strategy
             st.session_state.messages = []  # Clear chat history when switching strategies
             st.session_state.chat_session = None  # Reset session
             st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
 
     # Display strategy buttons
     for strategy in strategies:
@@ -325,11 +326,9 @@ with st.sidebar:
         # Determine if the current strategy is active
         is_active = st.session_state.active_strategy == strategy
         
-        # If the strategy is active, apply the active styling
+        # Use disabled attribute for active strategy button which will be styled via CSS
         if is_active:
-            st.markdown(f'<div class="active-strategy-button">', unsafe_allow_html=True)
             st.button(strategy, key=button_key, disabled=True, help="Currently selected strategy")
-            st.markdown('</div>', unsafe_allow_html=True)
         else:
             # Regular button for inactive strategies
             if st.button(strategy, key=button_key, help="Click to explore this strategy"):
@@ -361,7 +360,13 @@ with main_container:
         # First message intro for active strategy
         if not st.session_state.messages:
             strategy_intros = {
-                # strategy definitions here
+                "Active Supervision": "Active Supervision involves moving, scanning, and interacting with students to prevent and address behavior concerns.",
+                "Behavior-Specific Praise": "Behavior-Specific Praise is a form of positive reinforcement that acknowledges specific student behaviors.",
+                "High-Probability Request Sequences": "High-Probability Request Sequences involve making requests students are likely to comply with before making more challenging requests.",
+                "Instructional Choice": "Instructional Choice involves embedding options into lessons for students to select based on their preferences.",
+                "Instructional Feedback": "Instructional Feedback provides precise information to students about their academic, social, and behavioral performance.",
+                "Opportunities to Respond": "Opportunities to Respond involves offering frequent opportunities for students to engage with academic material.",
+                "Precorrection": "Precorrection involves proactively reminding students of expected behaviors before challenging situations arise."
             }
             intro = strategy_intros.get(st.session_state.active_strategy, "")
             st.markdown(f"<div style='background-color: #F0F2F6; padding: 15px;'>You're currently exploring the {st.session_state.active_strategy} strategy. {intro}</div>", unsafe_allow_html=True)
