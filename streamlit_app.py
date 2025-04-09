@@ -286,7 +286,7 @@ with st.sidebar:
     /* Style for return button - light blue */
     [data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
         background-color: #C1E5F5 !important; /* Light blue for return button */
-        color: #333333 !important; /* Darker text for better contrast */
+        color: black !important; /* Darker text for better contrast */
         margin-bottom: 15px !important; /* Add space below return button */
     }
     </style>
