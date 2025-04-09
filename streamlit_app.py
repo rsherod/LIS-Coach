@@ -284,8 +284,8 @@ with st.sidebar:
         cursor: default;
     }
     
-    /* Style for return button - Updated selector to target buttons with key containing return_button */
-    [data-testid="stSidebar"] button[key^="return_button"] {
+    /* Style for return button - Using first-of-type when strategy is active */
+    [data-testid="stSidebar"] div#strategy-buttons button:first-of-type {
         background-color: #C1E5F5 !important; /* Light blue for return button */
         color: black !important; /* Black text for better contrast */
         margin-bottom: 15px !important; /* Add space below return button */
