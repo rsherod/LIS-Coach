@@ -282,13 +282,19 @@ with st.sidebar:
         color: white; /* White text */
         opacity: 1 !important; /* Override default disabled opacity */
     }
-    
+
     /* Style for Return to Main Chat button - light blue */
-    [data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
+    [data-testid="stSidebar"] button[key*="return_button_"] {
         background-color: #C1E5F5 !important; /* Light blue for return button */
         color: black !important; /* Darker text for better contrast */
         margin-bottom: 15px !important; /* Add space below return button */
     }
+
+/* Ensure the return button also has proper styling on hover */
+[data-testid="stSidebar"] button[key*="return_button_"]:hover {
+    background-color: #A3D2E8 !important; /* Slightly darker blue on hover */
+    color: black !important; /* Keep text black on hover */
+}
     </style>
     """
 
