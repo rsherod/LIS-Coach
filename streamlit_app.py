@@ -249,7 +249,7 @@ with st.sidebar:
     # Strategy section title
     st.markdown("<h1 style='text-align: center;'>Low-Intensity Strategies</h1>", unsafe_allow_html=True)
     
-    # UPDATED CSS with improved selectors for button styling
+    # CSS styling for buttons
     custom_css = """
     <style>
     /* Target buttons within the sidebar */
@@ -283,13 +283,6 @@ with st.sidebar:
         opacity: 1 !important; /* Prevent the default opacity reduction */
         cursor: default;
     }
-    
-    /* Style for return button - Using first-of-type when strategy is active */
-    [data-testid="stSidebar"] div#strategy-buttons button:first-of-type {
-        background-color: #C1E5F5 !important; /* Light blue for return button */
-        color: black !important; /* Black text for better contrast */
-        margin-bottom: 15px !important; /* Add space below return button */
-    }
     </style>
     """
 
@@ -310,13 +303,34 @@ with st.sidebar:
         "Precorrection"
     ]
     
-    # If a strategy is active, first display the return button
+    # If a strategy is active, first display the return button using a custom colored element
     if st.session_state.active_strategy:
-        # Add return button with key starting with "return_button"
-        if st.button("Return to Main Chat", key="return_button_top", help="Go back to main chat"):
-            st.session_state.active_strategy = None  # Clear the active strategy
-            st.session_state.messages = []  # Clear chat history when switching strategies
-            st.session_state.chat_session = None  # Reset session
+        # Create a light blue button using direct HTML
+        st.markdown("""
+        <div style="width: 300px; margin: 4px 2px 15px 2px;">
+            <button 
+                style="width: 100%; 
+                       background-color: #C1E5F5; 
+                       color: black; 
+                       border: none; 
+                       padding: 10px 24px; 
+                       text-align: center; 
+                       text-decoration: none; 
+                       display: inline-block; 
+                       font-size: 10px; 
+                       cursor: pointer; 
+                       border-radius: 12px;" 
+                onclick="window.location.href=window.location.href">
+                Return to Main Chat
+            </button>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Hidden Streamlit button that will handle the state reset
+        if st.button("", key="hidden_return_button", help="Go back to main chat"):
+            st.session_state.active_strategy = None
+            st.session_state.messages = []
+            st.session_state.chat_session = None
             st.rerun()
 
     # Display strategy buttons
