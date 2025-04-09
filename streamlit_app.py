@@ -340,13 +340,13 @@ with main_container:
                 # strategy definitions here
             }
             intro = strategy_intros.get(st.session_state.active_strategy, "")
-            st.markdown(f"<div style='background-color: #E0E0E0; padding: 10px;'>You're currently exploring the {st.session_state.active_strategy} strategy. {intro}</div>", unsafe_allow_html=True)
-            st.markdown("<div style='background-color: #E0E0E0; padding: 10px;'>Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='background-color: #F0F2F6; padding: 10px;'>You're currently exploring the {st.session_state.active_strategy} strategy. {intro}</div>", unsafe_allow_html=True)
+            st.markdown("<div style='background-color: #F0F2F6; padding: 10px;'>Ask questions about how to implement this strategy in your classroom or describe a scenario where you might use it.</div>", unsafe_allow_html=True)
         else:
-            st.markdown(f"<div style='background-color: #E0E0E0; padding: 10px;'>You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='background-color: #F0F2F6; padding: 10px;'>You're currently exploring the {st.session_state.active_strategy} strategy. Ask questions about how to implement this strategy in your classroom or how it can help with specific scenarios.</div>", unsafe_allow_html=True)
     else:
-        st.markdown("<h2 style='background-color: #E0E0E0; padding: 10px;'>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
-        st.markdown("<div style='background-color: #E0E0E0; padding: 10px;'>The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.<br><br><strong>Directions:</strong> If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.</div>", unsafe_allow_html=True) 
+        st.markdown("<h2 style='background-color: #F0F2F6; padding: 10px;'>Welcome to the Low-Intensity Strategies Bot!</h2>", unsafe_allow_html=True)
+        st.markdown("<div style='background-color: #F0F2F6; padding: 10px;'>The goal of this bot is to assist you in selecting a low-intensity strategy that fits your needs—whether you are proactively planning for engagement in your lessons or responding to an interfering or challenging behavior you are experiencing.<br><br><strong>Directions:</strong> If you would like to explore multiple low-intensity strategy options, type a description of the scenario you are experiencing or a lesson plan idea into the chat to get started. If you would like to focus on one strategy specifically, click the name of the strategy on the side menu to get started.</div>", unsafe_allow_html=True) 
     st.caption("Note: This Bot is under development and can make mistakes. Visit ci3t.org for information and resources about low-intensity strategies.")
     
     # Add extra spacing between caption and chat input
