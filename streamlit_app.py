@@ -275,6 +275,17 @@ with st.sidebar:
         background-color: #871BA1; /* Darker purple */
         color: white !important; /* White text on hover - using !important to override any conflicting styles */
     }
+
+    /* Style for active buttons - lighter purple */
+    .active-strategy-button {
+        background-color: #9A55AD !important; /* Lighter purple for active button */
+    }
+    
+    /* Style for return button - light blue */
+    .return-button {
+        background-color: #C1E5F5 !important; /* Light blue for return button */
+        margin-bottom: 15px !important; /* Add space below return button */
+    }
     </style>
     """
 
