@@ -1,4 +1,4 @@
-# Low-Intensity Strategies Coach (R. Sherod, fall 2024)
+# Low-Intensity Strategy Coach (R. Sherod, fall 2024)
 import streamlit as st
 import google.generativeai as genai
 from PIL import Image
@@ -6,9 +6,6 @@ import json
 import os
 from datetime import datetime
 from io import BytesIO
-import firebase_admin
-from firebase_admin import credentials, firestore
-import uuid
 
 # Import file format libraries (will be used in helper functions)
 # Note: You may need to add these to your requirements.txt
@@ -18,81 +15,6 @@ import uuid
 st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
 
 # Global CSS for other elements remains unchanged (if any)
-
-# Initialize Firebase (only once)
-if not firebase_admin._apps:
-    # You'll need to download your Firebase service account key and save it securely
-    # For Streamlit Cloud, you can use st.secrets to store the credentials
-    firebase_credentials = {
-        "type": st.secrets["FIREBASE_TYPE"],
-        "project_id": st.secrets["FIREBASE_PROJECT_ID"],
-        "private_key_id": st.secrets["FIREBASE_PRIVATE_KEY_ID"],
-        "private_key": st.secrets["FIREBASE_PRIVATE_KEY"].replace('\\n', '\n'),
-        "client_email": st.secrets["FIREBASE_CLIENT_EMAIL"],
-        "client_id": st.secrets["FIREBASE_CLIENT_ID"],
-        "auth_uri": st.secrets["FIREBASE_AUTH_URI"],
-        "token_uri": st.secrets["FIREBASE_TOKEN_URI"],
-        "auth_provider_x509_cert_url": st.secrets["FIREBASE_AUTH_PROVIDER_X509_CERT_URL"],
-        "client_x509_cert_url": st.secrets["FIREBASE_CLIENT_X509_CERT_URL"]
-    }
-    
-    cred = credentials.Certificate(firebase_credentials)
-    firebase_admin.initialize_app(cred)
-
-# Get Firestore client
-db = firestore.client()
-
-# Initialize or retrieve session ID
-if "session_id" not in st.session_state:
-    st.session_state.session_id = str(uuid.uuid4())
-
-# Firebase helper functions
-def save_message_to_firestore(message, session_id):
-    message_data = {
-        "role": message["role"],
-        "content": message["content"],
-        "timestamp": firestore.SERVER_TIMESTAMP
-    }
-    
-    # Add to 'messages' collection, under the current session document
-    db.collection('sessions').document(session_id).collection('messages').add(message_data)
-    
-    # Update the session document with metadata
-    db.collection('sessions').document(session_id).set({
-        "last_updated": firestore.SERVER_TIMESTAMP,
-        "active_strategy": st.session_state.active_strategy
-    }, merge=True)
-
-# Function to retrieve chat history from Firestore
-def get_chat_history_from_firestore(session_id):
-    messages = []
-    # Get messages ordered by timestamp
-    message_refs = db.collection('sessions').document(session_id).collection('messages').order_by('timestamp').stream()
-    
-    for message in message_refs:
-        message_data = message.to_dict()
-        messages.append({
-            "role": message_data["role"],
-            "content": message_data["content"]
-        })
-    
-    return messages
-
-# Function to save strategy selection to Firestore
-def save_strategy_selection(strategy_name, session_id):
-    db.collection('sessions').document(session_id).set({
-        "active_strategy": strategy_name,
-        "timestamp": firestore.SERVER_TIMESTAMP
-    }, merge=True)
-
-# Function to save analytics data
-def log_interaction(event_type, data, session_id):
-    db.collection('analytics').add({
-        "session_id": session_id,
-        "event_type": event_type,
-        "data": data,
-        "timestamp": firestore.SERVER_TIMESTAMP
-    })
 
 # Initialize session state variables
 if "form_submitted" not in st.session_state:
@@ -117,6 +39,8 @@ if "uploaded_file" not in st.session_state:
     st.session_state.uploaded_file = None
 if "active_strategy" not in st.session_state:
     st.session_state.active_strategy = None
+if "session_id" not in st.session_state:
+    st.session_state.session_id = datetime.now().strftime("%Y%m%d%H%M%S")
 
 # Helper function to load text files
 def load_text_file(file_path):
@@ -268,6 +192,25 @@ def get_chat_docx():
     # Return bytes
     return bytesio.getvalue()
 
+# Mock functions for Firebase functionality (simplified for now)
+def save_message_to_firestore(message, session_id):
+    # This is a stub function that would normally save to Firestore
+    # For now, we'll just log to debug
+    st.session_state.debug.append(f"Would save message to Firestore: {message['role']} in session {session_id}")
+    return True
+
+def save_strategy_selection(strategy_name, session_id):
+    # This is a stub function that would normally save to Firestore
+    # For now, we'll just log to debug
+    st.session_state.debug.append(f"Would save strategy selection to Firestore: {strategy_name} in session {session_id}")
+    return True
+
+def log_interaction(event_type, data, session_id):
+    # This is a stub function that would normally log to Firestore
+    # For now, we'll just log to debug
+    st.session_state.debug.append(f"Would log interaction to Firestore: {event_type} in session {session_id}")
+    return True
+
 # Load system instructions and strategy data
 system_instructions = load_text_file('instructions.txt')
 strategies_data = {}
@@ -305,21 +248,10 @@ def build_system_prompt(active_strategy=None):
 # Sidebar for model and temperature selection
 with st.sidebar:
    # st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
-   # st.caption("Note: Gemini-1.5-pro-002 can only handle 2 requests per minute, gemini-1.5-flash-002 can handle 15 per minute")
 
     # Ensure model_name is initialized
     if 'model_name' not in st.session_state:
         st.session_state.model_name = "gemini-2.0-flash"  # default model
-
-    #model_option = st.selectbox(
-        #"Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.0-flash"]
-    #)
-
-    # Update model_name if it has changed
-    #if model_option != st.session_state.model_name:
-        #st.session_state.model_name = model_option
-        #st.session_state.messages = []
-        #st.session_state.chat_session = None
 
     # Add divider before strategy buttons
     st.divider()
@@ -395,7 +327,7 @@ with st.sidebar:
             st.session_state.active_strategy = None
             st.session_state.messages = []
             st.session_state.chat_session = None
-            # Log strategy deselection to Firestore
+            # Log strategy deselection
             log_interaction("strategy_deselected", {"strategy": st.session_state.active_strategy}, st.session_state.session_id)
             st.rerun()
 
@@ -415,47 +347,20 @@ with st.sidebar:
                 st.session_state.active_strategy = strategy  # Activate the strategy
                 st.session_state.messages = []  # Clear chat history when switching strategies
                 st.session_state.chat_session = None  # Reset session
-                # Save strategy selection to Firestore
+                # Save strategy selection
                 save_strategy_selection(strategy, st.session_state.session_id)
-                # Log strategy selection to analytics
+                # Log strategy selection
                 log_interaction("strategy_selected", {"strategy": strategy}, st.session_state.session_id)
                 st.rerun()
     
     # Close the container for the strategy buttons
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Add Previous Sessions section
+    # Debug section - uncomment if needed for debugging
     st.divider()
-    st.subheader("Previous Sessions")
-    
-    # Get recent sessions
-    try:
-        recent_sessions = db.collection('sessions').order_by('last_updated', direction=firestore.Query.DESCENDING).limit(5).stream()
-        
-        for session in recent_sessions:
-            session_data = session.to_dict()
-            if 'last_updated' in session_data and session_data.get('last_updated'):
-                # Format timestamp
-                timestamp = session_data['last_updated'].strftime('%Y-%m-%d %H:%M')
-                strategy = session_data.get('active_strategy', 'General Chat')
-                
-                if st.button(f"{strategy} - {timestamp}", key=f"session_{session.id}"):
-                    st.session_state.session_id = session.id
-                    st.session_state.active_strategy = session_data.get('active_strategy')
-                    # Load messages from this session
-                    st.session_state.messages = get_chat_history_from_firestore(session.id)
-                    st.session_state.chat_session = None  # Reset model chat
-                    log_interaction("session_loaded", {"session_id": session.id}, st.session_state.session_id)
-                    st.rerun()
-    except Exception as e:
-        st.warning("Could not load previous sessions.")
-        st.session_state.debug.append(f"Error loading sessions: {e}")
-    
-    # Debug section - only include once in the sidebar
-    #st.divider()
-    #st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
-    #for debug_msg in st.session_state.debug:
-        #st.text(debug_msg)
+    st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
+    for debug_msg in st.session_state.debug:
+        st.text(debug_msg)
 
 # Create a main container for all content
 main_container = st.container()
@@ -545,10 +450,6 @@ with main_container:
                     key="download_chat",
                     use_container_width=True
                 )
-                
-                # Log download event
-                if st.button("Download", key="download_trigger", use_container_width=True, on_click=lambda: log_interaction("chat_downloaded", {"format": format_option}, st.session_state.session_id)):
-                    pass
 
     # Handle form submission and generate response
     if st.session_state.should_generate_response:
@@ -561,7 +462,7 @@ with main_container:
         current_message = {"role": "user", "content": combined_prompt}
         st.session_state.messages.append(current_message)
         
-        # Save to Firestore
+        # Save to mock Firestore
         save_message_to_firestore(current_message, st.session_state.session_id)
 
         with st.chat_message("user"):
@@ -604,21 +505,18 @@ with main_container:
                 assistant_message = {"role": "assistant", "content": full_response}
                 st.session_state.messages.append(assistant_message)
                 
-                # Save to Firestore
+                # Save to mock Firestore
                 save_message_to_firestore(assistant_message, st.session_state.session_id)
                 
                 st.session_state.debug.append("Assistant response generated")
             except Exception as e:
                 st.error(f"An error occurred while generating the response: {e}")
                 st.session_state.debug.append(f"Error: {e}")
-                # Log error to Firestore
+                # Log error
                 log_interaction("error", {"message": str(e)}, st.session_state.session_id)
 
+        st.session_state.should_generate_response = False
         st.rerun()
-
-# Now put the funding acknowledgment in the funding container (will appear at the bottom)
-with funding_container:
-    st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
 
 # User input with context-aware placeholder
 placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
@@ -629,7 +527,7 @@ if user_input:
     current_message = {"role": "user", "content": user_input}
     st.session_state.messages.append(current_message)
     
-    # Save to Firestore
+    # Save to mock Firestore
     save_message_to_firestore(current_message, st.session_state.session_id)
     
     # Log user interaction
@@ -676,14 +574,18 @@ if user_input:
             assistant_message = {"role": "assistant", "content": full_response}
             st.session_state.messages.append(assistant_message)
             
-            # Save to Firestore
+            # Save to mock Firestore
             save_message_to_firestore(assistant_message, st.session_state.session_id)
             
             st.session_state.debug.append("Assistant response generated")
         except Exception as e:
             st.error(f"An error occurred while generating the response: {e}")
             st.session_state.debug.append(f"Error: {e}")
-            # Log error to Firestore
+            # Log error
             log_interaction("error", {"message": str(e)}, st.session_state.session_id)
 
     st.rerun()
+
+# Now put the funding acknowledgment in the funding container (will appear at the bottom)
+with funding_container:
+    st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
