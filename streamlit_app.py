@@ -341,10 +341,10 @@ with st.sidebar:
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Debug section - only include once in the sidebar
-    #st.divider()
-    #st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
-    #for debug_msg in st.session_state.debug:
-        #st.text(debug_msg)
+    st.divider()
+    st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
+    for debug_msg in st.session_state.debug:
+        st.text(debug_msg)
 
 # Create a main container for all content
 main_container = st.container()
