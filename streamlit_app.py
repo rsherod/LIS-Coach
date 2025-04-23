@@ -7,22 +7,10 @@ import os
 from datetime import datetime
 from io import BytesIO
 
-# Import file format libraries (will be used in helper functions)
-# Note: You may need to add these to your requirements.txt
-# python-docx, reportlab
-
 # Streamlit configuration
-st.set_page_config(page_title="Streamlit Chatbot", layout="wide")
-
-# Global CSS for other elements remains unchanged (if any)
+st.set_page_config(page_title="Low-Intensity Strategies Coach", layout="wide")
 
 # Initialize session state variables
-if "form_submitted" not in st.session_state:
-    st.session_state.form_submitted = False
-if "form_responses" not in st.session_state:
-    st.session_state.form_responses = {}
-if "should_generate_response" not in st.session_state:
-    st.session_state.should_generate_response = False
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "model_name" not in st.session_state:
@@ -31,12 +19,8 @@ if "temperature" not in st.session_state:
     st.session_state.temperature = 0.5
 if "debug" not in st.session_state:
     st.session_state.debug = []
-if "pdf_content" not in st.session_state:
-    st.session_state.pdf_content = ""
 if "chat_session" not in st.session_state:
     st.session_state.chat_session = None
-if "uploaded_file" not in st.session_state:
-    st.session_state.uploaded_file = None
 if "active_strategy" not in st.session_state:
     st.session_state.active_strategy = None
 if "session_id" not in st.session_state:
@@ -192,25 +176,6 @@ def get_chat_docx():
     # Return bytes
     return bytesio.getvalue()
 
-# Mock functions for Firebase functionality (simplified for now)
-def save_message_to_firestore(message, session_id):
-    # This is a stub function that would normally save to Firestore
-    # For now, we'll just log to debug
-    st.session_state.debug.append(f"Would save message to Firestore: {message['role']} in session {session_id}")
-    return True
-
-def save_strategy_selection(strategy_name, session_id):
-    # This is a stub function that would normally save to Firestore
-    # For now, we'll just log to debug
-    st.session_state.debug.append(f"Would save strategy selection to Firestore: {strategy_name} in session {session_id}")
-    return True
-
-def log_interaction(event_type, data, session_id):
-    # This is a stub function that would normally log to Firestore
-    # For now, we'll just log to debug
-    st.session_state.debug.append(f"Would log interaction to Firestore: {event_type} in session {session_id}")
-    return True
-
 # Load system instructions and strategy data
 system_instructions = load_text_file('instructions.txt')
 strategies_data = {}
@@ -247,12 +212,6 @@ def build_system_prompt(active_strategy=None):
 
 # Sidebar for model and temperature selection
 with st.sidebar:
-   # st.markdown("<h1 style='text-align: center;'>Settings</h1>", unsafe_allow_html=True)
-
-    # Ensure model_name is initialized
-    if 'model_name' not in st.session_state:
-        st.session_state.model_name = "gemini-2.0-flash"  # default model
-
     # Add divider before strategy buttons
     st.divider()
     
@@ -327,8 +286,6 @@ with st.sidebar:
             st.session_state.active_strategy = None
             st.session_state.messages = []
             st.session_state.chat_session = None
-            # Log strategy deselection
-            log_interaction("strategy_deselected", {"strategy": st.session_state.active_strategy}, st.session_state.session_id)
             st.rerun()
 
     # Display strategy buttons
@@ -347,16 +304,12 @@ with st.sidebar:
                 st.session_state.active_strategy = strategy  # Activate the strategy
                 st.session_state.messages = []  # Clear chat history when switching strategies
                 st.session_state.chat_session = None  # Reset session
-                # Save strategy selection
-                save_strategy_selection(strategy, st.session_state.session_id)
-                # Log strategy selection
-                log_interaction("strategy_selected", {"strategy": strategy}, st.session_state.session_id)
                 st.rerun()
     
     # Close the container for the strategy buttons
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Debug section - uncomment if needed for debugging
+    # Debug section
     st.divider()
     st.markdown("<h1 style='text-align: center;'>Debug Info</h1>", unsafe_allow_html=True)
     for debug_msg in st.session_state.debug:
@@ -451,73 +404,6 @@ with main_container:
                     use_container_width=True
                 )
 
-    # Handle form submission and generate response
-    if st.session_state.should_generate_response:
-        # Create combined prompt from responses
-        combined_prompt = "Form Responses:\n"
-        for q, a in st.session_state.form_responses.items():
-            combined_prompt += f"{q}: {a}\n"
-        
-        # Add user message to chat history
-        current_message = {"role": "user", "content": combined_prompt}
-        st.session_state.messages.append(current_message)
-        
-        # Save to mock Firestore
-        save_message_to_firestore(current_message, st.session_state.session_id)
-
-        with st.chat_message("user"):
-            st.markdown(current_message["content"])
-
-        # Generate and display assistant response
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-
-            # Initialize chat session if needed
-            if st.session_state.chat_session is None:
-                generation_config = {
-                    "temperature": st.session_state.temperature,
-                    "top_p": 0.95,
-                    "top_k": 40,
-                    "max_output_tokens": 8192,
-                }
-                model = genai.GenerativeModel(
-                    model_name=st.session_state.model_name,
-                    generation_config=generation_config,
-                )
-                
-                # Build complete system prompt with active strategy if applicable
-                complete_system_prompt = build_system_prompt(st.session_state.active_strategy)
-                
-                initial_messages = [
-                    {"role": "user", "parts": [f"System: {complete_system_prompt}"]},
-                    {"role": "model", "parts": ["Understood. I will follow these instructions."]},
-                ]
-                
-                st.session_state.chat_session = model.start_chat(history=initial_messages)
-
-            # Generate response with error handling
-            try:
-                response = st.session_state.chat_session.send_message(current_message["content"])
-                full_response = response.text
-                message_placeholder.markdown(full_response)
-                
-                # Add assistant message to chat history
-                assistant_message = {"role": "assistant", "content": full_response}
-                st.session_state.messages.append(assistant_message)
-                
-                # Save to mock Firestore
-                save_message_to_firestore(assistant_message, st.session_state.session_id)
-                
-                st.session_state.debug.append("Assistant response generated")
-            except Exception as e:
-                st.error(f"An error occurred while generating the response: {e}")
-                st.session_state.debug.append(f"Error: {e}")
-                # Log error
-                log_interaction("error", {"message": str(e)}, st.session_state.session_id)
-
-        st.session_state.should_generate_response = False
-        st.rerun()
-
 # User input with context-aware placeholder
 placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
 user_input = st.chat_input(placeholder_text)
@@ -527,11 +413,8 @@ if user_input:
     current_message = {"role": "user", "content": user_input}
     st.session_state.messages.append(current_message)
     
-    # Save to mock Firestore
-    save_message_to_firestore(current_message, st.session_state.session_id)
-    
-    # Log user interaction
-    log_interaction("user_message", {"message_length": len(user_input)}, st.session_state.session_id)
+    # Debug log
+    st.session_state.debug.append(f"User message added: {len(user_input)} chars")
 
     with st.chat_message("user"):
         st.markdown(current_message["content"])
@@ -574,15 +457,11 @@ if user_input:
             assistant_message = {"role": "assistant", "content": full_response}
             st.session_state.messages.append(assistant_message)
             
-            # Save to mock Firestore
-            save_message_to_firestore(assistant_message, st.session_state.session_id)
-            
+            # Debug log
             st.session_state.debug.append("Assistant response generated")
         except Exception as e:
             st.error(f"An error occurred while generating the response: {e}")
             st.session_state.debug.append(f"Error: {e}")
-            # Log error
-            log_interaction("error", {"message": str(e)}, st.session_state.session_id)
 
     st.rerun()
 
