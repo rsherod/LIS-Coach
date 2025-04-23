@@ -620,68 +620,70 @@ with main_container:
 with funding_container:
     st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
 
-    # User input with context-aware placeholder
-    placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
-    user_input = st.chat_input(placeholder_text)
+# User input with context-aware placeholder
+placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
+user_input = st.chat_input(placeholder_text)
 
-    if user_input:
-        # Add user message to chat history
-        current_message = {"role": "user", "content": user_input}
-        st.session_state.messages.append(current_message)
-        
-        # Save to Firestore
-        save_message_to_firestore(current_message, st.session_state.session_id)
-        
-        # Log user interaction
-        log_interaction("user_message", {"message_length": len(user_input)}, st.session_state.session_id)
+if user_input:
+    # Add user message to chat history
+    current_message = {"role": "user", "content": user_input}
+    st.session_state.messages.append(current_message)
+    
+    # Save to Firestore
+    save_message_to_firestore(current_message, st.session_state.session_id)
+    
+    # Log user interaction
+    log_interaction("user_message", {"message_length": len(user_input)}, st.session_state.session_id)
 
-        with st.chat_message("user"):
-            st.markdown(current_message["content"])
+    with st.chat_message("user"):
+        st.markdown(current_message["content"])
 
-        # Generate and display assistant response
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
+    # Generate and display assistant response
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
 
-            # Prepare messages for Gemini API
-            if st.session_state.chat_session is None:
-                generation_config = {
-                    "temperature": st.session_state.temperature,
-                    "top_p": 0.95,
-                    "top_k": 40,
-                    "max_output_tokens": 8192,
-                }
-                model = genai.GenerativeModel(
-                    model_name=st.session_state.model_name,
-                    generation_config=generation_config,
-                )
-                
-                # Build complete system prompt with active strategy if applicable
-                complete_system_prompt = build_system_prompt(st.session_state.active_strategy)
-                
-                # Initialize chat with system prompt
-                initial_messages = [
-                    {"role": "user", "parts": [f"System: {complete_system_prompt}"]},
-                    {"role": "model", "parts": ["Understood. I will follow these instructions."]},
-                ]
-                
-                st.session_state.chat_session = model.start_chat(history=initial_messages)
+        # Prepare messages for Gemini API
+        if st.session_state.chat_session is None:
+            generation_config = {
+                "temperature": st.session_state.temperature,
+                "top_p": 0.95,
+                "top_k": 40,
+                "max_output_tokens": 8192,
+            }
+            model = genai.GenerativeModel(
+                model_name=st.session_state.model_name,
+                generation_config=generation_config,
+            )
+            
+            # Build complete system prompt with active strategy if applicable
+            complete_system_prompt = build_system_prompt(st.session_state.active_strategy)
+            
+            # Initialize chat with system prompt
+            initial_messages = [
+                {"role": "user", "parts": [f"System: {complete_system_prompt}"]},
+                {"role": "model", "parts": ["Understood. I will follow these instructions."]},
+            ]
+            
+            st.session_state.chat_session = model.start_chat(history=initial_messages)
 
-            # Generate response with error handling
-            try:
-                response = st.session_state.chat_session.send_message(current_message["content"])
-                full_response = response.text
-                message_placeholder.markdown(full_response)
-                
-                # Add assistant message to chat history
-                assistant_message = {"role": "assistant", "content": full_response}
-                st.session_state.messages.append(assistant_message)
-                
-                # Save to Firestore
-                save_message_to_firestore(assistant_message, st.session_state.session_id)
-                
-                st.session_state.debug.append("Assistant response generated")
-            except Exception as e:
-                st.error(f"An error occurred while generating the response: {e}")
-                st.session_state.debug.append(f"Error: {e}")
-                # Log error to Firestore
-                log_interaction("error", {"message
+        # Generate response with error handling
+        try:
+            response = st.session_state.chat_session.send_message(current_message["content"])
+            full_response = response.text
+            message_placeholder.markdown(full_response)
+            
+            # Add assistant message to chat history
+            assistant_message = {"role": "assistant", "content": full_response}
+            st.session_state.messages.append(assistant_message)
+            
+            # Save to Firestore
+            save_message_to_firestore(assistant_message, st.session_state.session_id)
+            
+            st.session_state.debug.append("Assistant response generated")
+        except Exception as e:
+            st.error(f"An error occurred while generating the response: {e}")
+            st.session_state.debug.append(f"Error: {e}")
+            # Log error to Firestore
+            log_interaction("error", {"message": str(e)}, st.session_state.session_id)
+
+    st.rerun()
