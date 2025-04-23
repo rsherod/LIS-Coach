@@ -6,6 +6,9 @@ import json
 import os
 from datetime import datetime
 from io import BytesIO
+import firebase_admin
+from firebase_admin import credentials, firestore
+import uuid
 
 # Import file format libraries (will be used in helper functions)
 # Note: You may need to add these to your requirements.txt
