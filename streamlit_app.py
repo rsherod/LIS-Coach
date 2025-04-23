@@ -619,8 +619,8 @@ with main_container:
 # Now put the funding acknowledgment in the funding container (will appear at the bottom)
 with funding_container:
     st.markdown("<div style='text-align: center; margin-top: 20px;'><small style='color: rgb(128, 128, 128);'>This bot is programmed with information from ci3t.org.\n\nThis work was supported, in part, by ASU's Mary Lou Fulton Teachers College (MLFTC). The opinions and findings expressed in this document are those of the author and do not necessarily reflect those of the funding agency.</small></div>", unsafe_allow_html=True)
-    st.session_state.should_generate_response = False
-    st.rerun()
+        st.session_state.should_generate_response = False
+        st.rerun()
 
     # User input with context-aware placeholder
     placeholder_text = "Ask about how to use this strategy in your classroom" if st.session_state.active_strategy else "Describe a classroom scenario or ask about low-intensity strategies"
