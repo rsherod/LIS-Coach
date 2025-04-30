@@ -6,6 +6,9 @@ import json
 import os
 from datetime import datetime
 from io import BytesIO
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 # Import file format libraries (will be used in helper functions)
 # Note: You may need to add these to your requirements.txt
@@ -189,6 +192,36 @@ def get_chat_docx():
     
     # Return bytes
     return bytesio.getvalue()
+
+# --- Add this function to save messages to Firestore ---
+def save_message(user_input, bot_response):
+    # Ensure db is initialized before trying to save
+    if 'db' in globals() and db:
+        try:
+            # Data structure for a chat message
+            message_data = {
+                "user_input": user_input,
+                "bot_response": bot_response,
+                "timestamp": datetime.now(), # Add a server-side timestamp
+                # Optional: Add active strategy for context
+                "strategy": st.session_state.active_strategy if st.session_state.active_strategy else "main"
+            }
+
+            # Add a new document to the 'chats' collection in Firestore
+            # Firestore will automatically generate a unique document ID
+            doc_ref = db.collection("chats").add(message_data)
+
+            # Optional: Add a debug message (be mindful of rate limits if too chatty)
+            # st.session_state.debug.append(f"Message saved with ID: {doc_ref[1].id}")
+
+        except Exception as e:
+            st.session_state.debug.append(f"Firestore Save Error: {e}") # Log the error in debug
+            st.error(f"Error saving message history: {e}") # Display error to user
+
+    else:
+        # This case happens if Firebase initialization failed
+        st.session_state.debug.append("Firestore database not initialized. Cannot save message.")
+        # st.warning("Message history cannot be saved (database not initialized).") # Optional user warning
 
 # Load system instructions and strategy data
 system_instructions = load_text_file('instructions.txt')
@@ -383,6 +416,52 @@ with main_container:
     st.write("")
     st.write("")
 
+    # --- Add this block to initialize Firebase ---
+    @st.cache_resource
+    def initialize_firebase():
+        try:
+            # Construct the service account info dictionary from secrets
+            # Streamlit secrets are accessed via st.secrets
+            # Ensure the section name [firebase] matches your secrets.toml config
+            firebase_secrets = {
+                "type": st.secrets["firebase"]["type"],
+                "project_id": st.secrets["firebase"]["project_id"],
+                "private_key_id": st.secrets["firebase"]["private_key_id"],
+                "private_key": st.secrets["firebase"]["private_key"],
+                "client_email": st.secrets["firebase"]["client_email"],
+                "client_id": st.secrets["firebase"]["client_id"],
+                "auth_uri": st.secrets["firebase"]["auth_uri"],
+                "token_uri": st.secrets["firebase"]["token_uri"],
+                "auth_provider_x509_cert_url": st.secrets["firebase"]["auth_provider_x509_cert_url"],
+                "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"],
+                "universe_domain": st.secrets["firebase"]["universe_domain"]
+            }
+
+            # Check if firebase app is already initialized to prevent errors on rerun
+            if not firebase_admin._apps:
+                cred = credentials.Certificate(firebase_secrets)
+                firebase_admin.initialize_app(cred)
+                # You can add a debug message if needed, but avoid st.success here
+                # st.session_state.debug.append("Firebase initialized successfully!")
+            else:
+                # App is already initialized, just get the existing app
+                # st.session_state.debug.append("Firebase already initialized.")
+                pass # Or firebase_admin.get_app() if you need the app object
+
+            # Get Firestore client
+            db = firestore.client()
+            st.session_state.debug.append("Firestore client obtained.") # Debug message
+            return db
+
+        except Exception as e:
+            st.error(f"Error initializing Firebase: {e}. Please check your secrets configuration.")
+            st.session_state.debug.append(f"Firebase Init Error: {e}") # Debug message
+            return None
+
+    # Call the function to initialize Firebase and get the db client
+    # This variable 'db' will hold the Firestore client object if initialization was successful
+    db = initialize_firebase()
+    
     # Initialize Gemini client
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
@@ -483,6 +562,7 @@ with main_container:
                 message_placeholder.markdown(full_response)
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
                 st.session_state.debug.append("Assistant response generated")
+                save_message(current_message["content"], full_response)
             except Exception as e:
                 st.error(f"An error occurred while generating the response: {e}")
                 st.session_state.debug.append(f"Error: {e}")
@@ -537,6 +617,7 @@ with main_container:
                 message_placeholder.markdown(full_response)
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
                 st.session_state.debug.append("Assistant response generated")
+                save_message(current_message["content"], full_response)
             except Exception as e:
                 st.error(f"An error occurred while generating the response: {e}")
                 st.session_state.debug.append(f"Error: {e}")
