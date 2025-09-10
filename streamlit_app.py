@@ -6,10 +6,11 @@ import json
 import os
 from datetime import datetime
 from io import BytesIO
-import uuid
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from google.cloud import firestore as gcfirestore  # for SERVER_TIMESTAMP/Array ops
+import uuid
 
 
 # Import file format libraries (will be used in helper functions)
@@ -199,22 +200,34 @@ def get_chat_docx():
 
 # --- Add this function to save messages to Firestore ---
 def save_message(user_input, bot_response):
+    global db  # make sure we use the initialized client
     # Ensure db is initialized before trying to save
     if 'db' in globals() and db:
         try:
+            # Normalize messages to Firestore-safe structures (strings only)
+            messages_for_storage = [
+                {"role": m.get("role", ""), "content": str(m.get("content", ""))}
+                for m in st.session_state.messages
+            ]
+
             # One running record per chat session: upsert a single document with full history
             doc_ref = db.collection("chats").document(st.session_state.conversation_id)
-            doc_ref.set({
-                "messages": st.session_state.messages,  # full running chat history
-                "last_user_input": user_input,
-                "last_bot_response": bot_response,
-                "updated_at": datetime.now(),
-                "strategy": st.session_state.active_strategy if st.session_state.active_strategy else "main"
-            }, merge=True)
+            doc_ref.set(
+                {
+                    "conversation_id": st.session_state.conversation_id,
+                    "strategy": st.session_state.active_strategy if st.session_state.active_strategy else "main",
+                    "messages": messages_for_storage,  # full running chat history
+                    "last_user_input": str(user_input),
+                    "last_bot_response": str(bot_response),
+                    "updated_at": gcfirestore.SERVER_TIMESTAMP,
+                },
+                merge=True,
+            )
             
         except Exception as e:
             st.session_state.debug.append(f"Firestore Save Error: {e}") # Log the error in debug
-            st.error(f"Error saving message history: {e}") # Display error to user
+            # Do not interrupt UI rendering if Firestore write fails
+            # st.error(f"Error saving message history: {e}")
 
     else:
         # This case happens if Firebase initialization failed
@@ -348,6 +361,7 @@ with st.sidebar:
             st.session_state.active_strategy = None
             st.session_state.messages = []
             st.session_state.chat_session = None
+            st.session_state.conversation_id = str(uuid.uuid4())  # start a fresh record            
             st.rerun()
 
     # Display strategy buttons
@@ -366,6 +380,7 @@ with st.sidebar:
                 st.session_state.active_strategy = strategy  # Activate the strategy
                 st.session_state.messages = []  # Clear chat history when switching strategies
                 st.session_state.chat_session = None  # Reset session
+                st.session_state.conversation_id = str(uuid.uuid4())  # new record per focused strategy session                
                 st.rerun()
     
     # Close the container for the strategy buttons
