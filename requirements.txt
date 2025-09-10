@@ -1,7 +1,8 @@
 streamlit
-google-generativeai
+google-generativeai>=0.7.2
 Pillow
 PyPDF2
 reportlab
 python-docx
-firebase-admin
+firebase-admin>=6.5.0
+google-cloud-firestore>=2.15.0
