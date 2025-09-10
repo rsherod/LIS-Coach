@@ -6,9 +6,11 @@ import json
 import os
 from datetime import datetime
 from io import BytesIO
+import uuid
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+
 
 # Import file format libraries (will be used in helper functions)
 # Note: You may need to add these to your requirements.txt
@@ -42,6 +44,8 @@ if "uploaded_file" not in st.session_state:
     st.session_state.uploaded_file = None
 if "active_strategy" not in st.session_state:
     st.session_state.active_strategy = None
+if "conversation_id" not in st.session_state:
+    st.session_state.conversation_id = str(uuid.uuid4())
 
 # Helper function to load text files
 def load_text_file(file_path):
@@ -198,22 +202,16 @@ def save_message(user_input, bot_response):
     # Ensure db is initialized before trying to save
     if 'db' in globals() and db:
         try:
-            # Data structure for a chat message
-            message_data = {
-                "user_input": user_input,
-                "bot_response": bot_response,
-                "timestamp": datetime.now(), # Add a server-side timestamp
-                # Optional: Add active strategy for context
+            # One running record per chat session: upsert a single document with full history
+            doc_ref = db.collection("chats").document(st.session_state.conversation_id)
+            doc_ref.set({
+                "messages": st.session_state.messages,  # full running chat history
+                "last_user_input": user_input,
+                "last_bot_response": bot_response,
+                "updated_at": datetime.now(),
                 "strategy": st.session_state.active_strategy if st.session_state.active_strategy else "main"
-            }
-
-            # Add a new document to the 'chats' collection in Firestore
-            # Firestore will automatically generate a unique document ID
-            doc_ref = db.collection("chats").add(message_data)
-
-            # Optional: Add a debug message (be mindful of rate limits if too chatty)
-            # st.session_state.debug.append(f"Message saved with ID: {doc_ref[1].id}")
-
+            }, merge=True)
+            
         except Exception as e:
             st.session_state.debug.append(f"Firestore Save Error: {e}") # Log the error in debug
             st.error(f"Error saving message history: {e}") # Display error to user
