@@ -32,7 +32,7 @@ if "should_generate_response" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "model_name" not in st.session_state:
-    st.session_state.model_name = "gemini-2.5-flash"
+    st.session_state.model_name = "gemini-2.5-flash-lite"
 if "temperature" not in st.session_state:
     st.session_state.temperature = 0.5
 if "debug" not in st.session_state:
@@ -275,10 +275,10 @@ with st.sidebar:
 
     # Ensure model_name is initialized
     if 'model_name' not in st.session_state:
-        st.session_state.model_name = "gemini-2.5-flash"  # default model
+        st.session_state.model_name = "gemini-2.5-flash-lite"  # default model
 
     #model_option = st.selectbox(
-        #"Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.5-flash"]
+        #"Select Model:", ["gemini-2.0-pro-exp-02-05", "gemini-2.5-flash-lite"]
     #)
 
     # Update model_name if it has changed
